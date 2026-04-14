@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="HamdyTech — DevOps & Infrastructure Services. Proxmox, Docker, Linux, Nginx. Building scalable systems that last.">
+<title>HamdyTech — DevOps & Infrastructure Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================================================
+   TOKENS
+================================================ */
+:root {
+  --bg:     #020308;
+  --bg1:    #04060f;
+  --bg2:    #060914;
+  --bg3:    #090d1c;
+  --bg4:    #0c1124;
+  --sur:    rgba(255,255,255,.028);
+  --bor:    rgba(255,255,255,.07);
+  --bor2:   rgba(6,214,255,.18);
+  --cyan:   #06d6ff;
+  --cyanD:  #00afd4;
+  --violet: #7c3aed;
+  --violet2:#a855f7;
+  --pink:   #ec4899;
+  --green:  #10b981;
+  --amber:  #f59e0b;
+  --tx:     #eef2ff;
+  --tx2:    #8892b0;
+  --tx3:    #3d4a6b;
+  --font:   'Outfit',sans-serif;
+  --mono:   'JetBrains Mono',monospace;
+  --ar:     'Cairo',sans-serif;
+  --ease:   cubic-bezier(.16,1,.3,1);
+  --ease2:  cubic-bezier(.4,0,.2,1);
+  --r:      14px;
+  --r2:     20px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+body {
+  background:var(--bg);
+  color:var(--tx);
+  font-family:var(--font);
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+html[lang="ar"] body { font-family:var(--ar); }
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
+button,input,textarea { font-family:inherit; }
+@media(hover:none){ body { cursor:auto; } }
+
+/* ================================================
+   CURSOR
+================================================ */
+#CUR,#CURL {
+  position:fixed; top:0; left:0;
+  border-radius:50%; pointer-events:none;
+  z-index:99999; transform:translate(-50%,-50%);
+  will-change:transform,left,top;
+}
+#CUR {
+  width:8px; height:8px;
+  background:var(--cyan);
+  mix-blend-mode:screen;
+  transition:width .15s,height .15s,opacity .2s;
+}
+#CURL {
+  width:34px; height:34px;
+  border:1px solid rgba(6,214,255,.28);
+  transition:opacity .3s;
+  z-index:99998;
+}
+body.cursor-hover #CUR { width:14px; height:14px; opacity:.6; }
+body.cursor-hover #CURL { opacity:0; }
+@media(hover:none){#CUR,#CURL{display:none}}
+
+/* ================================================
+   LOADER
+================================================ */
+#LOAD {
+  position:fixed; inset:0; z-index:999999;
+  background:var(--bg);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:32px;
+  transition:opacity .9s var(--ease),visibility .9s;
+}
+#LOAD.bye { opacity:0; visibility:hidden; pointer-events:none; }
+
+.ld-brand { display:flex; overflow:hidden; gap:1px; }
+.ld-l {
+  font-family:var(--font);
+  font-size:clamp(2.8rem,8vw,5.5rem);
+  font-weight:900; letter-spacing:-.04em;
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--violet2) 55%,var(--pink) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 30px rgba(6,214,255,.35));
+  opacity:0; transform:translateY(40px);
+  animation:ldChar .55s var(--ease) forwards;
+}
+@keyframes ldChar { to { opacity:1; transform:none; } }
+.ld-line {
+  width:140px; height:1px;
+  background:rgba(255,255,255,.06); overflow:hidden;
+  opacity:0; animation:fdIn .3s 1.3s ease forwards;
+}
+.ld-prog {
+  height:100%;
+  background:linear-gradient(90deg,var(--cyan),var(--violet2));
+  width:0; animation:ldProg 1.3s 1.3s var(--ease) forwards;
+}
+@keyframes ldProg { to { width:100%; } }
+@keyframes fdIn { to { opacity:1; } }
+.ld-dot {
+  font-family:var(--mono); font-size:.62rem;
+  letter-spacing:.18em; color:var(--tx3); text-transform:uppercase;
+  opacity:0; animation:fdIn .3s 1.4s ease forwards;
+}
+.ld-dot em { color:var(--cyan); font-style:normal; animation:bk 1s 1.4s step-end infinite; }
+@keyframes bk { 0%,100%{opacity:1}50%{opacity:0} }
+
+/* ================================================
+   BG CANVAS
+================================================ */
+#BG { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55; }
+
+/* ================================================
+   LAYOUT
+================================================ */
+section { position:relative; z-index:2; }
+.W { max-width:1200px; margin:0 auto; padding:0 clamp(1rem,4vw,2.5rem); }
+.S { padding:clamp(4rem,8vw,7.5rem) 0; }
+
+/* ================================================
+   TYPE SYSTEM
+================================================ */
+.tag-label {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-family:var(--mono); font-size:.64rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--cyan);
+  margin-bottom:1rem;
+}
+.tag-label::before { content:'//'; color:var(--tx3); }
+.h2 {
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800; letter-spacing:-.03em; line-height:1.1;
+  margin-bottom:1.2rem;
+}
+html[lang="ar"] .h2 { font-family:var(--ar); letter-spacing:0; line-height:1.3; }
+.body-lg { font-size:clamp(.9rem,2vw,1.08rem); color:var(--tx2); line-height:1.8; }
+html[lang="ar"] .body-lg { font-family:var(--ar); font-size:clamp(.95rem,2vw,1.06rem); line-height:2; }
+
+.grad { background:linear-gradient(135deg,var(--cyan),var(--violet2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.grad2 { background:linear-gradient(135deg,var(--violet2),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+/* ================================================
+   BUTTONS
+================================================ */
+.btn {
+  display:inline-flex; align-items:center; gap:.55rem;
+  padding:.85rem 1.8rem; border-radius:10px;
+  font-size:.9rem; font-weight:600; cursor:pointer;
+  transition:all .25s var(--ease2); border:none;
+  white-space:nowrap; position:relative; overflow:hidden;
+  letter-spacing:-.01em;
+}
+.btn-p { background:linear-gradient(135deg,var(--cyan),var(--violet2)); color:#fff; }
+.btn-p::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--violet2),var(--pink)); opacity:0; transition:opacity .25s; }
+.btn-p span { position:relative; z-index:1; }
+.btn-p:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(6,214,255,.28); }
+.btn-p:hover::after { opacity:1; }
+.btn-s { background:transparent; color:var(--tx); border:1px solid rgba(255,255,255,.12); }
+.btn-s:hover { border-color:rgba(6,214,255,.4); color:var(--cyan); transform:translateY(-2px); }
+.btn-lg { padding:1rem 2.2rem; font-size:.98rem; border-radius:12px; }
+.btn-xl { padding:1.15rem 2.8rem; font-size:1.05rem; border-radius:13px; }
+
+/* ================================================
+   ANIMATIONS
+================================================ */
+@keyframes orb { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(6,214,255,.3)} 50%{box-shadow:0 0 0 16px rgba(6,214,255,0)} }
+@keyframes shimmer { from{background-position:-200% center} to{background-position:200% center} }
+@keyframes scanY { from{transform:translateY(-100%)} to{transform:translateY(100vh)} }
+@keyframes revealUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+@keyframes logosScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+.rv { opacity:0; transform:translateY(28px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.rv.in { opacity:1; transform:none; }
+.rvl { opacity:0; transform:translateX(-28px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.rvl.in { opacity:1; transform:none; }
+.rvr { opacity:0; transform:translateX(28px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.rvr.in { opacity:1; transform:none; }
+
+/* ================================================
+   NAV
+================================================ */
+#NAV {
+  position:fixed; top:0; inset-inline:0; z-index:1000;
+  padding:1.1rem clamp(1rem,4vw,2.5rem);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  background:rgba(2,3,8,.55);
+  backdrop-filter:blur(30px) saturate(160%);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:padding .3s var(--ease),background .3s;
+}
+#NAV.stuck { padding:.7rem clamp(1rem,4vw,2.5rem); background:rgba(2,3,8,.85); }
+.nav-logo { display:flex; align-items:center; gap:.55rem; font-weight:900; font-size:1.08rem; letter-spacing:-.03em; flex-shrink:0; }
+.nav-logo-mark {
+  width:32px; height:32px; border-radius:9px; flex-shrink:0;
+  background:linear-gradient(135deg,var(--cyan),var(--violet2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:.85rem; font-weight:900; color:#fff;
+  box-shadow:0 0 18px rgba(6,214,255,.3);
+}
+.nav-logo-txt { background:linear-gradient(135deg,var(--cyan),var(--violet2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:1.8rem; list-style:none; }
+.nav-links a {
+  font-family:var(--mono); font-size:.7rem;
+  letter-spacing:.08em; color:var(--tx2);
+  transition:color .2s; position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:1px; background:var(--cyan);
+  transform:scaleX(0); transition:transform .22s var(--ease);
+}
+.nav-links a:hover { color:var(--tx); }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-right { display:flex; align-items:center; gap:.75rem; flex-shrink:0; }
+.lang-sw { display:flex; background:rgba(255,255,255,.04); border:1px solid var(--bor); border-radius:100px; padding:3px; gap:2px; }
+.lb { padding:.28rem .7rem; border-radius:100px; font-family:var(--mono); font-size:.65rem; letter-spacing:.06em; color:var(--tx3); background:transparent; border:none; cursor:pointer; transition:all .2s; }
+.lb.on { background:linear-gradient(135deg,var(--cyan),var(--violet2)); color:#fff; box-shadow:0 2px 10px rgba(6,214,255,.3); }
+.nav-cta { padding:.5rem 1.25rem; border-radius:9px; background:linear-gradient(135deg,var(--cyan),var(--violet2)); color:#fff; font-size:.78rem; font-weight:600; border:none; cursor:pointer; transition:all .25s; position:relative; overflow:hidden; }
+.nav-cta::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--violet2),var(--pink)); opacity:0; transition:opacity .25s; }
+.nav-cta span { position:relative; z-index:1; }
+.nav-cta:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(6,214,255,.25); }
+.nav-cta:hover::after { opacity:1; }
+.ham { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+.ham span { display:block; width:22px; height:1.5px; background:var(--tx2); border-radius:2px; transition:all .3s; }
+.ham.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.ham.open span:nth-child(2) { opacity:0; }
+.ham.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mob-nav { position:fixed; inset:0; z-index:999; background:rgba(2,3,8,.97); backdrop-filter:blur(20px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; opacity:0; visibility:hidden; transition:all .35s var(--ease); }
+.mob-nav.open { opacity:1; visibility:visible; }
+.mob-nav a { font-size:clamp(1.6rem,5vw,2.2rem); font-weight:800; color:var(--tx2); letter-spacing:-.03em; transition:color .2s; }
+.mob-nav a:hover { color:var(--cyan); }
+html[lang="ar"] .mob-nav a { font-family:var(--ar); letter-spacing:0; }
+
+/* ================================================
+   HERO
+================================================ */
+#HERO {
+  min-height:100svh;
+  display:flex; align-items:center; justify-content:center;
+  padding:8rem clamp(1rem,4vw,2.5rem) 5rem;
+  text-align:center; overflow:hidden; position:relative;
+}
+.hero-bg { position:absolute; inset:0; pointer-events:none; }
+.hero-grid {
+  position:absolute; inset:0;
+  background-image: linear-gradient(rgba(6,214,255,.022) 1px,transparent 1px), linear-gradient(90deg,rgba(6,214,255,.022) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 40%,transparent 100%);
+}
+.hero-orb { position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; }
+.orb1 { width:clamp(300px,50vw,600px); height:clamp(300px,50vw,600px); top:0; left:-5%; background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%); animation:orb 12s ease-in-out infinite; }
+.orb2 { width:clamp(250px,40vw,480px); height:clamp(250px,40vw,480px); bottom:5%; right:-5%; background:radial-gradient(circle,rgba(6,214,255,.1),transparent 70%); animation:orb 16s ease-in-out infinite reverse 2s; }
+.orb3 { width:clamp(200px,35vw,380px); height:clamp(200px,35vw,380px); top:40%; left:50%; transform:translate(-50%,-50%); background:radial-gradient(circle,rgba(236,72,153,.07),transparent 70%); animation:orb 9s ease-in-out infinite 4s; }
+.hero-scan { position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:.03; }
+.hero-scan::after { content:''; position:absolute; inset:-100%; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.1) 2px,rgba(255,255,255,.1) 4px); animation:scanY 15s linear infinite; }
+.hero-inner { position:relative; z-index:2; max-width:900px; width:100%; }
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:.42rem 1.1rem; margin-bottom:2rem;
+  background:rgba(6,214,255,.05); border:1px solid rgba(6,214,255,.18);
+  border-radius:100px; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; color:var(--cyan);
+  animation:revealUp .7s var(--ease) both;
+}
+html[lang="ar"] .hero-eyebrow { font-family:var(--ar); letter-spacing:0; font-size:.76rem; }
+.eye-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); animation:bk 1.8s ease infinite; }
+.hero-h {
+  font-size:clamp(2.4rem,6.5vw,5.2rem);
+  font-weight:900; letter-spacing:-.045em; line-height:1.04;
+  margin-bottom:1.6rem;
+  animation:revealUp .75s .12s var(--ease) both;
+}
+html[lang="ar"] .hero-h { font-family:var(--ar); letter-spacing:0; line-height:1.2; }
+.hero-h .sh {
+  display:inline-block;
+  background:linear-gradient(135deg,var(--cyan),var(--violet2) 50%,var(--pink) 100%);
+  background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:shimmer 4.5s linear infinite;
+}
+.hero-sub { font-size:clamp(.95rem,2.2vw,1.12rem); color:var(--tx2); line-height:1.8; max-width:600px; margin:0 auto 1.6rem; animation:revealUp .75s .24s var(--ease) both; }
+html[lang="ar"] .hero-sub { font-family:var(--ar); }
+.hero-brand { font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; color:var(--tx3); margin-bottom:2.4rem; animation:revealUp .75s .32s var(--ease) both; }
+html[lang="ar"] .hero-brand { font-family:var(--ar); letter-spacing:0; font-size:.76rem; }
+.hero-brand strong { color:var(--cyan); }
+.hero-actions { display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; animation:revealUp .75s .4s var(--ease) both; }
+.hero-stats {
+  display:flex; gap:clamp(1.5rem,4vw,3.5rem); justify-content:center; flex-wrap:wrap;
+  margin-top:5rem; padding-top:3rem; border-top:1px solid var(--bor);
+  animation:revealUp .75s .55s var(--ease) both;
+}
+.stat { text-align:center; }
+.stat-n { display:block; font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:900; letter-spacing:-.04em; background:linear-gradient(135deg,var(--cyan),var(--violet2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+html[lang="ar"] .stat-n { font-family:var(--ar); }
+.stat-l { font-family:var(--mono); font-size:.61rem; letter-spacing:.1em; color:var(--tx3); text-transform:uppercase; margin-top:.22rem; }
+html[lang="ar"] .stat-l { font-family:var(--ar); letter-spacing:0; font-size:.72rem; }
+.scroll-ind { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.4rem; animation:fdIn 1s 1.8s ease both; opacity:0; }
+.scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,transparent,var(--cyan)); animation:scanY 2.2s ease infinite; }
+.scroll-txt { font-family:var(--mono); font-size:.56rem; letter-spacing:.18em; color:var(--tx3); text-transform:uppercase; }
+
+/* ================================================
+   LOGO STRIP  (replaces old text ticker)
+================================================ */
+#LOGOS {
+  position:relative; z-index:2;
+  padding:2.2rem 0 2.4rem;
+  border-top:1px solid var(--bor);
+  border-bottom:1px solid var(--bor);
+  background:rgba(255,255,255,.014);
+  overflow:hidden;
+}
+.logos-label {
+  text-align:center;
+  font-family:var(--mono); font-size:.58rem;
+  letter-spacing:.18em; color:var(--tx3);
+  text-transform:uppercase; margin-bottom:1.6rem;
+}
+.logos-track-wrap {
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+.logos-track {
+  display:flex; align-items:center; gap:1.2rem;
+  width:max-content;
+  animation:logosScroll 32s linear infinite;
+}
+.logos-track:hover { animation-play-state:paused; }
+.logo-pill {
+  display:flex; align-items:center; gap:.7rem;
+  padding:.6rem 1.1rem;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;
+  background:rgba(255,255,255,.022);
+  transition:all .25s var(--ease);
+  cursor:default; white-space:nowrap; flex-shrink:0;
+}
+.logo-pill:hover {
+  border-color:rgba(6,214,255,.28);
+  background:rgba(6,214,255,.05);
+  transform:translateY(-3px);
+  box-shadow:0 10px 28px rgba(6,214,255,.1),0 0 0 1px rgba(6,214,255,.12);
+}
+.logo-pill img {
+  width:22px; height:22px;
+  object-fit:contain;
+  opacity:.45;
+  filter:brightness(1.3);
+  transition:opacity .25s, filter .25s;
+  display:block; flex-shrink:0;
+}
+.logo-pill:hover img {
+  opacity:.85;
+  filter:brightness(1.5) drop-shadow(0 0 6px rgba(6,214,255,.55));
+}
+.logo-pill-name {
+  font-family:var(--mono); font-size:.67rem;
+  letter-spacing:.06em; color:var(--tx3);
+  transition:color .25s;
+}
+.logo-pill:hover .logo-pill-name { color:var(--cyan); }
+
+/* ================================================
+   SERVICES
+================================================ */
+#SVC { background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%); }
+.svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3.5rem; }
+.svc-card {
+  background:var(--sur); border:1px solid var(--bor);
+  border-radius:var(--r2); padding:clamp(1.4rem,3vw,2rem);
+  position:relative; overflow:hidden;
+  transition:all .3s var(--ease); cursor:default;
+}
+.svc-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(6,214,255,.04),transparent 55%,rgba(124,58,237,.04)); opacity:0; transition:opacity .3s; }
+.svc-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent 0%,var(--cyan) 50%,transparent 100%); opacity:0; transition:opacity .3s; }
+.svc-card:hover { border-color:rgba(6,214,255,.2); transform:translateY(-7px); box-shadow:0 28px 60px rgba(0,0,0,.55),0 0 50px rgba(6,214,255,.05); }
+.svc-card:hover::before { opacity:1; }
+.svc-card:hover::after { opacity:1; }
+.svc-card.wide { grid-column:span 2; }
+.svc-num { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; color:var(--tx3); display:block; margin-bottom:1.1rem; }
+.svc-ico { width:50px; height:50px; border-radius:13px; margin-bottom:1.2rem; display:flex; align-items:center; justify-content:center; font-size:1.4rem; transition:transform .3s var(--ease); }
+.svc-card:hover .svc-ico { transform:scale(1.12) rotate(-5deg); }
+.si1{background:linear-gradient(135deg,rgba(6,214,255,.15),rgba(6,214,255,.04));border:1px solid rgba(6,214,255,.2);}
+.si2{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(124,58,237,.04));border:1px solid rgba(124,58,237,.2);}
+.si3{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.04));border:1px solid rgba(16,185,129,.2);}
+.si4{background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(168,85,247,.04));border:1px solid rgba(168,85,247,.2);}
+.si5{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.04));border:1px solid rgba(245,158,11,.2);}
+.svc-title { font-size:1rem; font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
+html[lang="ar"] .svc-title { font-family:var(--ar); }
+.svc-desc { font-size:.84rem; color:var(--tx2); line-height:1.75; margin-bottom:1.2rem; }
+html[lang="ar"] .svc-desc { font-family:var(--ar); font-size:.87rem; line-height:2; }
+.svc-tags { display:flex; flex-wrap:wrap; gap:.38rem; }
+.stag { font-family:var(--mono); font-size:.62rem; padding:.2rem .6rem; border-radius:5px; background:rgba(124,58,237,.09); border:1px solid rgba(124,58,237,.16); color:#c084fc; }
+
+/* ================================================
+   WHY US
+================================================ */
+#WHY { background:var(--bg2); }
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3.5rem; }
+.why-card { padding:clamp(1.4rem,3vw,2rem); background:var(--sur); border:1px solid var(--bor); border-radius:var(--r2); position:relative; transition:border-color .3s; }
+.why-card:hover { border-color:var(--bor2); }
+.why-ico { font-size:1.8rem; margin-bottom:1rem; display:block; }
+.why-title { font-weight:700; font-size:.97rem; letter-spacing:-.02em; margin-bottom:.5rem; }
+html[lang="ar"] .why-title { font-family:var(--ar); }
+.why-txt { font-size:.84rem; color:var(--tx2); line-height:1.75; }
+html[lang="ar"] .why-txt { font-family:var(--ar); font-size:.87rem; line-height:2; }
+
+/* ================================================
+   ABOUT
+================================================ */
+#ABOUT { background:var(--bg3); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4.5rem); align-items:center; }
+.terminal { background:var(--bg4); border:1px solid var(--bor); border-radius:var(--r2); overflow:hidden; font-family:var(--mono); font-size:clamp(.7rem,1.5vw,.8rem); box-shadow:0 32px 70px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04); }
+.term-bar { padding:.8rem 1rem; background:rgba(255,255,255,.03); border-bottom:1px solid var(--bor); display:flex; align-items:center; gap:.8rem; }
+.term-dots { display:flex; gap:6px; }
+.td { width:12px; height:12px; border-radius:50%; }
+.td1{background:#ff5f57} .td2{background:#ffbd2e} .td3{background:#28ca41}
+.term-path { font-size:.62rem; color:var(--tx3); letter-spacing:.06em; }
+.term-body { padding:1.5rem; line-height:2.1; }
+.tl { display:block; }
+.tc-g{color:#34d399} .tc-c{color:var(--cyan)} .tc-v{color:#c084fc}
+.tc-m{color:var(--tx3)} .tc-s{color:#fbbf24} .tc-w{color:var(--tx)}
+.tc-r{color:#f87171} .tc-b{color:#60a5fa}
+.cur-blink { display:inline-block; width:7px; height:13px; background:var(--cyan); margin-left:2px; vertical-align:-2px; animation:bk 1s step-end infinite; }
+.about-title { font-size:clamp(1.6rem,3.5vw,2.5rem); font-weight:900; letter-spacing:-.04em; line-height:1.12; margin-bottom:1.1rem; }
+html[lang="ar"] .about-title { font-family:var(--ar); letter-spacing:0; line-height:1.28; }
+.about-p { font-size:.93rem; color:var(--tx2); line-height:1.85; margin-bottom:.9rem; }
+html[lang="ar"] .about-p { font-family:var(--ar); font-size:.97rem; line-height:2.1; }
+.about-p strong { color:var(--tx); }
+.infra-grid { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin:1.4rem 0; }
+.infra-pill { display:flex; align-items:center; gap:.7rem; padding:.8rem 1rem; background:var(--sur); border:1px solid var(--bor); border-radius:11px; transition:border-color .2s; }
+.infra-pill:hover { border-color:var(--bor2); }
+.ip-icon { font-size:1.15rem; flex-shrink:0; }
+.ip-lbl { font-weight:600; font-size:.82rem; display:block; }
+html[lang="ar"] .ip-lbl { font-family:var(--ar); }
+.ip-val { font-family:var(--mono); font-size:.67rem; color:var(--cyan); display:block; }
+.badge-row { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1.4rem; }
+.badge { padding:.28rem .78rem; border-radius:7px; background:rgba(6,214,255,.05); border:1px solid rgba(6,214,255,.13); font-family:var(--mono); font-size:.68rem; color:var(--cyan); cursor:default; transition:all .2s; }
+.badge:hover { background:rgba(6,214,255,.11); border-color:var(--cyan); transform:translateY(-1px); }
+
+/* ================================================
+   TECH STACK GRID
+================================================ */
+#TECH { background:var(--bg2); }
+.tech-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:.8rem; margin-top:3rem; }
+.tech-card { display:flex; flex-direction:column; align-items:center; gap:.7rem; padding:1.4rem 1rem; background:var(--sur); border:1px solid var(--bor); border-radius:var(--r); transition:all .25s var(--ease); cursor:default; text-align:center; }
+.tech-card:hover { border-color:var(--bor2); transform:translateY(-4px); background:rgba(6,214,255,.03); }
+.tech-icon { font-size:1.6rem; line-height:1; }
+.tech-name { font-family:var(--mono); font-size:.7rem; color:var(--tx2); letter-spacing:.06em; }
+.tech-card:hover .tech-name { color:var(--cyan); }
+
+/* ================================================
+   PROJECTS
+================================================ */
+#PROJ { background:var(--bg); }
+.proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+.proj-card { background:var(--sur); border:1px solid var(--bor); border-radius:var(--r2); padding:clamp(1.4rem,3vw,2rem); display:flex; flex-direction:column; position:relative; overflow:hidden; transition:all .3s var(--ease); cursor:default; }
+.proj-card.feat { grid-column:span 2; }
+.proj-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(124,58,237,.05),transparent 55%,rgba(6,214,255,.04)); opacity:0; transition:opacity .3s; }
+.proj-card:hover::before { opacity:1; }
+.proj-card:hover { border-color:rgba(6,214,255,.22); transform:translateY(-5px); box-shadow:0 22px 55px rgba(0,0,0,.5); }
+.proj-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.1rem; }
+.proj-icon { width:46px; height:46px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.25rem; }
+.pji1{background:linear-gradient(135deg,rgba(6,214,255,.18),rgba(6,214,255,.04));border:1px solid rgba(6,214,255,.2);}
+.pji2{background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(124,58,237,.04));border:1px solid rgba(124,58,237,.2);}
+.pji3{background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(16,185,129,.04));border:1px solid rgba(16,185,129,.2);}
+.pji4{background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(245,158,11,.04));border:1px solid rgba(245,158,11,.2);}
+.pji5{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(236,72,153,.04));border:1px solid rgba(236,72,153,.2);}
+.proj-arr { color:var(--tx3); font-size:1rem; transition:all .2s; }
+.proj-card:hover .proj-arr { color:var(--cyan); transform:translate(3px,-3px); }
+html[dir="rtl"] .proj-card:hover .proj-arr { transform:translate(-3px,-3px); }
+.proj-title { font-size:1.02rem; font-weight:700; letter-spacing:-.02em; margin-bottom:.5rem; }
+html[lang="ar"] .proj-title { font-family:var(--ar); }
+.proj-desc { font-size:.84rem; color:var(--tx2); line-height:1.75; margin-bottom:1.1rem; flex:1; }
+html[lang="ar"] .proj-desc { font-family:var(--ar); font-size:.87rem; line-height:2; }
+.impact-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:.9rem; }
+.imp { display:inline-flex; align-items:center; gap:.3rem; font-family:var(--mono); font-size:.63rem; padding:.2rem .65rem; border-radius:100px; background:rgba(16,185,129,.06); border:1px solid rgba(16,185,129,.15); color:var(--green); }
+html[lang="ar"] .imp { font-family:var(--ar); font-size:.68rem; }
+.ptags { display:flex; flex-wrap:wrap; gap:.38rem; }
+.ptag { font-family:var(--mono); font-size:.62rem; padding:.18rem .58rem; border-radius:5px; background:rgba(168,85,247,.09); border:1px solid rgba(168,85,247,.16); color:#c084fc; }
+.feat .feat-inner { display:grid; grid-template-columns:1.2fr 1fr; gap:2.5rem; align-items:start; }
+.cluster-box { background:var(--bg4); border:1px solid var(--bor); border-radius:12px; padding:1.3rem; font-family:var(--mono); font-size:.72rem; }
+.cb-hd { font-size:.6rem; color:var(--cyan); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.8rem; display:block; }
+.cb-row { display:flex; justify-content:space-between; align-items:center; padding:.4rem 0; border-bottom:1px solid var(--bor); color:var(--tx2); }
+.cb-row:last-child { border-bottom:none; }
+.cb-k { color:var(--tx); }
+.cb-v { color:var(--cyan); }
+
+/* ================================================
+   CASE STUDY
+================================================ */
+#CS { background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%); }
+.cs-box { background:var(--bg3); border:1px solid var(--bor); border-radius:22px; padding:clamp(1.8rem,4vw,3.2rem); position:relative; overflow:hidden; }
+.cs-box::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(to bottom,var(--cyan),var(--violet2),var(--pink)); }
+html[dir="rtl"] .cs-box::before { left:auto; right:0; }
+.cs-box::after { content:''; position:absolute; top:-80px; right:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,.07),transparent 70%); pointer-events:none; }
+.cs-tags { display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:1.8rem; }
+.cs-tag { font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; padding:.22rem .65rem; border-radius:5px; border:1px solid; }
+.ct1{color:var(--cyan);border-color:rgba(6,214,255,.2);background:rgba(6,214,255,.06);}
+.ct2{color:#c084fc;border-color:rgba(168,85,247,.2);background:rgba(168,85,247,.06);}
+.cs-title { font-size:clamp(1.4rem,3vw,2rem); font-weight:800; letter-spacing:-.03em; line-height:1.2; margin-bottom:.9rem; }
+html[lang="ar"] .cs-title { font-family:var(--ar); letter-spacing:0; line-height:1.4; }
+.cs-lead { font-size:.9rem; color:var(--tx2); line-height:1.8; margin-bottom:2.2rem; }
+html[lang="ar"] .cs-lead { font-family:var(--ar); font-size:.93rem; line-height:2; }
+.cs-two { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; margin-bottom:2.2rem; }
+.cs-col h4 { font-family:var(--mono); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); margin-bottom:.8rem; }
+html[lang="ar"] .cs-col h4 { font-family:var(--ar); letter-spacing:0; font-size:.76rem; }
+.cs-col p,.cs-col ul { font-size:.86rem; color:var(--tx2); line-height:1.8; }
+html[lang="ar"] .cs-col p, html[lang="ar"] .cs-col ul { font-family:var(--ar); font-size:.88rem; line-height:2; }
+.cs-col ul { list-style:none; display:flex; flex-direction:column; gap:.45rem; }
+.cs-col ul li { display:flex; gap:.5rem; align-items:flex-start; }
+.cs-col ul li::before { content:'▸'; color:var(--cyan); font-size:.58rem; margin-top:.28rem; flex-shrink:0; }
+html[dir="rtl"] .cs-col ul li::before { content:'◂'; }
+.cs-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--bor); border-radius:12px; overflow:hidden; margin-bottom:2.2rem; }
+.cs-step { background:var(--bg2); padding:1.3rem; }
+.cs-sn { font-family:var(--mono); font-size:.59rem; color:var(--cyan); letter-spacing:.1em; display:block; margin-bottom:.5rem; }
+html[lang="ar"] .cs-sn { font-family:var(--ar); letter-spacing:0; font-size:.68rem; }
+.cs-st { font-weight:700; font-size:.86rem; margin-bottom:.4rem; }
+html[lang="ar"] .cs-st { font-family:var(--ar); }
+.cs-sd { font-size:.77rem; color:var(--tx2); line-height:1.65; }
+html[lang="ar"] .cs-sd { font-family:var(--ar); font-size:.8rem; line-height:1.9; }
+.cs-results { display:flex; flex-wrap:wrap; gap:clamp(1.5rem,4vw,3rem); }
+.cs-rn { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; letter-spacing:-.04em; background:linear-gradient(135deg,var(--cyan),var(--violet2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:block; }
+html[lang="ar"] .cs-rn { font-family:var(--ar); }
+.cs-rl { font-size:.76rem; color:var(--tx3); margin-top:.2rem; }
+html[lang="ar"] .cs-rl { font-family:var(--ar); font-size:.8rem; }
+
+/* ================================================
+   PRICING
+================================================ */
+#PRICE { background:var(--bg2); }
+.price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3.5rem; align-items:start; }
+.price-card { background:var(--sur); border:1px solid var(--bor); border-radius:var(--r2); padding:clamp(1.6rem,3vw,2.2rem); position:relative; transition:all .3s var(--ease); }
+.price-card:hover { transform:translateY(-5px); border-color:rgba(6,214,255,.2); box-shadow:0 24px 55px rgba(0,0,0,.5); }
+.price-card.featured { border-color:rgba(6,214,255,.3); background:linear-gradient(135deg,rgba(6,214,255,.04),rgba(124,58,237,.04)); box-shadow:0 0 60px rgba(6,214,255,.08); transform:translateY(-8px); }
+.price-card.featured:hover { transform:translateY(-13px); }
+.feat-badge { position:absolute; top:-1px; left:50%; transform:translateX(-50%); padding:.3rem 1rem; border-radius:0 0 10px 10px; background:linear-gradient(135deg,var(--cyan),var(--violet2)); font-size:.65rem; font-weight:700; letter-spacing:.08em; color:#fff; text-transform:uppercase; font-family:var(--mono); white-space:nowrap; }
+html[lang="ar"] .feat-badge { font-family:var(--ar); letter-spacing:0; font-size:.72rem; }
+.plan-name { font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--tx3); margin-bottom:.6rem; }
+html[lang="ar"] .plan-name { font-family:var(--ar); letter-spacing:0; font-size:.78rem; }
+.plan-title { font-size:1.3rem; font-weight:800; letter-spacing:-.03em; margin-bottom:.5rem; }
+html[lang="ar"] .plan-title { font-family:var(--ar); letter-spacing:0; }
+.plan-desc { font-size:.83rem; color:var(--tx2); line-height:1.7; margin-bottom:1.4rem; }
+html[lang="ar"] .plan-desc { font-family:var(--ar); font-size:.86rem; line-height:2; }
+.plan-price { padding:1rem; margin-bottom:1.4rem; background:rgba(255,255,255,.03); border:1px solid var(--bor); border-radius:11px; text-align:center; }
+.plan-price-txt { font-family:var(--mono); font-size:.72rem; color:var(--cyan); letter-spacing:.08em; }
+html[lang="ar"] .plan-price-txt { font-family:var(--ar); letter-spacing:0; font-size:.82rem; }
+.plan-features { display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.6rem; }
+.pf { display:flex; align-items:flex-start; gap:.55rem; font-size:.84rem; color:var(--tx2); line-height:1.5; }
+html[lang="ar"] .pf { font-family:var(--ar); font-size:.87rem; }
+.pf-check { color:var(--green); flex-shrink:0; margin-top:.05rem; font-size:.85rem; }
+.pf-x { color:var(--tx3); flex-shrink:0; margin-top:.05rem; font-size:.85rem; }
+.plan-cta { display:block; width:100%; padding:.9rem; border-radius:10px; text-align:center; font-weight:600; font-size:.88rem; cursor:pointer; transition:all .25s; border:none; }
+.plan-cta-p { background:linear-gradient(135deg,var(--cyan),var(--violet2)); color:#fff; }
+.plan-cta-p:hover { box-shadow:0 10px 28px rgba(6,214,255,.28); transform:translateY(-2px); }
+.plan-cta-s { background:transparent; color:var(--tx); border:1px solid var(--bor); }
+.plan-cta-s:hover { border-color:rgba(6,214,255,.4); color:var(--cyan); transform:translateY(-2px); }
+.compare-wrap { margin-top:3.5rem; overflow-x:auto; }
+.compare-note { font-family:var(--mono); font-size:.65rem; color:var(--tx3); letter-spacing:.08em; margin-bottom:1rem; text-align:center; }
+html[lang="ar"] .compare-note { font-family:var(--ar); letter-spacing:0; font-size:.74rem; }
+.compare-table { width:100%; border-collapse:separate; border-spacing:0; font-size:.84rem; }
+.compare-table th { padding:.9rem 1.2rem; text-align:left; font-weight:700; font-size:.82rem; background:var(--bg3); border-bottom:1px solid var(--bor); }
+html[dir="rtl"] .compare-table th { text-align:right; }
+.compare-table th:first-child { border-radius:12px 0 0 0; }
+.compare-table th:last-child { border-radius:0 12px 0 0; }
+html[dir="rtl"] .compare-table th:first-child { border-radius:0 12px 0 0; }
+html[dir="rtl"] .compare-table th:last-child { border-radius:12px 0 0 0; }
+.compare-table th.hl { background:rgba(6,214,255,.08); color:var(--cyan); }
+.compare-table td { padding:.75rem 1.2rem; border-bottom:1px solid var(--bor); color:var(--tx2); }
+html[dir="rtl"] .compare-table td { text-align:right; }
+.compare-table td.feat-col { color:var(--tx); font-weight:500; }
+.compare-table td.hl { background:rgba(6,214,255,.03); }
+.compare-table tr:last-child td:first-child { border-radius:0 0 0 12px; }
+.compare-table tr:last-child td:last-child { border-radius:0 0 12px 0; }
+html[dir="rtl"] .compare-table tr:last-child td:first-child { border-radius:0 0 12px 0; }
+html[dir="rtl"] .compare-table tr:last-child td:last-child { border-radius:0 0 0 12px; }
+.compare-table tr:hover td { background:rgba(255,255,255,.015); }
+.chk { color:var(--green); }
+.cross { color:var(--tx3); }
+html[lang="ar"] .compare-table td,.compare-table th { font-family:var(--ar) !important; font-size:.86rem; }
+
+/* ================================================
+   TESTIMONIALS
+================================================ */
+#TESTI { background:var(--bg); }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3.5rem; }
+.testi-card { background:var(--sur); border:1px solid var(--bor); border-radius:var(--r2); padding:1.7rem; position:relative; transition:border-color .3s; }
+.testi-card:hover { border-color:var(--bor2); }
+.testi-card::before { content:'"'; position:absolute; top:1rem; right:1.4rem; font-size:3rem; color:rgba(6,214,255,.1); font-family:serif; line-height:1; }
+html[dir="rtl"] .testi-card::before { right:auto; left:1.4rem; }
+.testi-stars { color:var(--amber); font-size:.85rem; letter-spacing:.05em; margin-bottom:1rem; }
+.testi-txt { font-size:.86rem; color:var(--tx2); line-height:1.8; margin-bottom:1.3rem; font-style:italic; }
+html[lang="ar"] .testi-txt { font-family:var(--ar); font-size:.88rem; line-height:2; font-style:normal; }
+.testi-author { display:flex; align-items:center; gap:.75rem; }
+.testi-av { width:38px; height:38px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:700; color:#fff; }
+.av1{background:linear-gradient(135deg,var(--cyan),var(--violet2));}
+.av2{background:linear-gradient(135deg,var(--violet2),var(--pink));}
+.av3{background:linear-gradient(135deg,var(--green),var(--cyan));}
+.testi-name { font-weight:600; font-size:.84rem; }
+html[lang="ar"] .testi-name { font-family:var(--ar); }
+.testi-role { font-family:var(--mono); font-size:.65rem; color:var(--tx3); }
+html[lang="ar"] .testi-role { font-family:var(--ar); font-size:.72rem; }
+
+/* ================================================
+   BOOKING
+================================================ */
+#BOOK { background:var(--bg2); position:relative; overflow:hidden; }
+#BOOK::before { content:''; position:absolute; inset:0; pointer-events:none; background: radial-gradient(ellipse 55% 55% at 25% 50%,rgba(6,214,255,.06),transparent), radial-gradient(ellipse 55% 55% at 75% 50%,rgba(124,58,237,.07),transparent); }
+.book-inner { text-align:center; max-width:700px; margin:0 auto; position:relative; z-index:1; }
+.book-ico { width:68px; height:68px; border-radius:20px; margin:0 auto 2rem; background:linear-gradient(135deg,var(--cyan),var(--violet2)); display:flex; align-items:center; justify-content:center; font-size:1.9rem; box-shadow:0 0 45px rgba(6,214,255,.3); animation:pulse 2.8s ease infinite; }
+.book-pre { font-family:var(--mono); font-size:.65rem; letter-spacing:.16em; color:var(--cyan); text-transform:uppercase; display:block; margin-bottom:1rem; }
+html[lang="ar"] .book-pre { font-family:var(--ar); letter-spacing:0; font-size:.76rem; }
+.book-title { font-size:clamp(2rem,5vw,3.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.07; margin-bottom:1.2rem; }
+html[lang="ar"] .book-title { font-family:var(--ar); letter-spacing:0; line-height:1.22; }
+.book-desc { font-size:clamp(.9rem,2vw,1.05rem); color:var(--tx2); line-height:1.8; margin-bottom:2.5rem; }
+html[lang="ar"] .book-desc { font-family:var(--ar); }
+.book-note { margin-top:1.2rem; font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; color:var(--tx3); }
+html[lang="ar"] .book-note { font-family:var(--ar); letter-spacing:0; font-size:.76rem; }
+
+/* ================================================
+   CONTACT  — clean CTA, no form
+================================================ */
+#CON { background:var(--bg); }
+
+.con-cta-box {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,4.5rem); align-items:center;
+  margin-top:3rem;
+  padding:clamp(2rem,4vw,3.2rem);
+  background:var(--bg3); border:1px solid var(--bor);
+  border-radius:22px; position:relative; overflow:hidden;
+}
+.con-cta-box::before {
+  content:''; position:absolute; top:0; left:0; width:3px; height:100%;
+  background:linear-gradient(to bottom,var(--cyan),var(--violet2),var(--pink));
+}
+html[dir="rtl"] .con-cta-box::before { left:auto; right:0; }
+.con-cta-box::after {
+  content:''; position:absolute; bottom:-100px; right:-80px;
+  width:280px; height:280px; border-radius:50%;
+  background:radial-gradient(circle,rgba(6,214,255,.05),transparent 70%);
+  pointer-events:none;
+}
+
+.con-left { position:relative; z-index:1; }
+.con-headline {
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:900; letter-spacing:-.04em; line-height:1.1;
+  margin-bottom:.9rem;
+}
+html[lang="ar"] .con-headline { font-family:var(--ar); letter-spacing:0; line-height:1.28; }
+.con-tagline { font-size:.94rem; color:var(--tx2); line-height:1.8; margin-bottom:2rem; }
+html[lang="ar"] .con-tagline { font-family:var(--ar); font-size:.97rem; line-height:2; }
+
+.con-btn-wrap { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.con-main-btn {
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:1rem 2.4rem; border-radius:12px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet2));
+  color:#fff; font-size:1rem; font-weight:700;
+  border:none; cursor:pointer; transition:all .3s var(--ease);
+  position:relative; overflow:hidden; text-decoration:none;
+}
+.con-main-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--violet2),var(--pink)); opacity:0; transition:opacity .25s; }
+.con-main-btn > * { position:relative; z-index:1; }
+.con-main-btn:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(6,214,255,.3); }
+.con-main-btn:hover::after { opacity:1; }
+.con-note { font-family:var(--mono); font-size:.63rem; color:var(--tx3); letter-spacing:.06em; }
+html[lang="ar"] .con-note { font-family:var(--ar); letter-spacing:0; font-size:.72rem; }
+
+.con-right { position:relative; z-index:1; display:flex; flex-direction:column; gap:.65rem; }
+.clink {
+  display:flex; align-items:center; gap:1rem;
+  padding:.9rem 1.1rem; background:var(--sur);
+  border:1px solid var(--bor); border-radius:12px;
+  transition:all .25s;
+}
+.clink:hover { border-color:var(--bor2); transform:translateX(4px); background:rgba(6,214,255,.025); }
+html[dir="rtl"] .clink:hover { transform:translateX(-4px); }
+.clink-ico { font-size:1.1rem; flex-shrink:0; }
+.clink-name { font-weight:600; font-size:.84rem; display:block; }
+html[lang="ar"] .clink-name { font-family:var(--ar); }
+.clink-val { font-family:var(--mono); font-size:.66rem; color:var(--tx3); display:block; }
+.clink-arr { margin-left:auto; color:var(--tx3); transition:all .2s; font-size:.85rem; }
+html[dir="rtl"] .clink-arr { margin-left:0; margin-right:auto; }
+.clink:hover .clink-arr { color:var(--cyan); transform:translateX(4px); }
+html[dir="rtl"] .clink:hover .clink-arr { transform:translateX(-4px); }
+
+/* ================================================
+   FOOTER
+================================================ */
+footer { position:relative; z-index:2; border-top:1px solid var(--bor); padding:2.2rem clamp(1rem,4vw,2.5rem); }
+.foot-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.2rem; }
+.foot-logo { font-weight:900; font-size:.98rem; letter-spacing:-.02em; }
+.foot-logo span { background:linear-gradient(135deg,var(--cyan),var(--violet2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.foot-copy { font-family:var(--mono); font-size:.67rem; color:var(--tx3); }
+html[lang="ar"] .foot-copy { font-family:var(--ar); font-size:.75rem; letter-spacing:0; }
+.foot-links { display:flex; gap:1.2rem; }
+.foot-links a { font-family:var(--mono); font-size:.67rem; color:var(--tx3); transition:color .2s; }
+.foot-links a:hover { color:var(--cyan); }
+html[lang="ar"] .foot-links a { font-family:var(--ar); font-size:.75rem; }
+
+/* ================================================
+   SECTION HEADER
+================================================ */
+.sec-hd { text-align:center; margin-bottom:0; }
+.sec-hd .body-lg { max-width:580px; margin:0 auto; }
+html[lang="ar"] .sec-hd .body-lg { font-family:var(--ar); }
+
+/* ================================================
+   RESPONSIVE — TABLET
+================================================ */
+@media(max-width:1024px){
+  .svc-grid { grid-template-columns:1fr 1fr; }
+  .svc-card.wide { grid-column:span 1; }
+  .why-grid { grid-template-columns:1fr 1fr; }
+  .tech-grid { grid-template-columns:repeat(4,1fr); }
+  .price-grid { grid-template-columns:1fr; gap:1.4rem; }
+  .price-card.featured { transform:none; }
+  .price-card.featured:hover { transform:translateY(-5px); }
+  .testi-grid { grid-template-columns:1fr 1fr; }
+  .feat .feat-inner { grid-template-columns:1fr; }
+  .con-cta-box { grid-template-columns:1fr; }
+}
+
+/* ================================================
+   RESPONSIVE — MOBILE
+================================================ */
+@media(max-width:768px){
+  .nav-links { display:none; }
+  .nav-cta { display:none; }
+  .ham { display:flex; }
+  .hero-h { font-size:clamp(2rem,7vw,2.8rem); }
+  .hero-stats { gap:1.6rem; }
+  .svc-grid { grid-template-columns:1fr; }
+  .why-grid { grid-template-columns:1fr; }
+  .about-grid { grid-template-columns:1fr; }
+  .infra-grid { grid-template-columns:1fr 1fr; }
+  .tech-grid { grid-template-columns:repeat(3,1fr); }
+  .proj-grid { grid-template-columns:1fr; }
+  .proj-card.feat { grid-column:span 1; }
+  .cs-two { grid-template-columns:1fr; gap:1.5rem; }
+  .cs-steps { grid-template-columns:1fr 1fr; }
+  .price-grid { grid-template-columns:1fr; }
+  .testi-grid { grid-template-columns:1fr; }
+  .con-cta-box { grid-template-columns:1fr; padding:1.6rem; }
+  .foot-inner { flex-direction:column; align-items:center; text-align:center; }
+  .foot-links { justify-content:center; }
+  .S { padding:clamp(3rem,6vw,5rem) 0; }
+  .compare-table thead { display:none; }
+  .compare-table tr { display:block; background:var(--sur); border:1px solid var(--bor); border-radius:var(--r); margin-bottom:.7rem; padding:.5rem; }
+  .compare-table td { display:flex; justify-content:space-between; border:none; padding:.5rem .8rem; }
+  .compare-table td::before { content:attr(data-label); color:var(--tx3); font-size:.75rem; font-family:var(--mono); }
+  html[lang="ar"] .compare-table td::before { font-family:var(--ar); }
+  .compare-table td.feat-col { background:rgba(6,214,255,.04); border-radius:6px; margin-bottom:.3rem; }
+}
+@media(max-width:480px){
+  .hero-actions { flex-direction:column; align-items:center; }
+  .hero-actions .btn { width:100%; max-width:320px; justify-content:center; }
+  .infra-grid { grid-template-columns:1fr; }
+  .tech-grid { grid-template-columns:repeat(2,1fr); }
+  .cs-steps { grid-template-columns:1fr; }
+  .cs-results { gap:1.5rem; }
+  .con-btn-wrap { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="CUR"></div><div id="CURL"></div>
+
+<!-- LOADER -->
+<div id="LOAD">
+  <div class="ld-brand" id="LDB"></div>
+  <div class="ld-line"><div class="ld-prog"></div></div>
+  <div class="ld-dot">Initializing <em id="LDS">infrastructure</em>_</div>
+</div>
+
+<!-- BG CANVAS -->
+<canvas id="BG"></canvas>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="MOBNAV">
+  <a href="#SVC"   onclick="closeMob()" data-i18n="n.svc">Services</a>
+  <a href="#PROJ"  onclick="closeMob()" data-i18n="n.proj">Projects</a>
+  <a href="#CS"    onclick="closeMob()" data-i18n="n.cs">Case Study</a>
+  <a href="#PRICE" onclick="closeMob()" data-i18n="n.price">Pricing</a>
+  <a href="#BOOK"  onclick="closeMob()" data-i18n="n.book">Book a Call</a>
+  <a href="#CON"   onclick="closeMob()" data-i18n="n.con">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="NAV">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">H</div>
+    <span class="nav-logo-txt">HamdyTech</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#SVC"   data-i18n="n.svc">Services</a></li>
+    <li><a href="#PROJ"  data-i18n="n.proj">Projects</a></li>
+    <li><a href="#CS"    data-i18n="n.cs">Case Study</a></li>
+    <li><a href="#PRICE" data-i18n="n.price">Pricing</a></li>
+    <li><a href="#BOOK"  data-i18n="n.book">Book a Call</a></li>
+    <li><a href="#CON"   data-i18n="n.con">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-sw">
+      <button class="lb on" id="bEN" onclick="setLang('en')">EN</button>
+      <button class="lb" id="bAR" onclick="setLang('ar')">AR</button>
+    </div>
+    <button class="nav-cta" onclick="window.open('https://appointments.hamdyzone.icu','_blank')">
+      <span data-i18n="n.cta">Book a Meeting</span>
+    </button>
+    <button class="ham" id="HAM" onclick="toggleMob()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="HERO">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+    <div class="hero-scan"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="eye-dot"></span>
+      <span data-i18n="h.eye">Available for DevOps &amp; Infrastructure Projects</span>
+    </div>
+    <h1 class="hero-h">
+      <span data-i18n="h.t1">Building Scalable</span><br>
+      <span class="sh" data-i18n="h.t2">Infrastructure &amp; DevOps</span><br>
+      <span data-i18n="h.t3">Systems That Last</span>
+    </h1>
+    <p class="hero-sub" data-i18n="h.sub">Helping businesses deploy, automate, and scale real-world infrastructure. 2.5 years of hands-on experience across Proxmox, Docker, and Linux production environments.</p>
+    <div class="hero-brand" data-i18n="h.brand">Powered by <strong>HamdyTech</strong> · Ahmed Hamdy</div>
+    <div class="hero-actions">
+      <a href="https://appointments.hamdyzone.icu" target="_blank" class="btn btn-p btn-lg">
+        <span>📅</span><span data-i18n="h.cta1">Book a Meeting</span>
+      </a>
+      <a href="#PROJ" class="btn btn-s btn-lg">
+        <span data-i18n="h.cta2">View Projects</span><span>→</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n" data-c="5" data-s="+">0</span><div class="stat-l" data-i18n="s1">Proxmox Servers</div></div>
+      <div class="stat"><span class="stat-n" data-c="90" data-s="+">0</span><div class="stat-l" data-i18n="s2">Containers Running</div></div>
+      <div class="stat"><span class="stat-n" data-c="80" data-s="+">0</span><div class="stat-l" data-i18n="s3">Apps Deployed</div></div>
+      <div class="stat"><span class="stat-n" data-c="2.5" data-s="">0</span><div class="stat-l" data-i18n="s4">Years Experience</div></div>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    <span class="scroll-txt" data-i18n="scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════ LOGO STRIP ══════════════ -->
+<div id="LOGOS">
+  <div class="logos-label">// TECH STACK</div>
+  <div class="logos-track-wrap">
+    <div class="logos-track" id="LOGOTRACK"></div>
+  </div>
+</div>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="SVC" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="sv.tag">Services</div>
+      <h2 class="h2"><em class="grad" data-i18n="sv.h1">Build. Automate.</em> <span data-i18n="sv.h2">Scale.</span></h2>
+      <p class="body-lg" data-i18n="sv.sub">Real-world infrastructure solutions built for performance, scalability, and reliability.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card wide rv">
+        <span class="svc-num">01 —</span>
+        <div class="svc-ico si1">🖥️</div>
+        <div class="svc-title" data-i18n="sv1.t">Infrastructure Setup &amp; Management</div>
+        <p class="svc-desc" data-i18n="sv1.d">Full Proxmox VE cluster architecture from bare metal to production-ready. Covers VM and LXC provisioning, internal networking, reverse proxy with SSL, automated backups via PBS, and ongoing maintenance. I manage 5+ nodes and 90+ running services daily.</p>
+        <div class="svc-tags"><span class="stag">Proxmox VE</span><span class="stag">LXC</span><span class="stag">KVM</span><span class="stag">Nginx</span><span class="stag">PBS</span><span class="stag">UFW</span></div>
+      </div>
+      <div class="svc-card rv">
+        <span class="svc-num">02 —</span>
+        <div class="svc-ico si2">⚡</div>
+        <div class="svc-title" data-i18n="sv2.t">DevOps Automation</div>
+        <p class="svc-desc" data-i18n="sv2.d">Automate repetitive ops tasks — Bash scripts, health-check pipelines, backup workflows, and zero-downtime deployment routines that keep your systems self-managing.</p>
+        <div class="svc-tags"><span class="stag">Bash</span><span class="stag">Cron</span><span class="stag">Systemd</span><span class="stag">CI/CD</span></div>
+      </div>
+      <div class="svc-card rv">
+        <span class="svc-num">03 —</span>
+        <div class="svc-ico si3">🔧</div>
+        <div class="svc-title" data-i18n="sv3.t">Server Optimization</div>
+        <p class="svc-desc" data-i18n="sv3.d">Diagnose and resolve bottlenecks — Nginx tuning, PHP-FPM pools, MariaDB query optimization, Redis caching layers. Production-grade, tested under real load.</p>
+        <div class="svc-tags"><span class="stag">Nginx</span><span class="stag">PHP-FPM</span><span class="stag">MariaDB</span><span class="stag">Redis</span></div>
+      </div>
+      <div class="svc-card rv">
+        <span class="svc-num">04 —</span>
+        <div class="svc-ico si4">🚀</div>
+        <div class="svc-title" data-i18n="sv4.t">Deployment &amp; CI/CD</div>
+        <p class="svc-desc" data-i18n="sv4.d">Ship Magento, Laravel, React, Next.js, ERPNext and more — server provisioning, Docker Compose stacks, SSL, vhost config, and repeatable deployment pipelines.</p>
+        <div class="svc-tags"><span class="stag">Docker</span><span class="stag">Compose</span><span class="stag">GitHub Actions</span><span class="stag">SSL</span></div>
+      </div>
+      <div class="svc-card rv">
+        <span class="svc-num">05 —</span>
+        <div class="svc-ico si5">🏠</div>
+        <div class="svc-title" data-i18n="sv5.t">Self-Hosted Systems</div>
+        <p class="svc-desc" data-i18n="sv5.d">Own your data. I deploy Nextcloud, Mattermost, Chatwoot, GLPI, ERPNext, full mail servers, and WireGuard VPN — with security hardening and backup strategy built in.</p>
+        <div class="svc-tags"><span class="stag">Nextcloud</span><span class="stag">ERPNext</span><span class="stag">WireGuard</span><span class="stag">Postfix</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ WHY ══════════════ -->
+<section id="WHY" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="w.tag">Why HamdyTech</div>
+      <h2 class="h2"><span data-i18n="w.h1">Why Choose</span> <em class="grad" data-i18n="w.h2">HamdyTech</em></h2>
+      <p class="body-lg" data-i18n="w.sub">What makes working with me different from hiring a generalist or using a managed hosting service.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card rv"><span class="why-ico">🔬</span><div class="why-title" data-i18n="w1.t">Real Production Experience</div><p class="why-txt" data-i18n="w1.d">Every technique I use comes from managing live systems — not copied tutorials. I run the same stack I deploy for you.</p></div>
+      <div class="why-card rv"><span class="why-ico">⚡</span><div class="why-title" data-i18n="w2.t">Fast Deployment Turnaround</div><p class="why-txt" data-i18n="w2.d">From zero to live in hours, not days. My repeatable workflows and pre-configured templates mean less wait time for you.</p></div>
+      <div class="why-card rv"><span class="why-ico">🔒</span><div class="why-title" data-i18n="w3.t">Security-First Mindset</div><p class="why-txt" data-i18n="w3.d">Firewall rules, SSL everywhere, VPN-only admin access, and hardened defaults. Security isn't an add-on — it's the baseline.</p></div>
+      <div class="why-card rv"><span class="why-ico">📋</span><div class="why-title" data-i18n="w4.t">Clean Documentation</div><p class="why-txt" data-i18n="w4.d">Every setup I deliver comes with clear notes on architecture, credentials structure, and how to manage it going forward.</p></div>
+      <div class="why-card rv"><span class="why-ico">🔄</span><div class="why-title" data-i18n="w5.t">Automation Over Repetition</div><p class="why-txt" data-i18n="w5.d">If a task runs more than twice, it gets scripted. Backups, restarts, health checks — all automated and monitored.</p></div>
+      <div class="why-card rv"><span class="why-ico">🤝</span><div class="why-title" data-i18n="w6.t">Direct Communication</div><p class="why-txt" data-i18n="w6.d">You work directly with me — no middlemen. I explain what I'm doing and why, in plain terms, not jargon overload.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="ABOUT" class="S">
+  <div class="W">
+    <div class="about-grid">
+      <div class="rvl">
+        <div class="terminal">
+          <div class="term-bar">
+            <div class="term-dots"><div class="td td1"></div><div class="td td2"></div><div class="td td3"></div></div>
+            <div class="term-path">ahmed@hamdytech:~$</div>
+          </div>
+          <div class="term-body">
+<span class="tl"><span class="tc-m">$</span> <span class="tc-g">cat</span> <span class="tc-c">infrastructure.yml</span></span>
+<span class="tl">&nbsp;</span>
+<span class="tl"><span class="tc-c">owner</span><span class="tc-m">:</span> <span class="tc-s">"Ahmed Hamdy"</span></span>
+<span class="tl"><span class="tc-c">brand</span><span class="tc-m">:</span> <span class="tc-s">"HamdyTech"</span></span>
+<span class="tl"><span class="tc-c">experience</span><span class="tc-m">:</span> <span class="tc-v">2.5</span> <span class="tc-m"># years</span></span>
+<span class="tl">&nbsp;</span>
+<span class="tl"><span class="tc-c">cluster</span><span class="tc-m">:</span></span>
+<span class="tl">&nbsp; <span class="tc-v">nodes</span><span class="tc-m">:</span> <span class="tc-v">5</span><span class="tc-m"> # + dedicated backup</span></span>
+<span class="tl">&nbsp; <span class="tc-v">services</span><span class="tc-m">:</span> <span class="tc-v">90+</span> <span class="tc-m"># running now</span></span>
+<span class="tl">&nbsp; <span class="tc-v">vpn</span><span class="tc-m">:</span> <span class="tc-s">"WireGuard"</span></span>
+<span class="tl">&nbsp; <span class="tc-v">mail</span><span class="tc-m">:</span> <span class="tc-g">true</span></span>
+<span class="tl">&nbsp; <span class="tc-v">proxy</span><span class="tc-m">:</span> <span class="tc-s">"Nginx + SSL"</span></span>
+<span class="tl">&nbsp;</span>
+<span class="tl"><span class="tc-c">deployments</span><span class="tc-m">:</span></span>
+<span class="tl">&nbsp; <span class="tc-v">magento</span><span class="tc-m">:</span> <span class="tc-v">7+</span></span>
+<span class="tl">&nbsp; <span class="tc-v">erp_next</span><span class="tc-m">:</span> <span class="tc-g">native</span> <span class="tc-m"># no docker</span></span>
+<span class="tl">&nbsp; <span class="tc-v">stacks</span><span class="tc-m">:</span> <span class="tc-s">"Laravel, React, Next.js, PWA"</span></span>
+<span class="tl">&nbsp;</span>
+<span class="tl"><span class="tc-m">$</span> <span class="tc-g">uptime</span></span>
+<span class="tl"><span class="tc-c">2.5 years</span><span class="tc-m">, 0 major incidents</span></span>
+<span class="tl"><span class="tc-m">$</span> <span class="cur-blink"></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="about-right rvr">
+        <div class="tag-label" data-i18n="ab.tag">About</div>
+        <h2 class="about-title"><span data-i18n="ab.h1">Real Infrastructure,</span><br><span class="grad" data-i18n="ab.h2">Real Results</span></h2>
+        <p class="about-p" data-i18n="ab.p1">I'm Ahmed Hamdy — a DevOps Engineer and Linux System Administrator under the <strong>HamdyTech</strong> brand. With 2.5 years of daily hands-on work, I build and operate production infrastructure that runs at real scale.</p>
+        <p class="about-p" data-i18n="ab.p2">I manage <strong>5+ Proxmox nodes</strong> hosting 90+ live containers and services, a full internal network with VPN and mail server, and 80+ deployed web applications across Magento, ERPNext, streaming platforms, and modern JS frameworks.</p>
+        <div class="infra-grid">
+          <div class="infra-pill"><span class="ip-icon">🖧</span><div><span class="ip-lbl" data-i18n="ip1">Proxmox Cluster</span><span class="ip-val">5+ nodes + PBS</span></div></div>
+          <div class="infra-pill"><span class="ip-icon">🐳</span><div><span class="ip-lbl" data-i18n="ip2">Live Services</span><span class="ip-val">90+ containers</span></div></div>
+          <div class="infra-pill"><span class="ip-icon">📧</span><div><span class="ip-lbl" data-i18n="ip3">Mail Server</span><span class="ip-val">Postfix + Dovecot</span></div></div>
+          <div class="infra-pill"><span class="ip-icon">🔐</span><div><span class="ip-lbl" data-i18n="ip4">VPN</span><span class="ip-val">WireGuard</span></div></div>
+        </div>
+        <div class="badge-row">
+          <span class="badge">Proxmox VE</span><span class="badge">Docker</span>
+          <span class="badge">Linux</span><span class="badge">Nginx</span>
+          <span class="badge">Bash</span><span class="badge">LXC/KVM</span>
+          <span class="badge">Magento</span><span class="badge">ERPNext</span>
+          <span class="badge">WireGuard</span><span class="badge">MariaDB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TECH ══════════════ -->
+<section id="TECH" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="tc.tag">Stack</div>
+      <h2 class="h2"><span data-i18n="tc.h1">Technologies</span> <em class="grad" data-i18n="tc.h2">I Use Daily</em></h2>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card rv"><div class="tech-icon">🖥️</div><div class="tech-name">Proxmox VE</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🐳</div><div class="tech-name">Docker</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🐧</div><div class="tech-name">Linux</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🌐</div><div class="tech-name">Nginx</div></div>
+      <div class="tech-card rv"><div class="tech-icon">📦</div><div class="tech-name">LXC / KVM</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🔐</div><div class="tech-name">WireGuard</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🛢️</div><div class="tech-name">MariaDB</div></div>
+      <div class="tech-card rv"><div class="tech-icon">⚡</div><div class="tech-name">Redis</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🔑</div><div class="tech-name">Let's Encrypt</div></div>
+      <div class="tech-card rv"><div class="tech-icon">📜</div><div class="tech-name">Bash</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🏪</div><div class="tech-name">Magento</div></div>
+      <div class="tech-card rv"><div class="tech-icon">📊</div><div class="tech-name">ERPNext</div></div>
+      <div class="tech-card rv"><div class="tech-icon">⚛️</div><div class="tech-name">React / Next.js</div></div>
+      <div class="tech-card rv"><div class="tech-icon">🔥</div><div class="tech-name">Laravel</div></div>
+      <div class="tech-card rv"><div class="tech-icon">💾</div><div class="tech-name">PBS Backup</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PROJECTS ══════════════ -->
+<section id="PROJ" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="pr.tag">Projects</div>
+      <h2 class="h2"><span data-i18n="pr.h1">Production Work</span> <em class="grad" data-i18n="pr.h2">That Ships</em></h2>
+      <p class="body-lg" data-i18n="pr.sub">Real systems I built and currently manage — not demos.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card feat rv">
+        <div class="feat-inner">
+          <div>
+            <div class="proj-head"><div class="proj-icon pji1">🖧</div><span class="proj-arr">↗</span></div>
+            <div class="proj-title" data-i18n="p1.t">Proxmox Multi-Node Infrastructure</div>
+            <p class="proj-desc" data-i18n="p1.d">Designed and operate a 5+ node Proxmox VE cluster with dedicated PBS. All 90+ services run inside isolated LXC containers and KVM VMs. Internal virtual bridges provide strict service group isolation with a single Nginx entry point routing all domains with SSL.</p>
+            <div class="impact-row">
+              <span class="imp">✓ <span data-i18n="p1.i1">5+ Active Nodes</span></span>
+              <span class="imp">✓ <span data-i18n="p1.i2">Nightly PBS Snapshots</span></span>
+              <span class="imp">✓ <span data-i18n="p1.i3">Service Isolation</span></span>
+            </div>
+            <div class="ptags"><span class="ptag">Proxmox VE</span><span class="ptag">PBS</span><span class="ptag">LXC</span><span class="ptag">KVM</span><span class="ptag">Nginx</span><span class="ptag">UFW</span><span class="ptag">WireGuard</span></div>
+          </div>
+          <div class="cluster-box">
+            <span class="cb-hd">// CLUSTER OVERVIEW</span>
+            <div class="cb-row"><span class="cb-k">Nodes</span><span class="cb-v">5+ active</span></div>
+            <div class="cb-row"><span class="cb-k">Backup</span><span class="cb-v">Proxmox PBS</span></div>
+            <div class="cb-row"><span class="cb-k">Containers</span><span class="cb-v">90+ running</span></div>
+            <div class="cb-row"><span class="cb-k">VM Type</span><span class="cb-v">LXC + KVM</span></div>
+            <div class="cb-row"><span class="cb-k">Network</span><span class="cb-v">Virtual bridges</span></div>
+            <div class="cb-row"><span class="cb-k">Proxy</span><span class="cb-v">Nginx + SSL</span></div>
+            <div class="cb-row"><span class="cb-k">VPN</span><span class="cb-v">WireGuard</span></div>
+            <div class="cb-row"><span class="cb-k">Backup cadence</span><span class="cb-v">Nightly</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon pji2">🌐</div><span class="proj-arr">↗</span></div>
+        <div class="proj-title" data-i18n="p2.t">Web App Deployments (80+)</div>
+        <p class="proj-desc" data-i18n="p2.d">80+ production deployments — Magento (7+ stores), streaming platforms, WordPress, Laravel, React, Next.js, and PWA apps. Full setup: SSL, Nginx vhosts, PHP-FPM pools, environment config, ongoing maintenance.</p>
+        <div class="impact-row"><span class="imp">✓ <span data-i18n="p2.i1">7+ Magento Stores</span></span><span class="imp">✓ <span data-i18n="p2.i2">Multi-Stack</span></span></div>
+        <div class="ptags"><span class="ptag">Magento 2</span><span class="ptag">WordPress</span><span class="ptag">Laravel</span><span class="ptag">Next.js</span><span class="ptag">React</span></div>
+      </div>
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon pji3">⚙️</div><span class="proj-arr">↗</span></div>
+        <div class="proj-title" data-i18n="p3.t">ERPNext Native Deployment</div>
+        <p class="proj-desc" data-i18n="p3.d">Installed and manage ERPNext without Docker — Frappe Bench setup, background workers, Redis, MariaDB tuning, Nginx integration, version upgrades, and backup management. Full dependency control.</p>
+        <div class="impact-row"><span class="imp">✓ <span data-i18n="p3.i1">Zero Docker</span></span><span class="imp">✓ <span data-i18n="p3.i2">Full Control</span></span></div>
+        <div class="ptags"><span class="ptag">ERPNext</span><span class="ptag">Frappe</span><span class="ptag">MariaDB</span><span class="ptag">Redis</span></div>
+      </div>
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon pji4">🏠</div><span class="proj-arr">↗</span></div>
+        <div class="proj-title" data-i18n="p4.t">Self-Hosted Platform Suite</div>
+        <p class="proj-desc" data-i18n="p4.d">Complete self-hosted stack: Nextcloud, Mattermost, Chatwoot, GLPI, full mail server (Postfix + Dovecot + spam filtering), and WireGuard VPN. All secured and backed up.</p>
+        <div class="impact-row"><span class="imp">✓ <span data-i18n="p4.i1">6+ Platforms</span></span><span class="imp">✓ <span data-i18n="p4.i2">Data Owned</span></span></div>
+        <div class="ptags"><span class="ptag">Nextcloud</span><span class="ptag">Mattermost</span><span class="ptag">GLPI</span><span class="ptag">Postfix</span></div>
+      </div>
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon pji5">📡</div><span class="proj-arr">↗</span></div>
+        <div class="proj-title" data-i18n="p5.t">Streaming Platforms</div>
+        <p class="proj-desc" data-i18n="p5.d">Deployed and optimized multiple streaming platforms requiring HA configuration, Nginx caching layers, and resource-tuned VMs for efficient media delivery at scale.</p>
+        <div class="impact-row"><span class="imp">✓ <span data-i18n="p5.i1">High Availability</span></span><span class="imp">✓ <span data-i18n="p5.i2">Nginx Optimized</span></span></div>
+        <div class="ptags"><span class="ptag">Nginx</span><span class="ptag">Docker</span><span class="ptag">LXC</span><span class="ptag">Linux</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CASE STUDY ══════════════ -->
+<section id="CS" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="cs.tag">Case Study</div>
+      <h2 class="h2"><span data-i18n="cs.h1">Deep Dive:</span> <em class="grad" data-i18n="cs.h2">Real Infrastructure</em></h2>
+    </div>
+    <div class="cs-box rv" style="margin-top:3rem">
+      <div class="cs-tags">
+        <span class="cs-tag ct1">PROXMOX VE</span><span class="cs-tag ct2">DOCKER</span>
+        <span class="cs-tag ct1">NGINX</span><span class="cs-tag ct2">LINUX</span><span class="cs-tag ct1">NETWORKING</span>
+      </div>
+      <div class="cs-title" data-i18n="cs.title">Managing a Multi-Service Infrastructure with 90+ Containers</div>
+      <p class="cs-lead" data-i18n="cs.lead">How I designed, built, and currently operate a stable multi-node infrastructure running 90+ simultaneous containers and services — using Proxmox VE, Docker, internal networking, and Nginx as the routing backbone.</p>
+      <div class="cs-two">
+        <div class="cs-col"><h4 data-i18n="cs.ph">Problem</h4><p data-i18n="cs.pd">Managing unrelated services on a single machine creates dependency conflicts, resource contention, and zero isolation. As service count grew from 20 to 50 to 90+, a structured and scalable approach became critical to prevent cascading failures.</p></div>
+        <div class="cs-col">
+          <h4 data-i18n="cs.sh">Solution</h4>
+          <ul>
+            <li data-i18n="cs.s1">Dedicated Proxmox nodes by environment type — production, dev, internal tools</li>
+            <li data-i18n="cs.s2">LXC for lightweight services, KVM for heavier workloads</li>
+            <li data-i18n="cs.s3">Virtual bridges to strictly isolate service groups</li>
+            <li data-i18n="cs.s4">Nginx as single external routing entry point by domain</li>
+            <li data-i18n="cs.s5">Automated PBS nightly snapshots with retention policy</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-steps">
+        <div class="cs-step"><span class="cs-sn" data-i18n="csf1.n">01 // INFRA</span><div class="cs-st" data-i18n="csf1.t">Proxmox Cluster</div><div class="cs-sd" data-i18n="csf1.d">5+ physical nodes running isolated LXC/KVM instances with per-container resource limits</div></div>
+        <div class="cs-step"><span class="cs-sn" data-i18n="csf2.n">02 // NETWORK</span><div class="cs-st" data-i18n="csf2.t">Internal Networking</div><div class="cs-sd" data-i18n="csf2.d">Virtual bridges + private subnets group services. WireGuard VPN for remote admin access</div></div>
+        <div class="cs-step"><span class="cs-sn" data-i18n="csf3.n">03 // ROUTING</span><div class="cs-st" data-i18n="csf3.t">Nginx + SSL</div><div class="cs-sd" data-i18n="csf3.d">Single entry point routes 90+ domains to correct containers with auto-renewed SSL</div></div>
+        <div class="cs-step"><span class="cs-sn" data-i18n="csf4.n">04 // OPS</span><div class="cs-st" data-i18n="csf4.t">Backups &amp; Scripts</div><div class="cs-sd" data-i18n="csf4.d">PBS nightly snapshots. Bash health monitors. Snapshot taken before every major change</div></div>
+      </div>
+      <div class="cs-results">
+        <div><span class="cs-rn" data-i18n="cr1.n">90+</span><div class="cs-rl" data-i18n="cr1.l">Services running concurrently</div></div>
+        <div><span class="cs-rn" data-i18n="cr2.n">~25 min</span><div class="cs-rl" data-i18n="cr2.l">Avg. new service time-to-live</div></div>
+        <div><span class="cs-rn" data-i18n="cr3.n">Zero</span><div class="cs-rl" data-i18n="cr3.l">Cross-service interference</div></div>
+        <div><span class="cs-rn" data-i18n="cr4.n">Nightly</span><div class="cs-rl" data-i18n="cr4.l">Automated backup cadence</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PRICING ══════════════ -->
+<section id="PRICE" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="pc.tag">Pricing</div>
+      <h2 class="h2"><span data-i18n="pc.h1">Transparent</span> <em class="grad" data-i18n="pc.h2">Plans</em></h2>
+      <p class="body-lg" data-i18n="pc.sub">Every project is unique. Contact me to discuss your needs and get a custom quote. No fixed prices — no surprises.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card rv">
+        <div class="plan-name" data-i18n="pl1.n">STARTER</div>
+        <div class="plan-title" data-i18n="pl1.t">Single Server Setup</div>
+        <p class="plan-desc" data-i18n="pl1.d">For individuals or small teams deploying their first production server. Clean, secure baseline with everything you need to go live.</p>
+        <div class="plan-price"><div class="plan-price-txt" data-i18n="pl.cq">Contact for pricing →</div></div>
+        <div class="plan-features">
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf1.1">1 Linux server setup (Ubuntu/Debian)</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf1.2">Nginx + SSL configuration</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf1.3">Basic firewall (UFW)</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf1.4">Single app deployment</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf1.5">Basic backup strategy</span></div>
+          <div class="pf"><span class="pf-x">✗</span><span data-i18n="pf1.6" style="color:var(--tx3)">Multi-server management</span></div>
+          <div class="pf"><span class="pf-x">✗</span><span data-i18n="pf1.7" style="color:var(--tx3)">CI/CD pipelines</span></div>
+        </div>
+        <button class="plan-cta plan-cta-s" onclick="window.open('https://appointments.hamdyzone.icu','_blank')"><span data-i18n="pl.btn">Book a Discussion</span></button>
+      </div>
+      <div class="price-card featured rv">
+        <div class="feat-badge" data-i18n="pl.pop">Most Popular</div>
+        <div class="plan-name" data-i18n="pl2.n">PROFESSIONAL</div>
+        <div class="plan-title" data-i18n="pl2.t">Multi-Service Infrastructure</div>
+        <p class="plan-desc" data-i18n="pl2.d">For businesses running multiple services. Full reverse proxy setup, Docker environments, optimization, and monitoring included.</p>
+        <div class="plan-price"><div class="plan-price-txt" data-i18n="pl.cq">Contact for pricing →</div></div>
+        <div class="plan-features">
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.1">Everything in Starter</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.2">Multi-service environment (Docker + native)</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.3">Nginx reverse proxy (all domains)</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.4">Server &amp; app optimization</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.5">Basic monitoring &amp; alerting</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf2.6">VPN access setup</span></div>
+          <div class="pf"><span class="pf-x">✗</span><span data-i18n="pf2.7" style="color:var(--tx3)">Proxmox cluster setup</span></div>
+        </div>
+        <button class="plan-cta plan-cta-p" onclick="window.open('https://appointments.hamdyzone.icu','_blank')"><span data-i18n="pl.btn">Book a Discussion</span></button>
+      </div>
+      <div class="price-card rv">
+        <div class="plan-name" data-i18n="pl3.n">ENTERPRISE</div>
+        <div class="plan-title" data-i18n="pl3.t">Full Infrastructure Build</div>
+        <p class="plan-desc" data-i18n="pl3.d">Complete infrastructure design and implementation — Proxmox cluster, full automation, CI/CD, security hardening, and ongoing management.</p>
+        <div class="plan-price"><div class="plan-price-txt" data-i18n="pl.cq">Contact for pricing →</div></div>
+        <div class="plan-features">
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.1">Everything in Professional</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.2">Proxmox VE cluster + PBS setup</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.3">Full CI/CD automation pipeline</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.4">Security hardening &amp; audit</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.5">Self-hosted stack (ERPNext, mail, etc.)</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.6">Ongoing management &amp; support</span></div>
+          <div class="pf"><span class="pf-check">✓</span><span data-i18n="pf3.7">Documentation delivery</span></div>
+        </div>
+        <button class="plan-cta plan-cta-s" onclick="window.open('https://appointments.hamdyzone.icu','_blank')"><span data-i18n="pl.btn">Book a Discussion</span></button>
+      </div>
+    </div>
+    <div class="compare-wrap rv" style="margin-top:3.5rem">
+      <div class="compare-note" data-i18n="cmp.note">// Feature comparison across plans — all pricing via consultation</div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th data-i18n="cmp.feat">Feature</th>
+            <th data-i18n="pl1.n">STARTER</th>
+            <th class="hl" data-i18n="pl2.n">PROFESSIONAL</th>
+            <th data-i18n="pl3.n">ENTERPRISE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r1">Linux server setup</td><td data-label="Starter" class="chk">✓</td><td data-label="Professional" class="hl chk">✓</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r2">Nginx + SSL</td><td data-label="Starter" class="chk">✓</td><td data-label="Professional" class="hl chk">✓</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r3">Docker deployment</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl chk">✓</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r4">Reverse proxy (multi-domain)</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl chk">✓</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r5">VPN setup</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl chk">✓</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r6">Proxmox cluster</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl cross">✗</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r7">CI/CD pipeline</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl cross">✗</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r8">Security hardening</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl cross">✗</td><td data-label="Enterprise" class="chk">✓</td></tr>
+          <tr><td class="feat-col" data-label="Feature" data-i18n="cmp.r9">Documentation</td><td data-label="Starter" class="cross">✗</td><td data-label="Professional" class="hl cross">✗</td><td data-label="Enterprise" class="chk">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TESTIMONIALS ══════════════ -->
+<section id="TESTI" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="te.tag">Testimonials</div>
+      <h2 class="h2"><span data-i18n="te.h1">What Clients</span> <em class="grad" data-i18n="te.h2">Say</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card rv">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-txt" data-i18n="t1.txt">"Ahmed set up our entire Proxmox cluster from scratch and deployed our Magento store with proper optimization. The site is noticeably faster and the infrastructure has been rock solid for months."</p>
+        <div class="testi-author">
+          <div class="testi-av av1">K</div>
+          <div><div class="testi-name" data-i18n="t1.n">Khalid A.</div><div class="testi-role" data-i18n="t1.r">E-commerce Business Owner</div></div>
+        </div>
+      </div>
+      <div class="testi-card rv">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-txt" data-i18n="t2.txt">"Our self-hosted tools — Nextcloud, Mattermost, and mail server — were set up cleanly and everything is documented. We can manage it ourselves now. Exactly what we needed."</p>
+        <div class="testi-author">
+          <div class="testi-av av2">S</div>
+          <div><div class="testi-name" data-i18n="t2.n">Sara M.</div><div class="testi-role" data-i18n="t2.r">Startup Technical Lead</div></div>
+        </div>
+      </div>
+      <div class="testi-card rv">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-txt" data-i18n="t3.txt">"ERPNext was a nightmare to deploy natively — Ahmed handled it end to end, including the MariaDB tuning and Nginx setup. It's been running without issues and the performance is solid."</p>
+        <div class="testi-author">
+          <div class="testi-av av3">O</div>
+          <div><div class="testi-name" data-i18n="t3.n">Omar F.</div><div class="testi-role" data-i18n="t3.r">Operations Manager</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BOOKING ══════════════ -->
+<section id="BOOK" class="S">
+  <div class="W">
+    <div class="book-inner rv">
+      <div class="book-ico">📅</div>
+      <span class="book-pre" data-i18n="bk.pre">Ready to build something real?</span>
+      <h2 class="book-title">
+        <span data-i18n="bk.h1">Book a Call with</span><br>
+        <span class="grad">HamdyTech</span>
+      </h2>
+      <p class="book-desc" data-i18n="bk.desc">Let's discuss your infrastructure challenges, scaling needs, or deployment goals. Whether it's a quick question or a full project — I'm ready to listen and help.</p>
+      <a href="https://appointments.hamdyzone.icu" target="_blank" class="btn btn-p btn-xl">
+        <span>📅</span><span data-i18n="bk.btn">Book a Meeting</span><span>→</span>
+      </a>
+      <div class="book-note" data-i18n="bk.note">Free consultation · No commitment required · Usually replies within 24h</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="CON" class="S">
+  <div class="W">
+    <div class="sec-hd rv">
+      <div class="tag-label" data-i18n="cn.tag">Contact</div>
+      <h2 class="h2"><span data-i18n="cn.h1">Let's Work</span> <em class="grad" data-i18n="cn.h2">Together</em></h2>
+    </div>
+
+    <div class="con-cta-box rv">
+      <!-- Left: CTA -->
+      <div class="con-left">
+        <h3 class="con-headline" data-i18n="cn.headline">Ready to build your<br>next infrastructure?</h3>
+        <p class="con-tagline" data-i18n="cn.tagline">Book a call to discuss your infrastructure, deployment, or scaling needs. Free consultation, no commitment required.</p>
+        <div class="con-btn-wrap">
+          <a href="https://appointments.hamdyzone.icu" target="_blank" class="con-main-btn">
+            <span>📅</span><span data-i18n="cn.btn">Book a Meeting</span><span>→</span>
+          </a>
+          <span class="con-note" data-i18n="cn.note">Usually replies within 24h</span>
+        </div>
+      </div>
+
+      <!-- Right: Contact links -->
+      <div class="con-right">
+        <a href="mailto:ahmedhamdy807@outlook.com" class="clink">
+          <span class="clink-ico">✉️</span>
+          <div><span class="clink-name" data-i18n="cl1">Email</span><span class="clink-val">ahmedhamdy807@outlook.com</span></div>
+          <span class="clink-arr">→</span>
+        </a>
+        <a href="tel:+201119433658" class="clink">
+          <span class="clink-ico">📱</span>
+          <div><span class="clink-name" data-i18n="cl2">Phone / WhatsApp</span><span class="clink-val">+20 111 943 3658</span></div>
+          <span class="clink-arr">→</span>
+        </a>
+        <a href="https://github.com/ahmed2287" target="_blank" class="clink">
+          <span class="clink-ico">🐙</span>
+          <div><span class="clink-name">GitHub</span><span class="clink-val">github.com/ahmed2287</span></div>
+          <span class="clink-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/ahmed-hamdy-ab58a3109" target="_blank" class="clink">
+          <span class="clink-ico">💼</span>
+          <div><span class="clink-name">LinkedIn</span><span class="clink-val">ahmed-hamdy-ab58a3109</span></div>
+          <span class="clink-arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><span>HamdyTech</span></div>
+    <div class="foot-copy" data-i18n="ft.copy">© 2026 HamdyTech — DevOps Engineer & Linux SysAdmin · Ahmed Hamdy</div>
+    <div class="foot-links">
+      <a href="https://github.com/ahmed2287" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/ahmed-hamdy-ab58a3109" target="_blank">LinkedIn</a>
+      <a href="https://appointments.hamdyzone.icu" target="_blank" data-i18n="ft.book">Book Call</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================
+   SCRIPTS
+================================================ -->
+<script>
+/* ──────── TRANSLATIONS ──────── */
+const T = {
+en:{
+  "n.svc":"Services","n.proj":"Projects","n.cs":"Case Study","n.price":"Pricing","n.book":"Book a Call","n.con":"Contact","n.cta":"Book a Meeting",
+  "h.eye":"Available for DevOps & Infrastructure Projects",
+  "h.t1":"Building Scalable","h.t2":"Infrastructure & DevOps","h.t3":"Systems That Last",
+  "h.sub":"Helping businesses deploy, automate, and scale real-world infrastructure. 2.5 years of hands-on experience across Proxmox, Docker, and Linux production environments.",
+  "h.brand":"Powered by <strong>HamdyTech</strong> · Ahmed Hamdy",
+  "h.cta1":"Book a Meeting","h.cta2":"View Projects",
+  "s1":"Proxmox Servers","s2":"Containers Running","s3":"Apps Deployed","s4":"Years Experience","scroll":"Scroll",
+  "sv.tag":"Services",
+  "sv.h1":"Build. Automate.","sv.h2":"Scale.",
+  "sv.sub":"Real-world infrastructure solutions built for performance, scalability, and reliability.",
+  "sv1.t":"Infrastructure Setup & Management","sv1.d":"Full Proxmox VE cluster architecture from bare metal to production-ready. Covers VM and LXC provisioning, internal networking, reverse proxy with SSL, automated backups via PBS, and ongoing maintenance. I manage 5+ nodes and 90+ running services daily.",
+  "sv2.t":"DevOps Automation","sv2.d":"Automate repetitive ops tasks — Bash scripts, health-check pipelines, backup workflows, and zero-downtime deployment routines that keep your systems self-managing.",
+  "sv3.t":"Server Optimization","sv3.d":"Diagnose and resolve bottlenecks — Nginx tuning, PHP-FPM pools, MariaDB query optimization, Redis caching layers. Production-grade, tested under real load.",
+  "sv4.t":"Deployment & CI/CD","sv4.d":"Ship Magento, Laravel, React, Next.js, ERPNext and more — server provisioning, Docker Compose stacks, SSL, vhost config, and repeatable deployment pipelines.",
+  "sv5.t":"Self-Hosted Systems","sv5.d":"Own your data. I deploy Nextcloud, Mattermost, Chatwoot, GLPI, ERPNext, full mail servers, and WireGuard VPN — with security hardening and backup strategy built in.",
+  "w.tag":"Why HamdyTech","w.h1":"Why Choose","w.h2":"HamdyTech",
+  "w.sub":"What makes working with me different from hiring a generalist or using a managed hosting service.",
+  "w1.t":"Real Production Experience","w1.d":"Every technique I use comes from managing live systems — not copied tutorials. I run the same stack I deploy for you.",
+  "w2.t":"Fast Deployment Turnaround","w2.d":"From zero to live in hours, not days. My repeatable workflows and pre-configured templates mean less wait time for you.",
+  "w3.t":"Security-First Mindset","w3.d":"Firewall rules, SSL everywhere, VPN-only admin access, and hardened defaults. Security isn't an add-on — it's the baseline.",
+  "w4.t":"Clean Documentation","w4.d":"Every setup I deliver comes with clear notes on architecture, credentials structure, and how to manage it going forward.",
+  "w5.t":"Automation Over Repetition","w5.d":"If a task runs more than twice, it gets scripted. Backups, restarts, health checks — all automated and monitored.",
+  "w6.t":"Direct Communication","w6.d":"You work directly with me — no middlemen. I explain what I'm doing and why, in plain terms, not jargon overload.",
+  "ab.tag":"About","ab.h1":"Real Infrastructure,","ab.h2":"Real Results",
+  "ab.p1":"I'm Ahmed Hamdy — a DevOps Engineer and Linux System Administrator under the <strong>HamdyTech</strong> brand. With 2.5 years of daily hands-on work, I build and operate production infrastructure that runs at real scale.",
+  "ab.p2":"I manage <strong>5+ Proxmox nodes</strong> hosting 90+ live containers, a full internal network with VPN and mail server, and 80+ deployed web applications across Magento, ERPNext, streaming platforms, and modern JS frameworks.",
+  "ip1":"Proxmox Cluster","ip2":"Live Services","ip3":"Mail Server","ip4":"VPN",
+  "tc.tag":"Stack","tc.h1":"Technologies","tc.h2":"I Use Daily",
+  "pr.tag":"Projects","pr.h1":"Production Work","pr.h2":"That Ships",
+  "pr.sub":"Real systems I built and currently manage — not demos.",
+  "p1.t":"Proxmox Multi-Node Infrastructure","p1.d":"Designed and operate a 5+ node Proxmox VE cluster with dedicated PBS. All 90+ services run inside isolated LXC containers and KVM VMs. Internal virtual bridges provide strict service group isolation with a single Nginx entry point routing all domains with SSL.","p1.i1":"5+ Active Nodes","p1.i2":"Nightly PBS Snapshots","p1.i3":"Service Isolation",
+  "p2.t":"Web App Deployments (80+)","p2.d":"80+ production deployments — Magento (7+ stores), streaming platforms, WordPress, Laravel, React, Next.js, and PWA apps. Full setup: SSL, Nginx vhosts, PHP-FPM pools, environment config, ongoing maintenance.","p2.i1":"7+ Magento Stores","p2.i2":"Multi-Stack",
+  "p3.t":"ERPNext Native Deployment","p3.d":"Installed and manage ERPNext without Docker — Frappe Bench setup, background workers, Redis, MariaDB tuning, Nginx integration, version upgrades, and backup management. Full dependency control.","p3.i1":"Zero Docker","p3.i2":"Full Control",
+  "p4.t":"Self-Hosted Platform Suite","p4.d":"Complete self-hosted stack: Nextcloud, Mattermost, Chatwoot, GLPI, full mail server (Postfix + Dovecot + spam filtering), and WireGuard VPN. All secured and backed up.","p4.i1":"6+ Platforms","p4.i2":"Data Owned",
+  "p5.t":"Streaming Platforms","p5.d":"Deployed and optimized multiple streaming platforms requiring HA configuration, Nginx caching layers, and resource-tuned VMs for efficient media delivery at scale.","p5.i1":"High Availability","p5.i2":"Nginx Optimized",
+  "cs.tag":"Case Study","cs.h1":"Deep Dive:","cs.h2":"Real Infrastructure",
+  "cs.title":"Managing a Multi-Service Infrastructure with 90+ Containers",
+  "cs.lead":"How I designed, built, and currently operate a stable multi-node infrastructure running 90+ simultaneous containers and services — using Proxmox VE, Docker, internal networking, and Nginx as the routing backbone.",
+  "cs.ph":"Problem","cs.pd":"Managing unrelated services on a single machine creates dependency conflicts, resource contention, and zero isolation. As service count grew from 20 to 50 to 90+, a structured and scalable approach became critical to prevent cascading failures.",
+  "cs.sh":"Solution","cs.s1":"Dedicated Proxmox nodes by environment type — production, dev, internal tools","cs.s2":"LXC for lightweight services, KVM for heavier workloads","cs.s3":"Virtual bridges to strictly isolate service groups","cs.s4":"Nginx as single external routing entry point by domain","cs.s5":"Automated PBS nightly snapshots with retention policy",
+  "csf1.n":"01 // INFRA","csf1.t":"Proxmox Cluster","csf1.d":"5+ physical nodes running isolated LXC/KVM instances with per-container resource limits",
+  "csf2.n":"02 // NETWORK","csf2.t":"Internal Networking","csf2.d":"Virtual bridges + private subnets group services. WireGuard VPN for remote admin access",
+  "csf3.n":"03 // ROUTING","csf3.t":"Nginx + SSL","csf3.d":"Single entry point routes 90+ domains to correct containers with auto-renewed SSL",
+  "csf4.n":"04 // OPS","csf4.t":"Backups & Scripts","csf4.d":"PBS nightly snapshots. Bash health monitors. Snapshot taken before every major change",
+  "cr1.n":"90+","cr1.l":"Services running concurrently","cr2.n":"~25 min","cr2.l":"Avg. new service time-to-live","cr3.n":"Zero","cr3.l":"Cross-service interference","cr4.n":"Nightly","cr4.l":"Automated backup cadence",
+  "pc.tag":"Pricing","pc.h1":"Transparent","pc.h2":"Plans",
+  "pc.sub":"Every project is unique. Contact me to discuss your needs and get a custom quote. No fixed prices — no surprises.",
+  "pl1.n":"STARTER","pl1.t":"Single Server Setup","pl1.d":"For individuals or small teams deploying their first production server. Clean, secure baseline with everything you need to go live.",
+  "pl2.n":"PROFESSIONAL","pl2.t":"Multi-Service Infrastructure","pl2.d":"For businesses running multiple services. Full reverse proxy setup, Docker environments, optimization, and monitoring included.",
+  "pl3.n":"ENTERPRISE","pl3.t":"Full Infrastructure Build","pl3.d":"Complete infrastructure design and implementation — Proxmox cluster, full automation, CI/CD, security hardening, and ongoing management.",
+  "pl.cq":"Contact for pricing →","pl.pop":"Most Popular","pl.btn":"Book a Discussion",
+  "pf1.1":"1 Linux server setup (Ubuntu/Debian)","pf1.2":"Nginx + SSL configuration","pf1.3":"Basic firewall (UFW)","pf1.4":"Single app deployment","pf1.5":"Basic backup strategy","pf1.6":"Multi-server management","pf1.7":"CI/CD pipelines",
+  "pf2.1":"Everything in Starter","pf2.2":"Multi-service environment (Docker + native)","pf2.3":"Nginx reverse proxy (all domains)","pf2.4":"Server & app optimization","pf2.5":"Basic monitoring & alerting","pf2.6":"VPN access setup","pf2.7":"Proxmox cluster setup",
+  "pf3.1":"Everything in Professional","pf3.2":"Proxmox VE cluster + PBS setup","pf3.3":"Full CI/CD automation pipeline","pf3.4":"Security hardening & audit","pf3.5":"Self-hosted stack (ERPNext, mail, etc.)","pf3.6":"Ongoing management & support","pf3.7":"Documentation delivery",
+  "cmp.note":"// Feature comparison across plans — all pricing via consultation",
+  "cmp.feat":"Feature","cmp.r1":"Linux server setup","cmp.r2":"Nginx + SSL","cmp.r3":"Docker deployment","cmp.r4":"Reverse proxy (multi-domain)","cmp.r5":"VPN setup","cmp.r6":"Proxmox cluster","cmp.r7":"CI/CD pipeline","cmp.r8":"Security hardening","cmp.r9":"Documentation",
+  "te.tag":"Testimonials","te.h1":"What Clients","te.h2":"Say",
+  "t1.txt":"\"Ahmed set up our entire Proxmox cluster from scratch and deployed our Magento store with proper optimization. The site is noticeably faster and the infrastructure has been rock solid for months.\"","t1.n":"Khalid A.","t1.r":"E-commerce Business Owner",
+  "t2.txt":"\"Our self-hosted tools — Nextcloud, Mattermost, and mail server — were set up cleanly and everything is documented. We can manage it ourselves now. Exactly what we needed.\"","t2.n":"Sara M.","t2.r":"Startup Technical Lead",
+  "t3.txt":"\"ERPNext was a nightmare to deploy natively — Ahmed handled it end to end, including the MariaDB tuning and Nginx setup. It's been running without issues and the performance is solid.\"","t3.n":"Omar F.","t3.r":"Operations Manager",
+  "bk.pre":"Ready to build something real?","bk.h1":"Book a Call with","bk.btn":"Book a Meeting",
+  "bk.desc":"Let's discuss your infrastructure challenges, scaling needs, or deployment goals. Whether it's a quick question or a full project — I'm ready to listen and help.",
+  "bk.note":"Free consultation · No commitment required · Usually replies within 24h",
+  "cn.tag":"Contact","cn.h1":"Let's Work","cn.h2":"Together",
+  "cn.headline":"Ready to build your<br>next infrastructure?",
+  "cn.tagline":"Book a call to discuss your infrastructure, deployment, or scaling needs. Free consultation, no commitment required.",
+  "cn.btn":"Book a Meeting","cn.note":"Usually replies within 24h",
+  "cl1":"Email","cl2":"Phone / WhatsApp",
+  "ft.copy":"© 2026 HamdyTech — DevOps Engineer & Linux SysAdmin · Ahmed Hamdy","ft.book":"Book Call"
+},
+ar:{
+  "n.svc":"الخدمات","n.proj":"المشاريع","n.cs":"دراسة حالة","n.price":"الأسعار","n.book":"احجز مكالمة","n.con":"تواصل","n.cta":"احجز اجتماعاً",
+  "h.eye":"متاح لمشاريع DevOps والبنية التحتية",
+  "h.t1":"نبني بنية تحتية","h.t2":"قابلة للتوسع DevOps","h.t3":"و أنظمة تدوم",
+  "h.sub":"نساعد الشركات على نشر وأتمتة وتوسيع بنيتها التحتية الحقيقية. خبرة عملية 2.5 سنة عبر Proxmox وDocker وبيئات Linux الإنتاجية.",
+  "h.brand":"بتقنية <strong>HamdyTech</strong> · أحمد حمدي",
+  "h.cta1":"احجز اجتماعاً","h.cta2":"عرض المشاريع",
+  "s1":"خوادم Proxmox","s2":"حاويات تعمل","s3":"تطبيقات منشورة","s4":"سنوات خبرة","scroll":"انزل",
+  "sv.tag":"الخدمات",
+  "sv.h1":"ابنِ. أتمت.","sv.h2":"وسِّع.",
+  "sv.sub":"حلول بنية تحتية حقيقية مبنية على الأداء والقابلية للتوسع والموثوقية.",
+  "sv1.t":"إعداد وإدارة البنية التحتية","sv1.d":"معمارية كلاستر Proxmox VE الكاملة من الخادم الفيزيائي حتى جاهزية الإنتاج. يشمل توفير VM وLXC والشبكات الداخلية وReverse Proxy مع SSL والنسخ الاحتياطية عبر PBS والصيانة المستمرة.",
+  "sv2.t":"أتمتة DevOps","sv2.d":"أتمتة مهام العمليات المتكررة — سكريبتات Bash وفحوصات الصحة وسير عمل النسخ الاحتياطية وروتينات النشر بدون توقف.",
+  "sv3.t":"تحسين الخوادم","sv3.d":"تشخيص وحل عنق الزجاجة — ضبط Nginx وPHP-FPM وتحسين استعلامات MariaDB وطبقات تخزين Redis مؤقت. اختبار تحت حمل حقيقي.",
+  "sv4.t":"النشر وCI/CD","sv4.d":"نشر Magento وLaravel وReact وNext.js وERPNext والمزيد — توفير الخادم وstacks Docker Compose وSSL وإعدادات vhost وخطوط نشر قابلة للتكرار.",
+  "sv5.t":"الأنظمة ذاتية الاستضافة","sv5.d":"امتلك بياناتك. أنشر Nextcloud وMattermost وChatwoot وGLPI وERPNext وخوادم البريد الكاملة وWireGuard VPN — مع تصليب أمني واستراتيجية نسخ احتياطي مدمجة.",
+  "w.tag":"لماذا HamdyTech","w.h1":"لماذا تختار","w.h2":"HamdyTech",
+  "w.sub":"ما الذي يجعل العمل معي مختلفاً عن توظيف مستشار عام أو استخدام خدمة استضافة مُدارة.",
+  "w1.t":"خبرة إنتاج حقيقية","w1.d":"كل تقنية أستخدمها مستمدة من إدارة أنظمة حية — لا دروس مُنسخة. أشغّل نفس الstack الذي أنشره لك.",
+  "w2.t":"سرعة في التسليم","w2.d":"من الصفر إلى البث المباشر في ساعات لا أيام. سير عملي المتكرر والقوالب المُعدة مسبقاً تعني وقت انتظار أقل.",
+  "w3.t":"أولوية الأمان","w3.d":"قواعد الجدار الناري، SSL في كل مكان، الوصول الإداري عبر VPN فقط، والإعدادات المُصلبة. الأمان ليس إضافة — إنه الخط الأساسي.",
+  "w4.t":"توثيق واضح","w4.d":"كل إعداد أسلّمه يأتي مع ملاحظات واضحة عن المعمارية وهيكل البيانات الحساسة وكيفية إدارته مستقبلاً.",
+  "w5.t":"الأتمتة على التكرار","w5.d":"إذا تكررت مهمة أكثر من مرتين، تُؤتمت. النسخ الاحتياطية وإعادة التشغيل وفحوصات الصحة — كلها آلية ومُراقبة.",
+  "w6.t":"تواصل مباشر","w6.d":"تعمل مباشرة معي — لا وسطاء. أشرح ما أفعله ولماذا بلغة بسيطة لا بمصطلحات تقنية مُبالغ فيها.",
+  "ab.tag":"عن","ab.h1":"بنية تحتية حقيقية،","ab.h2":"نتائج حقيقية",
+  "ab.p1":"أنا أحمد حمدي — مهندس DevOps ومدير أنظمة Linux تحت علامة <strong>HamdyTech</strong>. بخبرة عملية يومية 2.5 سنة، أبني وأشغّل بنية تحتية إنتاجية على نطاق حقيقي.",
+  "ab.p2":"أدير <strong>5+ عقد Proxmox</strong> تستضيف 90+ حاوية وخدمة حية، وشبكة داخلية كاملة بـ VPN وخادم بريد، و80+ تطبيق ويب منشور عبر Magento وERPNext ومنصات البث وأطر JS الحديثة.",
+  "ip1":"كلاستر Proxmox","ip2":"الخدمات الحية","ip3":"خادم البريد","ip4":"VPN",
+  "tc.tag":"التقنيات","tc.h1":"التقنيات","tc.h2":"التي أستخدمها يومياً",
+  "pr.tag":"المشاريع","pr.h1":"أعمال الإنتاج","pr.h2":"التي تُشحن",
+  "pr.sub":"أنظمة حقيقية بنيتها وأديرها حالياً — ليست عروضاً توضيحية.",
+  "p1.t":"البنية التحتية متعددة العقد على Proxmox","p1.d":"صممت وأشغّل كلاستر Proxmox VE بـ 5+ عقد مع PBS مخصص. جميع الخدمات الـ90+ تعمل داخل حاويات LXC وKVM معزولة. جسور افتراضية داخلية توفر عزلاً صارماً بنقطة دخول Nginx وحيدة تدير جميع النطاقات بـ SSL.","p1.i1":"5+ عقد نشطة","p1.i2":"نسخ PBS ليلية","p1.i3":"عزل الخدمات",
+  "p2.t":"نشر تطبيقات الويب (80+)","p2.d":"80+ نشر إنتاجي — Magento (7+ متاجر)، منصات بث، WordPress وLaravel وReact وNext.js وتطبيقات PWA. إعداد كامل: SSL وvhosts Nginx وPHP-FPM وتهيئة البيئة والصيانة المستمرة.","p2.i1":"7+ متاجر Magento","p2.i2":"متعدد التقنيات",
+  "p3.t":"نشر ERPNext الأصيل","p3.d":"ثبّتت وأدير ERPNext بدون Docker — إعداد Frappe Bench والعمال الخلفيين وRedis وضبط MariaDB وتكامل Nginx وترقيات الإصدارات وإدارة النسخ الاحتياطية.","p3.i1":"صفر Docker","p3.i2":"تحكم كامل",
+  "p4.t":"منظومة المنصات ذاتية الاستضافة","p4.d":"stack كامل ذاتي الاستضافة: Nextcloud وMattermost وChatwoot وGLPI وخادم بريد كامل (Postfix + Dovecot + تصفية البريد المزعج) وWireGuard VPN. الكل مؤمَّن ومنسوخ احتياطياً.","p4.i1":"6+ منصات","p4.i2":"ملكية البيانات",
+  "p5.t":"منصات البث","p5.d":"نشّرت وحسّنت منصات بث متعددة تتطلب إعداد توافر عالٍ وطبقات تخزين Nginx مؤقت وVMs محسّنة الموارد لتسليم وسائط فعّال.","p5.i1":"توافر عالٍ","p5.i2":"Nginx محسَّن",
+  "cs.tag":"دراسة حالة","cs.h1":"تعمّق:","cs.h2":"بنية تحتية حقيقية",
+  "cs.title":"إدارة بنية تحتية متعددة الخدمات بأكثر من 90 حاوية",
+  "cs.lead":"كيف صممت وبنيت وأشغّل حالياً بنية تحتية مستقرة متعددة العقد تشغّل 90+ حاوية وخدمة متزامنة — باستخدام Proxmox VE وDocker والشبكات الداخلية وNginx عموداً فقرياً للتوجيه.",
+  "cs.ph":"المشكلة","cs.pd":"إدارة خدمات غير مرتبطة على جهاز واحد تُحدث تعارضات تبعيات وتنافساً على الموارد وصفر عزل. مع نمو عدد الخدمات من 20 إلى 50 ثم 90+، أصبح النهج المنظم القابل للتوسع ضرورة لمنع الإخفاقات المتتالية.",
+  "cs.sh":"الحل","cs.s1":"عقد Proxmox مخصصة لكل نوع بيئة — الإنتاج والتطوير والأدوات الداخلية","cs.s2":"LXC للخدمات الخفيفة، KVM للأحمال الثقيلة","cs.s3":"جسور افتراضية لعزل صارم بين مجموعات الخدمات","cs.s4":"Nginx كنقطة التوجيه الخارجية الوحيدة حسب النطاق","cs.s5":"نسخ PBS ليلية تلقائية مع سياسة احتفاظ",
+  "csf1.n":"01 // البنية","csf1.t":"كلاستر Proxmox","csf1.d":"5+ عقد فيزيائية تشغّل نسخ LXC/KVM معزولة بحدود موارد لكل حاوية",
+  "csf2.n":"02 // الشبكة","csf2.t":"الشبكات الداخلية","csf2.d":"جسور افتراضية + شبكات فرعية خاصة تجمّع الخدمات. WireGuard VPN للإدارة عن بُعد",
+  "csf3.n":"03 // التوجيه","csf3.t":"Nginx + SSL","csf3.d":"نقطة دخول واحدة توجّه 90+ نطاق للحاويات الصحيحة مع SSL متجدد تلقائياً",
+  "csf4.n":"04 // العمليات","csf4.t":"النسخ والسكريبتات","csf4.d":"نسخ PBS ليلية. مراقبو صحة بـ Bash. نسخة احتياطية قبل كل تغيير رئيسي",
+  "cr1.n":"90+","cr1.l":"خدمات تعمل في آن واحد","cr2.n":"~25 دقيقة","cr2.l":"متوسط وقت البث المباشر لخدمة جديدة","cr3.n":"صفر","cr3.l":"تداخل بين الخدمات","cr4.n":"ليلياً","cr4.l":"جدول النسخ الاحتياطية",
+  "pc.tag":"الأسعار","pc.h1":"خطط","pc.h2":"شفافة",
+  "pc.sub":"كل مشروع فريد. تواصل معي لمناقشة احتياجاتك والحصول على عرض سعر مخصص. لا أسعار ثابتة — لا مفاجآت.",
+  "pl1.n":"المبتدئ","pl1.t":"إعداد خادم واحد","pl1.d":"للأفراد أو الفرق الصغيرة التي تنشر خادم إنتاجها الأول. خط أساسي نظيف وآمن بكل ما تحتاجه للإطلاق.",
+  "pl2.n":"المحترف","pl2.t":"بنية متعددة الخدمات","pl2.d":"للشركات التي تشغّل خدمات متعددة. إعداد Reverse Proxy كامل وبيئات Docker وتحسين ومراقبة مدرجة.",
+  "pl3.n":"المؤسسي","pl3.t":"بناء بنية تحتية كاملة","pl3.d":"تصميم وتنفيذ بنية تحتية كاملة — كلاستر Proxmox وأتمتة CI/CD وتصليب أمني وإدارة مستمرة.",
+  "pl.cq":"تواصل للحصول على السعر →","pl.pop":"الأكثر طلباً","pl.btn":"احجز نقاشاً",
+  "pf1.1":"إعداد خادم Linux واحد (Ubuntu/Debian)","pf1.2":"تهيئة Nginx + SSL","pf1.3":"جدار ناري أساسي (UFW)","pf1.4":"نشر تطبيق واحد","pf1.5":"استراتيجية نسخ احتياطي أساسية","pf1.6":"إدارة متعدد الخوادم","pf1.7":"خطوط CI/CD",
+  "pf2.1":"كل شيء في المبتدئ","pf2.2":"بيئة متعددة الخدمات (Docker + أصيل)","pf2.3":"Nginx Reverse Proxy (جميع النطاقات)","pf2.4":"تحسين الخادم والتطبيق","pf2.5":"مراقبة وتنبيهات أساسية","pf2.6":"إعداد الوصول عبر VPN","pf2.7":"إعداد كلاستر Proxmox",
+  "pf3.1":"كل شيء في المحترف","pf3.2":"إعداد كلاستر Proxmox VE + PBS","pf3.3":"خط أتمتة CI/CD كامل","pf3.4":"تصليب أمني ومراجعة","pf3.5":"stack ذاتي الاستضافة (ERPNext، البريد، إلخ)","pf3.6":"إدارة ودعم مستمر","pf3.7":"تسليم التوثيق",
+  "cmp.note":"// مقارنة الميزات عبر الخطط — كل الأسعار عبر الاستشارة",
+  "cmp.feat":"الميزة","cmp.r1":"إعداد خادم Linux","cmp.r2":"Nginx + SSL","cmp.r3":"نشر Docker","cmp.r4":"Reverse Proxy (متعدد النطاق)","cmp.r5":"إعداد VPN","cmp.r6":"كلاستر Proxmox","cmp.r7":"خط CI/CD","cmp.r8":"تصليب أمني","cmp.r9":"التوثيق",
+  "te.tag":"آراء العملاء","te.h1":"ماذا يقول","te.h2":"عملاؤنا",
+  "t1.txt":"\"أعدّ أحمد كلاستر Proxmox بالكامل من الصفر ونشر متجر Magento مع تحسين مناسب. الموقع أسرع بشكل ملحوظ والبنية التحتية كانت صلبة كالصخر لأشهر.\"","t1.n":"خالد أ.","t1.r":"صاحب عمل تجارة إلكترونية",
+  "t2.txt":"\"أُعدّت أدواتنا ذاتية الاستضافة — Nextcloud وMattermost وخادم البريد — بنظافة وكل شيء موثّق. نستطيع إدارتها بأنفسنا الآن. بالضبط ما احتجناه.\"","t2.n":"سارة م.","t2.r":"قائدة تقنية في ناشئة",
+  "t3.txt":"\"كان نشر ERPNext أصيلاً كابوساً — تولّى أحمد الأمر من ألفه إلى يائه، بما في ذلك ضبط MariaDB وإعداد Nginx. يعمل بلا مشاكل والأداء متين.\"","t3.n":"عمر ف.","t3.r":"مدير عمليات",
+  "bk.pre":"مستعد لبناء شيء حقيقي؟","bk.h1":"احجز مكالمة مع","bk.btn":"احجز اجتماعاً",
+  "bk.desc":"لنناقش تحديات بنيتك التحتية أو احتياجات التوسع أو أهداف النشر. سواء كان سؤالاً سريعاً أو مشروعاً كاملاً — أنا مستعد للاستماع والمساعدة.",
+  "bk.note":"استشارة مجانية · لا التزام مطلوب · الرد عادةً خلال 24 ساعة",
+  "cn.tag":"تواصل","cn.h1":"لنعمل","cn.h2":"معاً",
+  "cn.headline":"هل أنت مستعد لبناء<br>بنيتك التحتية القادمة؟",
+  "cn.tagline":"احجز مكالمة لمناقشة احتياجاتك في البنية التحتية والنشر أو التوسع. استشارة مجانية، بدون التزام.",
+  "cn.btn":"احجز اجتماعاً","cn.note":"الرد عادةً خلال 24 ساعة",
+  "cl1":"البريد الإلكتروني","cl2":"الهاتف / واتساب",
+  "ft.copy":"© 2026 HamdyTech — مهندس DevOps ومدير أنظمة Linux · أحمد حمدي","ft.book":"احجز مكالمة"
+}
+};
+
+/* ──────── LANG ENGINE ──────── */
+let LG = 'en';
+function setLang(l) {
+  LG = l;
+  document.documentElement.lang = l;
+  document.documentElement.dir  = l==='ar'?'rtl':'ltr';
+  document.getElementById('bEN').classList.toggle('on',l==='en');
+  document.getElementById('bAR').classList.toggle('on',l==='ar');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(T[l][k]!==undefined) el.innerHTML=T[l][k];
+  });
+}
+
+/* ──────── LOADER ──────── */
+const WORD='HAMDYTECH';
+const ldb=document.getElementById('LDB');
+WORD.split('').forEach((c,i)=>{
+  const s=document.createElement('span');
+  s.className='ld-l';
+  s.textContent=c;
+  s.style.animationDelay=(i*.07)+'s';
+  ldb.appendChild(s);
+});
+const LDS_VALS=['infrastructure','containers','proxmox','nginx','ready ✓'];
+let ldsI=0;
+const ldsT=setInterval(()=>{
+  ldsI=(ldsI+1)%LDS_VALS.length;
+  const e=document.getElementById('LDS');
+  if(e) e.textContent=LDS_VALS[ldsI];
+},430);
+window.addEventListener('load',()=>{
+  clearInterval(ldsT);
+  setTimeout(()=>{
+    document.getElementById('LOAD').classList.add('bye');
+    runCounters();
+    setLang('en');
+  },2500);
+});
+
+/* ──────── CURSOR ──────── */
+const $c=document.getElementById('CUR');
+const $l=document.getElementById('CURL');
+if($c && $l){
+  let mx=0,my=0,lx=0,ly=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    $c.style.left=mx+'px'; $c.style.top=my+'px';
+  });
+  (function loop(){
+    lx+=(mx-lx)*.12; ly+=(my-ly)*.12;
+    $l.style.left=lx+'px'; $l.style.top=ly+'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.svc-card,.proj-card,.price-card,.testi-card,.why-card,.tech-card,.badge,.clink,.logo-pill').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+}
+
+/* ──────── BG CANVAS ──────── */
+const cv=document.getElementById('BG');
+const cx=cv?cv.getContext('2d'):null;
+let W,H,PTS=[];
+const MOB=window.innerWidth<768;
+const CNT=MOB?0:65;
+
+function rsz(){ if(!cv)return; W=cv.width=innerWidth; H=cv.height=innerHeight; }
+rsz(); window.addEventListener('resize',rsz);
+
+class Dot {
+  constructor(){ this.init(); }
+  init(){
+    this.x=Math.random()*W; this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.18; this.vy=(Math.random()-.5)*.18;
+    this.r=Math.random()*1.1+.4; this.life=Math.random();
+    this.spd=Math.random()*.011+.003;
+    this.col=Math.random()>.5?'6,214,255':'124,58,237';
+  }
+  tick(){ this.x+=this.vx; this.y+=this.vy; this.life+=this.spd; if(this.life>1||this.x<0||this.x>W||this.y<0||this.y>H)this.init(); }
+  draw(){ cx.beginPath(); cx.arc(this.x,this.y,this.r,0,Math.PI*2); cx.fillStyle=`rgba(${this.col},${Math.sin(this.life*Math.PI)*.42})`; cx.fill(); }
+}
+if(cx && CNT>0){ for(let i=0;i<CNT;i++)PTS.push(new Dot()); }
+
+function frame(){
+  if(!cx)return;
+  cx.clearRect(0,0,W,H);
+  PTS.forEach(p=>p.tick());
+  const D=95;
+  for(let i=0;i<PTS.length;i++){
+    for(let j=i+1;j<PTS.length;j++){
+      const dx=PTS[i].x-PTS[j].x,dy=PTS[i].y-PTS[j].y,d=Math.hypot(dx,dy);
+      if(d<D){ cx.beginPath(); cx.moveTo(PTS[i].x,PTS[i].y); cx.lineTo(PTS[j].x,PTS[j].y); cx.strokeStyle=`rgba(6,214,255,${(1-d/D)*.065})`; cx.lineWidth=.35; cx.stroke(); }
+    }
+  }
+  PTS.forEach(p=>p.draw());
+  requestAnimationFrame(frame);
+}
+if(CNT>0) frame();
+
+/* ──────── LOGO STRIP ──────── */
+const LOGOS = [
+  { name:'Docker',     slug:'docker'       },
+  { name:'Linux',      slug:'linux'        },
+  { name:'Nginx',      slug:'nginx'        },
+  { name:'Node.js',    slug:'nodedotjs'    },
+  { name:'PHP',        slug:'php'          },
+  { name:'MySQL',      slug:'mysql'        },
+  { name:'Redis',      slug:'redis'        },
+  { name:'Git',        slug:'git'          },
+  { name:'Kubernetes', slug:'kubernetes'   },
+  { name:'Proxmox',    slug:'proxmox'      },
+];
+
+const lt = document.getElementById('LOGOTRACK');
+if(lt){
+  /* Duplicate the array to create seamless infinite scroll */
+  const all = [...LOGOS, ...LOGOS];
+  lt.innerHTML = all.map(l =>
+    `<div class="logo-pill">
+      <img src="https://cdn.simpleicons.org/${l.slug}/ffffff" alt="${l.name}" width="22" height="22" loading="lazy">
+      <span class="logo-pill-name">${l.name}</span>
+    </div>`
+  ).join('');
+}
+
+/* ──────── SCROLL REVEAL ──────── */
+const RO=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('in'),i*75); });
+},{threshold:.08});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>RO.observe(el));
+
+/* ──────── COUNTERS ──────── */
+function runCounters(){
+  document.querySelectorAll('[data-c]').forEach(el=>{
+    const target=parseFloat(el.dataset.c);
+    const suf=el.dataset.s||'';
+    const dec=target%1!==0;
+    let cur=0; const step=target/50;
+    const t=setInterval(()=>{
+      cur+=step; if(cur>=target){cur=target;clearInterval(t);}
+      el.textContent=(dec?cur.toFixed(1):Math.floor(cur))+suf;
+    },18);
+  });
+}
+
+/* ──────── NAV ──────── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('NAV').classList.toggle('stuck',scrollY>60);
+});
+
+/* ──────── MOBILE MENU ──────── */
+function toggleMob(){
+  const m=document.getElementById('MOBNAV');
+  const h=document.getElementById('HAM');
+  m.classList.toggle('open'); h.classList.toggle('open');
+}
+function closeMob(){
+  document.getElementById('MOBNAV').classList.remove('open');
+  document.getElementById('HAM').classList.remove('open');
+}
+
+/* ──────── SMOOTH SCROLL ──────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
