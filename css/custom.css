@@ -111,6 +111,16 @@ img { max-width: 100%; display: block; }
   80%  { opacity: 1; }
   100% { opacity: 0; transform: translateY(-20px); }
 }
+@keyframes float-card {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes terminal-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97%            { opacity: 0.85; }
+  98%            { opacity: 1; }
+  99%            { opacity: 0.9; }
+}
 
 /* ── Status indicators ───────────────────────────────────── */
 .status-dot {
@@ -409,6 +419,9 @@ body::after {
 @media (max-width: 768px) {
   .terminal-body { font-size: 11px; }
   .contrib-cell  { width: 9px; height: 9px; }
+  /* Reduce section vertical padding */
+  section.py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  section.py-32 { padding-top: 4rem;   padding-bottom: 4rem; }
 }
 
 /* ── Top announcement banner ──────────────────────────────── */
@@ -416,8 +429,11 @@ body::after {
   background: linear-gradient(90deg, var(--neon) 0%, #7affdb 40%, var(--neon) 100%);
   background-size: 200% auto;
   animation: shimmer 5s linear infinite;
-  position: relative;
-  z-index: 60;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 61;
   text-align: center;
 }
 
@@ -540,27 +556,674 @@ body::after {
 /* ── Enhanced btn-primary hover ────────────────────────────── */
 .btn-primary:active { transform: translateY(0); }
 
-/* ── Nav padding compensation for banner ─────────────────── */
+/* ── Card padding on tablet/mobile ───────────────────────── */
 @media (max-width: 768px) {
   .automation-hub-card { padding: 28px 20px; }
+  .booking-cta-card     { padding: 2rem 1.5rem; }
 }
 
-/* ── Automation Hub section nav link ─────────────────────── */
-.nav-link-hub {
-  color: var(--neon);
+/* ── Nav "NEW" badge — shared base ──────────────────────────
+   Both .nav-link-hub and .nav-link-mon use the same ::after
+   positioning; only the accent colour differs.
+─────────────────────────────────────────────────────────── */
+.nav-link-hub,
+.nav-link-mon {
   font-weight: 600;
   position: relative;
 }
-.nav-link-hub::after {
-  content: 'NEW';
+.nav-link-hub { color: var(--neon); }
+.nav-link-mon  {
+  color: #60a5fa;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(96,165,250,0.45), 0 0 24px rgba(96,165,250,0.15);
+}
+
+/* Shared badge geometry */
+.nav-link-hub::after,
+.nav-link-mon::after {
   font-size: 8px;
   font-family: var(--font-mono);
-  background: var(--neon);
   color: var(--obsidian);
-  padding: 1px 4px;
+  padding: 1px 5px;
   position: absolute;
-  top: -8px;
-  right: -6px;
+  top: -2px;
+  left: 100%;
+  margin-left: 5px;
   font-weight: 700;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  line-height: 1.5;
+  pointer-events: none;
+}
+.nav-link-hub::after { content: 'NEW'; background: var(--neon); }
+.nav-link-mon::after  { content: 'NEW'; background: #3b82f6; color: #fff; }
+
+/* ── Download CV button ───────────────────────────────────── */
+.btn-cv {
+  background: linear-gradient(135deg, var(--neon) 0%, #7affdb 100%);
+  color: var(--obsidian);
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.25s, transform 0.18s, filter 0.2s;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-cv::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-cv:hover {
+  box-shadow: 0 8px 36px rgba(60,255,192,0.55), 0 0 60px rgba(60,255,192,0.18);
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.06);
+}
+.btn-cv:hover::before { opacity: 1; }
+.btn-cv:active { transform: translateY(0) scale(1); }
+
+/* ── Improved Automation Hub CTA (higher contrast) ──────── */
+.btn-hub {
+  background: linear-gradient(135deg, var(--neon) 0%, #7affdb 100%);
+  color: #050505;
+  border: 2px solid rgba(60,255,192,0.4);
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.25s, transform 0.18s, filter 0.2s, border-color 0.2s;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.btn-hub::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-hub:hover {
+  box-shadow: 0 10px 40px rgba(60,255,192,0.6), 0 0 80px rgba(60,255,192,0.2);
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.08);
+  border-color: rgba(60,255,192,0.7);
+}
+.btn-hub:hover::before { opacity: 1; }
+.btn-hub:active { transform: translateY(0) scale(1); }
+
+/* ── Nav book button ─────────────────────────────────────── */
+.btn-book-nav {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border: 1px solid rgba(60,255,192,0.4);
+  color: var(--neon);
+  background: rgba(60,255,192,0.06);
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-book-nav:hover {
+  background: rgba(60,255,192,0.14);
+  border-color: var(--neon);
+}
+
+/* ── Booking section ─────────────────────────────────────── */
+.booking-type-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.2s, background 0.2s;
+}
+.booking-type-card.booking-type-highlight {
+  border-color: rgba(60,255,192,0.35);
+  background: rgba(60,255,192,0.04);
+}
+.booking-type-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-2);
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--neon);
+}
+.booking-badge {
+  margin-inline-start: auto;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--obsidian);
+  background: var(--neon);
+  padding: 3px 7px;
+}
+.booking-cta-card {
+  position: relative;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  padding: 40px 36px;
+  overflow: hidden;
+}
+.booking-cta-orb {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(60,255,192,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.booking-cal-icon {
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(60,255,192,0.3);
+  background: rgba(60,255,192,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon);
+}
+.btn-schedule {
+  font-family: var(--font-head);
+  background: var(--neon);
+  color: var(--obsidian);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, filter 0.2s;
+}
+.btn-schedule::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-schedule:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.btn-schedule:hover::before { opacity: 1; }
+.btn-schedule:active { transform: translateY(0); }
+
+/* ── Language switcher ────────────────────────────────────── */
+.btn-lang {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border: 1px solid var(--border-2);
+  color: var(--text-2);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  text-transform: uppercase;
+}
+.btn-lang:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: var(--neon-dim);
+}
+
+/* ── Contact info cards ───────────────────────────────────── */
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: inherit;
+}
+.contact-card:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 20px rgba(60,255,192,0.07);
+  transform: translateY(-1px);
+}
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Project cards ────────────────────────────────────────── */
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.project-card:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 30px rgba(60,255,192,0.09), inset 0 0 30px rgba(60,255,192,0.02);
+  transform: translateY(-3px);
+}
+.project-card:hover::before { opacity: 1; }
+
+/* ── RTL overrides ────────────────────────────────────────── */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .font-mono,
+[dir="rtl"] .terminal,
+[dir="rtl"] .terminal-body,
+[dir="rtl"] .section-label,
+[dir="rtl"] .tag,
+[dir="rtl"] .hub-pill {
+  font-family: var(--font-mono);
+  direction: ltr;
+  text-align: left;
+}
+[dir="rtl"] .nav-link-hub::after,
+[dir="rtl"] .nav-link-mon::after {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: 5px;
+}
+[dir="rtl"] .reveal-left {
+  transform: translateX(28px);
+}
+[dir="rtl"] .reveal-left.visible {
+  transform: translateX(0);
+}
+[dir="rtl"] .arch-line::after {
+  right: auto;
+  left: -6px;
+  content: '◀';
+}
+[dir="rtl"] #mobile-menu .flex.flex-col { align-items: flex-end; }
+[dir="rtl"] .contact-card { flex-direction: row-reverse; }
+[dir="rtl"] .btn-cv svg,
+[dir="rtl"] .btn-hub svg { transform: scaleX(-1); }
+
+/* ── Responsive: small screens (≤640px) ──────────────────── */
+@media (max-width: 640px) {
+  /* Buttons */
+  .btn-cv      { font-size: 13px; padding: 10px 18px; }
+  .btn-hub     { font-size: 14px; padding: 12px 22px; }
+  .btn-schedule{ font-size: 15px; padding: 14px 20px; width: 100%; max-width: 100%; }
+
+  /* Cards */
+  .contact-card    { padding: 12px 14px; }
+  .booking-cta-card{ padding: 1.75rem 1.25rem; }
+
+  /* Mobile menu — taller for extra nav items */
+  #mobile-menu.open { max-height: 600px; }
+
+  /* Hero */
+  #hero { min-height: auto; padding-top: 5rem; }
+  #hero .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+  #hero .gap-12 { gap: 2rem; }
+  #hero .mb-12 { margin-bottom: 1.5rem; }
+  #hero .mb-10 { margin-bottom: 1.5rem; }
+  #hero .mb-8  { margin-bottom: 1rem; }
+
+  /* Architecture diagram — allow text to wrap */
+  .arch-node { white-space: normal; font-size: 9px; padding: 5px 6px; min-width: 0; }
+  /* Stack the 3 app nodes vertically on mobile */
+  #case-study .flex.gap-2.flex-1 { flex-direction: column; gap: 4px; }
+  /* Case study terminal padding */
+  #case-study .terminal.p-6 { padding: 1rem; }
+  /* Case study arch row label */
+  #case-study .w-16 { width: 3rem; font-size: 9px; }
+
+  /* Booking section */
+  #book .grid.lg\:grid-cols-2 { grid-template-columns: 1fr; }
+  #book .booking-cal-icon { width: 56px; height: 56px; }
+  #book .booking-cal-icon svg { width: 24px; height: 24px; }
+
+  /* Contact terminal — prevent long command overflow */
+  #contact .terminal-body .font-mono { word-break: break-all; }
+
+  /* GitHub contribution grid label row */
+  #github .flex.items-center.gap-2.mt-4 { flex-wrap: wrap; }
+
+  /* Footer nav — wrap nicely */
+  footer .flex.flex-wrap.gap-6 { gap: 1rem; }
+
+  /* Section headings — slightly smaller on tiny screens */
+  .font-grotesk.font-bold.text-4xl { font-size: 1.75rem; }
+  #contact h2.text-4xl             { font-size: 1.875rem; }
+}
+
+/* ── Banner height compensation ───────────────────────────── */
+:root { --banner-h: 0px; }
+
+/* Nav follows banner */
+.nav-blur { top: var(--banner-h) !important; }
+
+/* Push page content below the fixed banner */
+body { padding-top: var(--banner-h); }
+
+/* ── Modern language toggle pill ─────────────────────────── */
+.lang-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 9999px;
+  padding: 3px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.lang-switch:hover { border-color: var(--neon); }
+.lang-switch:focus-visible { outline: 2px solid var(--neon); outline-offset: 2px; }
+.lang-switch-option {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  min-width: 32px;
+  text-align: center;
+  padding: 4px 0;
+  position: relative;
+  z-index: 1;
+  color: var(--text-3);
+  transition: color 0.25s;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.lang-switch-option.active { color: var(--obsidian); }
+.lang-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: calc(100% - 6px);
+  background: var(--neon);
+  border-radius: 9999px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+.lang-switch.ar .lang-switch-thumb { transform: translateX(32px); }
+
+/* RTL: flex order is reversed (AR on left, EN on right), so thumb logic inverts */
+[dir="rtl"] .lang-switch-thumb               { transform: translateX(32px); }
+[dir="rtl"] .lang-switch.ar .lang-switch-thumb { transform: translateX(0); }
+
+/* ── Case study equal-height columns ─────────────────────── */
+#case-study .grid.lg\:grid-cols-2 { align-items: stretch; }
+#case-study .grid.lg\:grid-cols-2 > div { display: flex; flex-direction: column; }
+#case-study .grid.lg\:grid-cols-2 .terminal { flex: 1; }
+
+/* ── Contact card brand colours (via inline override) ────── */
+.contact-card-email .contact-icon  { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.25); color: #3b82f6; }
+.contact-card-email .contact-icon:hover { background: rgba(59,130,246,0.22); }
+.contact-card-wa .contact-icon    { background: rgba(37,211,102,0.12); border-color: rgba(37,211,102,0.25); color: #25D366; }
+.contact-card-li .contact-icon    { background: rgba(0,119,181,0.15); border-color: rgba(0,119,181,0.3); color: #0a66c2; }
+.contact-card-gh .contact-icon    { background: rgba(110,118,129,0.15); border-color: rgba(110,118,129,0.3); color: #c9d1d9; }
+
+/* ══════════════════════════════════════════════════════════
+   MONITORING PLATFORM SECTION
+══════════════════════════════════════════════════════════ */
+
+/* ── Card shell ──────────────────────────────────────────── */
+.monitoring-platform-card {
+  position: relative;
+  background: linear-gradient(135deg,
+    rgba(59,130,246,0.04) 0%,
+    rgba(99,102,241,0.05) 50%,
+    rgba(60,255,192,0.02) 100%);
+  border: 1px solid rgba(59,130,246,0.2);
+  padding: 48px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.monitoring-platform-card:hover {
+  border-color: rgba(59,130,246,0.4);
+  box-shadow: 0 0 60px rgba(59,130,246,0.07), 0 0 120px rgba(99,102,241,0.04);
+}
+
+/* ── Background grid (blue tint) ─────────────────────────── */
+.monitoring-platform-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ── Ambient glow orbs ───────────────────────────────────── */
+.monitoring-platform-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+.orb-mon-1 {
+  width: 420px; height: 420px;
+  top: -120px; right: -80px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%);
+}
+.orb-mon-2 {
+  width: 320px; height: 320px;
+  bottom: -90px; left: 8%;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%);
+}
+
+/* ── Feature pills ───────────────────────────────────────── */
+.mon-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid rgba(59,130,246,0.25);
+  color: rgba(96,165,250,0.9);
+  background: rgba(59,130,246,0.07);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  letter-spacing: 0.03em;
+}
+.mon-pill:hover {
+  border-color: var(--blue);
+  background: rgba(59,130,246,0.14);
+  color: #93c5fd;
+}
+
+/* ── CTA button — system-level emphasis ──────────────────── */
+.btn-mon {
+  background: linear-gradient(135deg, #1d4ed8 0%, var(--blue) 45%, var(--indigo) 100%);
+  color: #fff;
+  border: 1.5px solid rgba(96,165,250,0.5);
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* Resting glow — makes it visually heavier than btn-hub */
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.2),
+    0 4px 20px rgba(59,130,246,0.3),
+    0 0 40px rgba(99,102,241,0.1);
+  transition: box-shadow 0.25s, transform 0.18s, filter 0.2s, border-color 0.2s;
+}
+.btn-mon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+/* Animated border shimmer on idle */
+.btn-mon::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(96,165,250,0.4) 50%,
+    transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+.btn-mon:hover {
+  box-shadow:
+    0 0 0 1px rgba(96,165,250,0.6),
+    0 8px 32px rgba(59,130,246,0.6),
+    0 0 80px rgba(59,130,246,0.2),
+    0 0 120px rgba(99,102,241,0.1);
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.1);
+  border-color: rgba(96,165,250,0.8);
+}
+.btn-mon:hover::before { opacity: 1; }
+.btn-mon:active { transform: translateY(0) scale(1); box-shadow: 0 4px 20px rgba(59,130,246,0.35); }
+
+/* ── Blue shimmer headline ───────────────────────────────── */
+.shimmer-blue {
+  background: linear-gradient(
+    90deg,
+    #3b82f6 0%,
+    #93c5fd 25%,
+    #3b82f6 50%,
+    #93c5fd 75%,
+    #3b82f6 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .monitoring-platform-card { padding: 28px 20px; }
+}
+@media (max-width: 640px) {
+  .btn-mon { font-size: 14px; padding: 12px 22px; }
+}
+
+/* ── Warning terminal row — smooth, professional pulse ───── */
+@keyframes mon-row-warn {
+  0%, 100% { background: transparent; box-shadow: none; }
+  50%       { background: rgba(245,158,11,0.05); box-shadow: inset 2px 0 0 rgba(245,158,11,0.3); }
+}
+.mon-warning-row {
+  border-radius: 3px;
+  animation: mon-row-warn 3.5s ease-in-out infinite;
+}
+
+/* ── nav-link-mon hover & active ────────────────────────── */
+.nav-link-mon:hover { color: #93c5fd; text-shadow: 0 0 16px rgba(147,197,253,0.6); }
+/* Active state: scrollspy adds text-neon — keep blue + underline indicator */
+.nav-link-mon.text-neon {
+  color: #60a5fa !important;
+  text-shadow: 0 0 14px rgba(96,165,250,0.7), 0 0 30px rgba(96,165,250,0.25) !important;
+  border-bottom: 1.5px solid #60a5fa;
+  padding-bottom: 1px;
+}
+
+/* ── RTL overrides ───────────────────────────────────────── */
+[dir="rtl"] .btn-mon svg { transform: scaleX(-1); }
+[dir="rtl"] .monitoring-platform-card { direction: rtl; }
+[dir="rtl"] .mon-pill { direction: rtl; }
+/* Keep terminal content LTR in RTL layout */
+[dir="rtl"] .monitoring-platform-card .terminal,
+[dir="rtl"] .monitoring-platform-card .terminal-body,
+[dir="rtl"] .monitoring-platform-card .mon-pill {
+  direction: ltr;
+  text-align: left;
+}
+
+/* ── Monitoring stats grid — staggered float ─────────────── */
+.mon-stats-grid .mon-stat-cell:nth-child(1) { animation: float-card 5.5s ease-in-out infinite; }
+.mon-stats-grid .mon-stat-cell:nth-child(2) { animation: float-card 5.5s ease-in-out infinite 0.8s; }
+.mon-stats-grid .mon-stat-cell:nth-child(3) { animation: float-card 5.5s ease-in-out infinite 1.6s; }
+.mon-stats-grid .mon-stat-cell:nth-child(4) { animation: float-card 5.5s ease-in-out infinite 2.4s; }
+
+/* ── Terminal flicker (monitoring) ─────────────────────────── */
+.mon-terminal-live {
+  animation: terminal-flicker 8s ease-in-out infinite 3s;
+}
+
+/* ── Proof link (Monitoring → Projects) ─────────────────── */
+.mon-proof-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+  margin-top: 16px;
+  display: inline-block;
+}
+.mon-proof-link a {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(96,165,250,0.4);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.mon-proof-link a:hover {
+  color: #93c5fd;
+  text-decoration-color: rgba(147,197,253,0.7);
+}
+[dir="rtl"] .mon-proof-link { direction: rtl; text-align: right; }
+
+/* ── btn-mon: stronger rest-state glow ───────────────────── */
+.btn-mon {
+  box-shadow:
+    0 0 0 1px rgba(96,165,250,0.25),
+    0 4px 24px rgba(59,130,246,0.35),
+    0 0 48px rgba(99,102,241,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+/* Shimmer sweep on btn-mon ::after (already exists — boost it) */
+.btn-mon::after {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.12) 30%,
+    rgba(147,197,253,0.15) 50%,
+    rgba(255,255,255,0.08) 70%,
+    transparent 100%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmer 2.5s linear infinite !important;
 }

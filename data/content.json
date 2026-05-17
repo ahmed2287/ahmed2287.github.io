@@ -2,7 +2,7 @@
   "name": "Ahmed Hamdy",
   "title": "DevOps Engineer",
   "description": "DevOps automation, cloud infrastructure, and smart deployment solutions to help you scale faster.",
-  "cv": "/assets/cv.pdf",
+  "cv": "/data/cv.pdf",
 
   "contact": {
     "email": "ahmedhamdy807@outlook.com",
@@ -32,6 +32,18 @@
       "tech": ["Prometheus", "Grafana", "Docker", "API Keys", "Agents", "Loki"],
       "tagColor": "neon",
       "icon": "◎",
+      "status": "live"
+    },
+    {
+      "id": "hamdyhost",
+      "title": "HamdyHost",
+      "titleAr": "حمدي هوست",
+      "url": "https://hosting.hamdyzone.icu/",
+      "description": "Self-hosted KVM virtual servers with NVMe storage, full root access, and instant provisioning. Built for engineers who need bare-metal performance without the bare-metal hassle. DDoS protection, snapshots, and 24/7 support included.",
+      "descriptionAr": "خوادم افتراضية KVM ذاتية الاستضافة مع تخزين NVMe، ووصول root كامل، وتوفير فوري. مصممة للمهندسين الذين يحتاجون أداء المعدن المجرد بدون عناء المعدن المجرد. تشمل حماية DDoS، ولقطات، ودعماً على مدار الساعة.",
+      "tech": ["KVM", "NVMe SSD", "Root Access", "1Gbps", "DDoS Protection", "Snapshots"],
+      "tagColor": "neon",
+      "icon": "▣",
       "status": "live"
     },
     {

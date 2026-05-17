@@ -1,201 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HamdyTech — The Architectural Terminal | DevOps & Infrastructure Engineering</title>
-  <meta name="description" content="HamdyTech builds resilient, self-healing infrastructure. Proxmox, Docker, Kubernetes, Nginx, CI/CD — production-grade systems designed for scale.">
-  <meta name="keywords" content="DevOps, Infrastructure, Proxmox, Docker, Kubernetes, Nginx, CI/CD, Linux, Automation">
-  <meta name="author" content="HamdyTech">
-  <meta property="og:title" content="HamdyTech — The Architectural Terminal">
-  <meta property="og:description" content="Production-grade DevOps & Infrastructure Engineering. Systems that scale.">
+  <title>Ahmed Hamdy &mdash; DevOps Engineer | Infrastructure &amp; Cloud Automation</title>
+  <meta name="description" content="Ahmed Hamdy &mdash; DevOps Engineer specialising in Proxmox, Docker, Kubernetes, Nginx, CI/CD, and self-hosted infrastructure. Production-grade systems designed for scale.">
+  <meta name="keywords" content="DevOps, Infrastructure, Proxmox, Docker, Kubernetes, Nginx, CI/CD, Linux, Automation, Ahmed Hamdy">
+  <meta name="author" content="Ahmed Hamdy">
+  <meta property="og:title" content="Ahmed Hamdy &mdash; DevOps Engineer">
+  <meta property="og:description" content="Production-grade DevOps &amp; Infrastructure Engineering. Systems that scale.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hamdy.tech">
+  <meta property="og:url" content="https://hamdyzone.icu">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://hamdy.tech">
-
-  <!-- Fonts -->
+  <link rel="canonical" href="https://hamdyzone.icu">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CDN (Play CDN — replace with compiled output.css for production) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            obsidian:  '#0e0e0e',
-            surface:   '#141414',
+            obsidian:    '#0e0e0e',
+            surface:     '#141414',
             'surface-2': '#1c1c1c',
             'surface-3': '#222222',
-            'neon':    '#3cffc0',
-            'border-dim': '#2a2a2a',
+            'neon':      '#3cffc0',
+            'border-dim':'#2a2a2a',
           },
           fontFamily: {
             grotesk: ['Space Grotesk', 'sans-serif'],
             mono:    ['JetBrains Mono', 'monospace'],
           },
-          animation: {
-            'pulse-slow': 'pulse 3s ease-in-out infinite',
-          }
         }
       }
     }
   </script>
-
-  <!-- Custom styles -->
   <link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body class="bg-obsidian text-gray-200">
 
-<!-- ═══════════════════════════════════════════════════════════
-     TOP ANNOUNCEMENT BANNER
-══════════════════════════════════════════════════════════════ -->
+<!-- TOP BANNER -->
 <div id="top-banner" class="top-banner">
   <div class="max-w-7xl mx-auto px-6 flex items-center justify-center gap-3 py-2.5">
-    <span class="font-mono text-xs tracking-wide" style="color:#0e0e0e">
-      🚀 Try <strong>Automation Hub</strong> — Deploy apps in seconds. Zero manual setup.
+    <span class="font-mono text-xs tracking-wide" style="color:#0e0e0e" data-i18n-html="banner.text">
+      Try <strong>Automation Hub</strong> &mdash; Deploy apps in seconds. Zero manual setup.
     </span>
     <a href="https://automation-hub.hamdyzone.icu" target="_blank" rel="noopener"
-       class="font-mono text-xs font-700 underline decoration-dotted hover:no-underline"
-       style="color:#0e0e0e; font-weight:700">
-      Explore Now →
-    </a>
-    <button onclick="document.getElementById('top-banner').remove()" aria-label="Dismiss"
+       class="font-mono text-xs font-bold underline decoration-dotted hover:no-underline"
+       style="color:#0e0e0e" data-i18n="banner.cta">Explore Now &rarr;</a>
+    <button id="banner-close" aria-label="Dismiss"
             class="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-base leading-none"
-            style="color:rgba(14,14,14,0.5)">✕</button>
+            style="color:rgba(14,14,14,0.5)">&times;</button>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     NAVIGATION
-══════════════════════════════════════════════════════════════ -->
+<!-- NAVIGATION -->
 <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-    <!-- Logo -->
     <a href="#hero" class="flex items-center gap-3 group">
       <img src="/My-Logo.png" alt="HamdyTech Logo" class="h-9 w-auto object-contain logo-img">
     </a>
-
-    <!-- Desktop links -->
     <div class="hidden md:flex items-center gap-8">
-      <a href="#automation-hub" class="font-mono text-sm nav-link-hub hover:opacity-80 transition-opacity tracking-wide relative">Automation Hub</a>
-      <a href="#services"    class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide">Services</a>
-      <a href="#case-study"  class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide">Case Study</a>
-      <a href="#pricing"     class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide">Pricing</a>
+      <a href="#automation-hub" class="font-mono text-sm nav-link-hub hover:opacity-80 transition-opacity tracking-wide relative" data-i18n="nav.automation_hub">Automation Hub</a>
+      <a href="#monitoring-platform" class="font-mono text-sm nav-link-mon hover:opacity-80 transition-opacity tracking-wide relative" data-i18n="nav.monitoring">Monitoring</a>
+      <a href="#services"    class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide" data-i18n="nav.services">Services</a>
+      <a href="#projects"    class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide" data-i18n="nav.projects">Projects</a>
+      <a href="#case-study"  class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide" data-i18n="nav.case_study">Case Study</a>
+      <a href="#contact"     class="font-mono text-sm text-gray-400 hover:text-neon transition-colors tracking-wide" data-i18n="nav.contact">Contact</a>
+      <a href="#book"        class="font-mono text-sm btn-book-nav tracking-wide" data-i18n="nav.book">Book Appointment</a>
     </div>
-
-    <!-- CTA -->
     <div class="hidden md:flex items-center gap-3">
       <span class="flex items-center gap-2 font-mono text-xs text-neon">
-        <span class="status-dot online"></span>AVAILABLE
+        <span class="status-dot online"></span>
+        <span data-i18n="nav.available">AVAILABLE</span>
       </span>
-      <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
-         class="btn-book font-mono text-sm px-5 py-2 tracking-wide">
-        📅 Book Appointment
+      <div id="lang-switcher" class="lang-switch" role="button" tabindex="0" aria-label="Switch language">
+        <span class="lang-switch-option active" data-lang="en">EN</span>
+        <span class="lang-switch-option" data-lang="ar">AR</span>
+        <span class="lang-switch-thumb"></span>
+      </div>
+      <a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link"
+         class="btn-cv text-sm px-5 py-2 tracking-wide">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        CV
       </a>
     </div>
-
-    <!-- Mobile toggle -->
     <button id="nav-toggle" class="md:hidden text-gray-400 hover:text-neon transition-colors p-1">
-      <svg data-icon="menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="6"  x2="21" y2="6"/>
-        <line x1="3" y1="12" x2="21" y2="12"/>
-        <line x1="3" y1="18" x2="21" y2="18"/>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
     </button>
   </div>
-
-  <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden border-t border-border-dim">
     <div class="px-6 py-4 flex flex-col gap-4">
-      <a href="#automation-hub" class="font-mono text-sm nav-link-hub relative inline-block">Automation Hub</a>
-      <a href="#services"   class="font-mono text-sm text-gray-400 hover:text-neon transition-colors">Services</a>
-      <a href="#case-study" class="font-mono text-sm text-gray-400 hover:text-neon transition-colors">Case Study</a>
-      <a href="#github"     class="font-mono text-sm text-gray-400 hover:text-neon transition-colors">Activity</a>
-      <a href="#pricing"    class="font-mono text-sm text-gray-400 hover:text-neon transition-colors">Pricing</a>
-      <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
-         class="btn-book font-mono text-sm px-5 py-2.5 text-center tracking-wide">
-        📅 Book Appointment
-      </a>
+      <a href="#automation-hub" class="font-mono text-sm nav-link-hub relative inline-block" data-i18n="nav.automation_hub">Automation Hub</a>
+      <a href="#monitoring-platform" class="font-mono text-sm nav-link-mon relative inline-block" data-i18n="nav.monitoring">Monitoring</a>
+      <a href="#services"   class="font-mono text-sm text-gray-400 hover:text-neon transition-colors" data-i18n="nav.services">Services</a>
+      <a href="#projects"   class="font-mono text-sm text-gray-400 hover:text-neon transition-colors" data-i18n="nav.projects">Projects</a>
+      <a href="#case-study" class="font-mono text-sm text-gray-400 hover:text-neon transition-colors" data-i18n="nav.case_study">Case Study</a>
+      <a href="#contact"    class="font-mono text-sm text-gray-400 hover:text-neon transition-colors" data-i18n="nav.contact">Contact</a>
+      <a href="#book"       class="font-mono text-sm text-neon hover:opacity-80 transition-opacity" data-i18n="nav.book">Book Appointment</a>
+      <div class="flex items-center gap-3 pt-2 border-t border-border-dim">
+        <button id="lang-switcher-mobile" class="btn-lang" aria-label="Switch language">AR</button>
+        <a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link"
+           class="btn-cv font-mono text-xs px-5 py-2.5 tracking-wide">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span data-i18n="hero.cta_cv">Download CV</span>
+        </a>
+      </div>
     </div>
   </div>
 </nav>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     HERO
-══════════════════════════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-
-  <!-- Grid background -->
   <div class="hero-grid-bg absolute inset-0 pointer-events-none"></div>
-
-  <!-- Radial glow -->
   <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-       style="background: radial-gradient(ellipse at center, rgba(60,255,192,0.04) 0%, transparent 70%)"></div>
-
+       style="background:radial-gradient(ellipse at center,rgba(60,255,192,0.04) 0%,transparent 70%)"></div>
   <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
     <div class="grid lg:grid-cols-2 gap-12 xl:gap-16 items-center">
-
-      <!-- Left: Headline -->
       <div>
-        <!-- Status badge -->
         <div class="inline-flex items-center gap-2 border border-neon/30 bg-neon/5 px-3 py-1.5 mb-8">
           <span class="status-dot online"></span>
-          <span class="font-mono text-xs text-neon tracking-widest">SYSTEM ONLINE — ALL SERVICES OPERATIONAL</span>
+          <span class="font-mono text-xs text-neon tracking-widest" data-i18n="hero.badge">SYSTEM ONLINE &mdash; ALL SERVICES OPERATIONAL</span>
         </div>
-
-        <h1 class="font-grotesk font-700 text-5xl xl:text-6xl leading-[1.05] tracking-tight text-white mb-6">
-          Automate Your<br>
-          <span class="shimmer-text">Infrastructure with HamdyTech</span>
+        <h1 class="font-grotesk font-bold text-4xl sm:text-5xl xl:text-6xl leading-[1.05] tracking-tight text-white mb-6">
+          <span data-i18n="hero.headline_1">Automate Your</span><br>
+          <span class="shimmer-text" data-i18n="hero.headline_2">Infrastructure with HamdyTech</span>
         </h1>
-
-        <p class="text-gray-400 text-lg leading-relaxed max-w-lg mb-10">
-          We provide <span class="text-white font-500">DevOps automation</span>, cloud infrastructure,
-          and smart deployment solutions to help you
-          <span class="text-white font-500">scale faster</span>.
+        <p class="text-gray-400 text-lg leading-relaxed max-w-lg mb-10" data-i18n-html="hero.description">
+          We provide <span class="text-white font-medium">DevOps automation</span>, cloud infrastructure,
+          and smart deployment solutions to help you <span class="text-white font-medium">scale faster</span>.
         </p>
-
-        <!-- CTAs -->
+        <!-- CTAs: Primary = Download CV, Secondary = View Projects -->
         <div class="flex flex-wrap gap-3 mb-12">
-          <a href="#services" class="btn-primary font-grotesk font-600 text-sm px-6 py-3 tracking-wide">
-            → Get Started
+          <a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link"
+             class="btn-cv text-sm px-7 py-3.5 tracking-wide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="shrink-0">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span data-i18n="hero.cta_cv">Download CV</span>
           </a>
-          <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
-             class="btn-book font-mono text-sm px-6 py-3 tracking-wide">
-            📅 Book Appointment
+          <a href="#projects" class="btn-ghost font-mono text-sm px-6 py-3.5 tracking-wide inline-flex items-center gap-2">
+            <span data-i18n="hero.cta_projects">View Projects</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
-
-        <!-- Stats row -->
+        <!-- Stats -->
         <div class="grid grid-cols-3 gap-4 pt-8 border-t border-border-dim">
           <div>
-            <div class="font-mono text-3xl font-700 text-neon mb-1">
-              <span data-counter="47" data-suffix="">47</span>+
-            </div>
-            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Systems Deployed</div>
+            <div class="font-mono text-3xl font-bold text-neon mb-1"><span data-counter="47" data-suffix="">47</span>+</div>
+            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="hero.stat_1">Systems Deployed</div>
           </div>
           <div>
-            <div class="font-mono text-3xl font-700 text-blue-400 mb-1">99.9%</div>
-            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Uptime SLA</div>
+            <div class="font-mono text-3xl font-bold text-blue-400 mb-1">99.9%</div>
+            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="hero.stat_2">Uptime SLA</div>
           </div>
           <div>
-            <div class="font-mono text-3xl font-700 text-indigo-400 mb-1">
-              &lt;<span data-counter="200" data-suffix="ms">200ms</span>
-            </div>
-            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Deploy Time</div>
+            <div class="font-mono text-3xl font-bold text-indigo-400 mb-1">&lt;<span data-counter="200" data-suffix="ms">200ms</span></div>
+            <div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="hero.stat_3">Deploy Time</div>
           </div>
         </div>
       </div>
-
-      <!-- Right: Terminal console -->
+      <!-- Terminal -->
       <div class="terminal">
-        <!-- Title bar -->
         <div class="terminal-header justify-between">
           <div class="flex items-center gap-6">
             <div class="flex gap-1.5">
@@ -205,127 +180,83 @@
             </div>
             <span class="font-mono text-xs text-gray-500">hamdy@arch-terminal:~</span>
           </div>
-          <span class="font-mono text-xs text-neon/60 hidden sm:block">● LIVE</span>
+          <span class="font-mono text-xs text-neon/60 hidden sm:block">&bull; LIVE</span>
         </div>
-
-        <!-- Prompt line -->
         <div class="px-4 pt-4 pb-2 font-mono text-sm">
-          <span class="text-neon">hamdy@arch-terminal</span>
-          <span class="text-gray-600">:</span>
-          <span class="text-blue-400">~</span>
-          <span class="text-gray-400">$ ./system-status --watch</span>
+          <span class="text-neon">hamdy@arch-terminal</span><span class="text-gray-600">:</span><span class="text-blue-400">~</span><span class="text-gray-400">$ ./system-status --watch</span>
         </div>
-
-        <!-- Log stream container -->
         <div class="overflow-y-auto px-4 pb-4" style="height:200px">
           <div id="log-stream" class="space-y-0.5 terminal-body !p-0"></div>
         </div>
-
-        <!-- Cursor -->
         <div class="px-4 pb-3 font-mono text-sm text-neon flex items-center gap-1">
-          <span class="text-gray-600">›</span>
-          <span class="cursor-blink"></span>
+          <span class="text-gray-600">&rsaquo;</span><span class="cursor-blink"></span>
         </div>
-
-        <!-- Metrics grid -->
         <div class="border-t border-border-dim grid grid-cols-2 sm:grid-cols-4">
           <div class="border-r border-border-dim p-3">
             <div class="font-mono text-xs text-gray-500 mb-1">CPU</div>
-            <div class="font-mono text-lg font-600 text-neon mb-2">12%</div>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" data-metric-width="12%" style="width:0%"></div>
-            </div>
+            <div class="font-mono text-lg font-semibold text-neon mb-2">12%</div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" data-metric-width="12%" style="width:0%"></div></div>
           </div>
           <div class="border-r border-border-dim p-3">
             <div class="font-mono text-xs text-gray-500 mb-1">MEM</div>
-            <div class="font-mono text-lg font-600 text-blue-400 mb-2">34%</div>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill blue" data-metric-width="34%" style="width:0%"></div>
-            </div>
+            <div class="font-mono text-lg font-semibold text-blue-400 mb-2">34%</div>
+            <div class="metric-bar-track"><div class="metric-bar-fill blue" data-metric-width="34%" style="width:0%"></div></div>
           </div>
           <div class="border-r border-border-dim p-3">
             <div class="font-mono text-xs text-gray-500 mb-1">NET</div>
-            <div class="font-mono text-lg font-600 text-indigo-400 mb-2">2.1GB</div>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" style="background:linear-gradient(90deg,#6366f1,#818cf8); width:0%" data-metric-width="62%"></div>
-            </div>
+            <div class="font-mono text-lg font-semibold text-indigo-400 mb-2">2.1GB</div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" style="background:linear-gradient(90deg,#6366f1,#818cf8);width:0%" data-metric-width="62%"></div></div>
           </div>
           <div class="p-3">
             <div class="font-mono text-xs text-gray-500 mb-1">DISK</div>
-            <div class="font-mono text-lg font-600 text-amber-400 mb-2">67%</div>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" style="background:linear-gradient(90deg,#f59e0b,#fbbf24); width:0%" data-metric-width="67%"></div>
-            </div>
+            <div class="font-mono text-lg font-semibold text-amber-400 mb-2">67%</div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" style="background:linear-gradient(90deg,#f59e0b,#fbbf24);width:0%" data-metric-width="67%"></div></div>
           </div>
         </div>
-
-        <!-- Uptime row -->
         <div class="border-t border-border-dim px-4 py-3 flex items-center justify-between">
-          <span class="font-mono text-xs text-gray-500">UPTIME</span>
+          <span class="font-mono text-xs text-gray-500" data-i18n="hero.uptime_label">UPTIME</span>
           <span id="uptime-val" class="font-mono text-xs text-neon">47d 14h 22m 11s</span>
         </div>
       </div>
-
-    </div><!-- /grid -->
-  </div><!-- /container -->
+    </div>
+  </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     AUTOMATION HUB PROMOTION
-══════════════════════════════════════════════════════════════ -->
+<!-- AUTOMATION HUB -->
 <section id="automation-hub" class="py-20 border-t border-border-dim">
   <div class="max-w-7xl mx-auto px-6">
     <div class="automation-hub-card reveal">
-
-      <!-- Background grid overlay -->
       <div class="automation-hub-grid"></div>
-
-      <!-- Glow orbs -->
       <div class="automation-hub-orb orb-1"></div>
       <div class="automation-hub-orb orb-2"></div>
-
       <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
-
-        <!-- Left: Text content -->
         <div class="flex-1 max-w-2xl">
-          <div class="inline-flex items-center gap-2 border border-neon/40 bg-neon/8 px-3 py-1.5 mb-6">
+          <div class="inline-flex items-center gap-2 border border-neon/40 bg-neon/5 px-3 py-1.5 mb-6">
             <span class="status-dot online"></span>
-            <span class="font-mono text-xs text-neon tracking-widest">NEW PRODUCT — NOW AVAILABLE</span>
+            <span class="font-mono text-xs text-neon tracking-widest" data-i18n="hub.badge">NEW PRODUCT &mdash; NOW AVAILABLE</span>
           </div>
-
-          <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white leading-tight mb-5">
-            🚀 Introducing<br>
-            <span class="shimmer-text">Automation Hub</span>
-            <span class="text-white"> by HamdyTech</span>
+          <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white leading-tight mb-5">
+            &#x1F680; <span data-i18n="hub.headline_1">Introducing</span><br>
+            <span class="shimmer-text" data-i18n="hub.headline_2">Automation Hub</span><span class="text-white" data-i18n="hub.headline_3"> by HamdyTech</span>
           </h2>
-
-          <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl">
-            Launch and manage your applications automatically.
-            Deploy <strong class="text-white">Magento</strong>, <strong class="text-white">WordPress</strong>,
-            <strong class="text-white">Node.js</strong>, and more in seconds with
-            <strong class="text-neon">zero manual setup</strong>.
+          <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl" data-i18n-html="hub.description">
+            Launch and manage your applications automatically. Deploy <strong class="text-white">Magento</strong>,
+            <strong class="text-white">WordPress</strong>, <strong class="text-white">Node.js</strong>,
+            and more in seconds with <strong class="text-neon">zero manual setup</strong>.
           </p>
-
-          <!-- Feature pills -->
           <div class="flex flex-wrap gap-2 mb-8">
-            <span class="hub-pill">⚡ One-Click Deploy</span>
-            <span class="hub-pill">🔄 Auto-Scaling</span>
-            <span class="hub-pill">🔒 SSL Included</span>
-            <span class="hub-pill">📊 Live Monitoring</span>
-            <span class="hub-pill">🛠 Zero Config</span>
+            <span class="hub-pill" data-i18n="hub.pill_1">&#x26A1; One-Click Deploy</span>
+            <span class="hub-pill" data-i18n="hub.pill_2">&#x1F504; Auto-Scaling</span>
+            <span class="hub-pill" data-i18n="hub.pill_3">&#x1F512; SSL Included</span>
+            <span class="hub-pill" data-i18n="hub.pill_4">&#x1F4CA; Live Monitoring</span>
+            <span class="hub-pill" data-i18n="hub.pill_5">&#x1F6E0; Zero Config</span>
           </div>
-
           <a href="https://automation-hub.hamdyzone.icu" target="_blank" rel="noopener"
-             class="btn-hub font-grotesk font-600 text-base px-8 py-4 inline-flex items-center gap-2">
-            Explore Automation Hub
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+             class="btn-hub font-grotesk text-base px-8 py-4">
+            <span data-i18n="hub.cta">Explore Automation Hub</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
-
-        <!-- Right: Visual card -->
         <div class="shrink-0 w-full lg:w-80">
           <div class="terminal">
             <div class="terminal-header justify-between">
@@ -335,37 +266,134 @@
                   <div class="terminal-btn bg-amber-500/70"></div>
                   <div class="terminal-btn bg-neon/70"></div>
                 </div>
-                <span class="font-mono text-xs text-gray-500">automation-hub deploy</span>
+                <span class="font-mono text-xs text-gray-500" data-i18n="hub.terminal_title">automation-hub deploy</span>
               </div>
-              <span class="font-mono text-xs text-neon/60">● LIVE</span>
+              <span class="font-mono text-xs text-neon/60">&bull; LIVE</span>
             </div>
             <div class="terminal-body space-y-1.5 text-xs">
-              <div><span class="text-neon">✓</span> <span class="text-gray-400">Pulling image magento:2.4.7...</span></div>
-              <div><span class="text-neon">✓</span> <span class="text-gray-400">Configuring nginx vhost...</span></div>
-              <div><span class="text-neon">✓</span> <span class="text-gray-400">Provisioning MySQL 8.0...</span></div>
-              <div><span class="text-neon">✓</span> <span class="text-gray-400">SSL certificate issued...</span></div>
-              <div><span class="text-blue-400">›</span> <span class="text-gray-400">DNS propagation...</span></div>
+              <div><span class="text-neon">&#x2713;</span> <span class="text-gray-400" data-i18n="hub.terminal_line_1">Pulling image magento:2.4.7...</span></div>
+              <div><span class="text-neon">&#x2713;</span> <span class="text-gray-400" data-i18n="hub.terminal_line_2">Configuring nginx vhost...</span></div>
+              <div><span class="text-neon">&#x2713;</span> <span class="text-gray-400" data-i18n="hub.terminal_line_3">Provisioning MySQL 8.0...</span></div>
+              <div><span class="text-neon">&#x2713;</span> <span class="text-gray-400" data-i18n="hub.terminal_line_4">SSL certificate issued...</span></div>
+              <div><span class="text-blue-400">&rsaquo;</span> <span class="text-gray-400" data-i18n="hub.terminal_line_5">DNS propagation...</span></div>
               <div class="pt-2 border-t border-border-dim">
-                <span class="text-neon font-700">✓ Deploy complete</span>
-                <span class="text-gray-500 ml-2">in 18s</span>
+                <span class="text-neon font-bold" data-i18n="hub.terminal_done">&#x2713; Deploy complete</span>
+                <span class="text-gray-500 ml-2" data-i18n="hub.terminal_time">in 18s</span>
               </div>
-              <div class="font-mono text-xs text-gray-600">→ https://your-store.hamdyzone.icu</div>
+              <div class="font-mono text-xs text-gray-600">&rarr; https://your-store.hamdyzone.icu</div>
             </div>
           </div>
-
-          <!-- Stats strip -->
           <div class="grid grid-cols-3 mt-3 border border-border-dim">
             <div class="p-3 text-center border-r border-border-dim">
-              <div class="font-mono text-lg font-700 text-neon">18s</div>
-              <div class="font-mono text-xs text-gray-600">Deploy</div>
+              <div class="font-mono text-lg font-bold text-neon" data-i18n="hub.stat_1_val">18s</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="hub.stat_1_label">Deploy</div>
             </div>
             <div class="p-3 text-center border-r border-border-dim">
-              <div class="font-mono text-lg font-700 text-blue-400">99.9%</div>
-              <div class="font-mono text-xs text-gray-600">Uptime</div>
+              <div class="font-mono text-lg font-bold text-blue-400" data-i18n="hub.stat_2_val">99.9%</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="hub.stat_2_label">Uptime</div>
             </div>
             <div class="p-3 text-center">
-              <div class="font-mono text-lg font-700 text-indigo-400">10+</div>
-              <div class="font-mono text-xs text-gray-600">Apps</div>
+              <div class="font-mono text-lg font-bold text-indigo-400" data-i18n="hub.stat_3_val">10+</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="hub.stat_3_label">Apps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HAMDYHOST -->
+<section id="hamdyhost" class="py-20 border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="automation-hub-card reveal">
+      <div class="automation-hub-grid"></div>
+      <div class="automation-hub-orb orb-1"></div>
+      <div class="automation-hub-orb orb-2"></div>
+      <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        <!-- LEFT: text + pills + CTA -->
+        <div class="flex-1 max-w-2xl" data-stagger>
+          <div class="inline-flex items-center gap-2 border border-neon/40 bg-neon/5 px-3 py-1.5 mb-6 reveal">
+            <span class="status-dot online"></span>
+            <span class="font-mono text-xs text-neon tracking-widest" data-i18n="hamdyhost.tag">SOVEREIGN VPS &mdash; KVM POWERED</span>
+          </div>
+          <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white leading-tight mb-5 reveal" data-i18n-html="hamdyhost.headline">
+            &#x1F5A5; HamdyHost &mdash; <span class="text-neon">VPS Hosting</span>
+          </h2>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl reveal" data-i18n="hamdyhost.subtitle">
+            Self-hosted KVM virtual servers with NVMe storage, full root access, and instant provisioning. Built for engineers who need bare-metal performance without the bare-metal hassle.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-8 reveal">
+            <span class="hub-pill" data-i18n="hamdyhost.pill_kvm">&#x2699; KVM Virtualization</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_nvme">&#x1F4BE; NVMe SSD</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_root">&#x1F511; Full Root Access</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_uptime">&#x1F4C8; 99.9% Uptime</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_instant">&#x26A1; Instant Deploy</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_ddos">&#x1F6E1; DDoS Protection</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_snapshots">&#x1F4F8; Snapshots</span>
+            <span class="hub-pill" data-i18n="hamdyhost.pill_support">&#x260E; 24/7 Support</span>
+          </div>
+          <div class="reveal">
+            <a href="https://hosting.hamdyzone.icu/" target="_blank" rel="noopener"
+               class="btn-hub font-grotesk text-base px-8 py-4">
+              <span data-i18n="hamdyhost.cta">Explore HamdyHost</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <div class="font-mono text-xs text-gray-500 mt-3" data-i18n="hamdyhost.cta_note">&rarr; hosting.hamdyzone.icu</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: provisioning terminal + specs panel -->
+        <div class="shrink-0 w-full lg:w-80">
+          <div class="terminal">
+            <div class="terminal-header justify-between">
+              <div class="flex items-center gap-6">
+                <div class="flex gap-1.5">
+                  <div class="terminal-btn bg-red-500/70"></div>
+                  <div class="terminal-btn bg-amber-500/70"></div>
+                  <div class="terminal-btn bg-neon/70"></div>
+                </div>
+                <span class="font-mono text-xs text-gray-500">hamdyhost provision</span>
+              </div>
+              <span class="font-mono text-xs text-neon/60">&bull; LIVE</span>
+            </div>
+            <div class="terminal-body space-y-1.5 text-xs">
+              <div><span class="text-neon font-bold">$</span> <span class="text-gray-400" data-i18n="hamdyhost.term_1">Allocating KVM instance...</span> <span class="text-neon">&#x2713;</span></div>
+              <div><span class="text-neon font-bold">$</span> <span class="text-gray-400" data-i18n="hamdyhost.term_2">Attaching NVMe storage...</span> <span class="text-neon">&#x2713;</span></div>
+              <div><span class="text-neon font-bold">$</span> <span class="text-gray-400" data-i18n="hamdyhost.term_3">Configuring network + DDoS shield...</span> <span class="text-neon">&#x2713;</span></div>
+              <div><span class="text-neon font-bold">$</span> <span class="text-gray-400" data-i18n="hamdyhost.term_4">Generating root credentials...</span> <span class="text-neon">&#x2713;</span></div>
+              <div><span class="text-neon font-bold">$</span> <span class="text-gray-400" data-i18n="hamdyhost.term_5">Booting Ubuntu 24.04 LTS...</span> <span class="text-blue-400">&rsaquo;</span></div>
+              <div class="pt-2 border-t border-border-dim">
+                <span class="text-neon font-bold">$</span> <span style="display:inline-block;width:7px;height:13px;background:var(--neon);vertical-align:middle;animation:blink-cursor 1s infinite"></span>
+              </div>
+            </div>
+          </div>
+          <div class="border border-border-dim mt-3">
+            <div class="px-3 py-2 border-b border-border-dim flex items-center justify-between">
+              <span class="font-mono text-xs text-gray-500" data-i18n="hamdyhost.specs_title">Starter Plan</span>
+              <span class="font-mono text-xs text-neon">$ ./spec</span>
+            </div>
+            <div class="grid grid-cols-2">
+              <div class="p-3 text-center border-r border-b border-border-dim">
+                <div class="font-mono text-lg font-bold text-neon"><span data-i18n="hamdyhost.spec_cpu">2</span> <span class="text-gray-400 text-sm font-normal" data-i18n="hamdyhost.spec_cpu_unit">vCores</span></div>
+                <div class="font-mono text-xs text-gray-600">CPU</div>
+              </div>
+              <div class="p-3 text-center border-b border-border-dim">
+                <div class="font-mono text-lg font-bold text-neon" data-i18n="hamdyhost.spec_ram">4 GB</div>
+                <div class="font-mono text-xs text-gray-600">RAM</div>
+              </div>
+              <div class="p-3 text-center border-r border-border-dim">
+                <div class="font-mono text-lg font-bold text-neon" data-i18n="hamdyhost.spec_storage">50 GB NVMe</div>
+                <div class="font-mono text-xs text-gray-600">Storage</div>
+              </div>
+              <div class="p-3 text-center">
+                <div class="font-mono text-lg font-bold text-neon" data-i18n="hamdyhost.spec_bw">2 TB</div>
+                <div class="font-mono text-xs text-gray-600">Bandwidth</div>
+              </div>
+            </div>
+            <div class="px-3 py-2 border-t border-border-dim text-center font-mono text-xs text-neon" data-i18n="hamdyhost.deploy_time">
+              &#x26A1; Deploy time &lt; 60s
             </div>
           </div>
         </div>
@@ -375,878 +403,640 @@
   </div>
 </section>
 
+<!-- MONITORING PLATFORM -->
+<section id="monitoring-platform" class="py-20 border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="monitoring-platform-card reveal">
+      <div class="monitoring-platform-grid"></div>
+      <div class="monitoring-platform-orb orb-mon-1"></div>
+      <div class="monitoring-platform-orb orb-mon-2"></div>
+      <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
 
-<!-- ═══════════════════════════════════════════════════════════
-     PAIN vs SOLUTION
-══════════════════════════════════════════════════════════════ -->
+        <!-- LEFT: text content -->
+        <div class="flex-1 max-w-2xl">
+          <div class="inline-flex items-center gap-2 border border-blue-500/40 bg-blue-500/5 px-3 py-1.5 mb-6">
+            <span class="status-dot online" style="background:#3b82f6;animation:none;box-shadow:none"></span>
+            <span class="font-mono text-xs text-blue-400 tracking-widest" data-i18n="mon.badge">LIVE &mdash; NOW AVAILABLE</span>
+          </div>
+          <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white leading-tight mb-5">
+            &#x1F4CA; <span data-i18n="mon.headline_1">Introducing</span><br>
+            <span class="shimmer-blue" data-i18n="mon.headline_2">Monitoring Platform</span><span class="text-white" data-i18n="mon.headline_3"> by HamdyTech</span>
+          </h2>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl" data-i18n-html="mon.description">
+            Monitor your infrastructure with <strong class="text-white">lightweight agents</strong>,
+            <strong class="text-white">API key authentication</strong>, and real-time metrics.
+            Fully <strong class="text-blue-400">self-hosted</strong> and designed for high reliability.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="mon-pill" data-i18n="mon.pill_1">&#x1F916; Agent-Based</span>
+            <span class="mon-pill" data-i18n="mon.pill_2">&#x1F511; API Key Auth</span>
+            <span class="mon-pill" data-i18n="mon.pill_3">&#x1F4CA; Real-Time Metrics</span>
+            <span class="mon-pill" data-i18n="mon.pill_4">&#x1F3E0; Self-Hosted</span>
+            <span class="mon-pill" data-i18n="mon.pill_5">&#x26A1; Zero Config</span>
+          </div>
+          <a href="https://monitoring.hamdyzone.icu/" target="_blank" rel="noopener"
+             class="btn-mon font-grotesk text-base px-8 py-4">
+            <span data-i18n="mon.cta">Explore Monitoring Platform</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <p class="mon-proof-link" data-i18n-html="mon.proof_link">
+            Used in real production environments &rarr; <a href="#projects">See deployments</a>
+          </p>
+        </div>
+
+        <!-- RIGHT: agent status + metrics panel -->
+        <div class="shrink-0 w-full lg:w-80">
+          <div class="terminal">
+            <div class="terminal-header justify-between">
+              <div class="flex items-center gap-6">
+                <div class="flex gap-1.5">
+                  <div class="terminal-btn bg-red-500/70"></div>
+                  <div class="terminal-btn bg-amber-500/70"></div>
+                  <div class="terminal-btn bg-blue-500/70"></div>
+                </div>
+                <span class="font-mono text-xs text-gray-500" data-i18n="mon.terminal_title">monitoring-platform</span>
+              </div>
+              <span class="font-mono text-xs" style="color:rgba(59,130,246,0.65)">&bull; LIVE</span>
+            </div>
+            <div class="terminal-body text-xs space-y-1.5 mon-terminal-live">
+              <!-- agent-1: healthy -->
+              <div class="flex items-center justify-between py-0.5">
+                <div class="flex items-center gap-2">
+                  <span class="status-dot online shrink-0" style="width:6px;height:6px"></span>
+                  <span class="text-gray-500 font-mono" style="font-size:10px">agent-1</span>
+                  <span class="font-mono text-gray-300" style="font-size:11px;font-weight:600">web-prod</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono" style="color:#4ade80;font-size:10px;letter-spacing:0.02em">healthy</span>
+                  <span class="font-mono text-neon" style="font-size:11px;font-weight:600" id="mon-lat-1">21ms</span>
+                </div>
+              </div>
+              <!-- agent-2: healthy -->
+              <div class="flex items-center justify-between py-0.5">
+                <div class="flex items-center gap-2">
+                  <span class="status-dot online shrink-0" style="width:6px;height:6px"></span>
+                  <span class="text-gray-500 font-mono" style="font-size:10px">agent-2</span>
+                  <span class="font-mono text-gray-300" style="font-size:11px;font-weight:600">db-primary</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono" style="color:#4ade80;font-size:10px;letter-spacing:0.02em">healthy</span>
+                  <span class="font-mono text-neon" style="font-size:11px;font-weight:600" id="mon-lat-2">18ms</span>
+                </div>
+              </div>
+              <!-- agent-3: healthy -->
+              <div class="flex items-center justify-between py-0.5">
+                <div class="flex items-center gap-2">
+                  <span class="status-dot online shrink-0" style="width:6px;height:6px"></span>
+                  <span class="text-gray-500 font-mono" style="font-size:10px">agent-3</span>
+                  <span class="font-mono text-gray-300" style="font-size:11px;font-weight:600">cache</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono" style="color:#4ade80;font-size:10px;letter-spacing:0.02em">healthy</span>
+                  <span class="font-mono text-neon" style="font-size:11px;font-weight:600" id="mon-lat-3">25ms</span>
+                </div>
+              </div>
+              <!-- agent-4: warning — packet loss -->
+              <div class="flex items-center justify-between py-1 px-1.5 -mx-1.5 mon-warning-row">
+                <div class="flex items-center gap-2">
+                  <span class="status-dot warning shrink-0" style="width:6px;height:6px"></span>
+                  <span class="text-gray-500 font-mono" style="font-size:10px">agent-4</span>
+                  <span class="font-mono text-amber-300" style="font-size:11px;font-weight:600">worker</span>
+                </div>
+                <span class="font-mono text-amber-400" style="font-size:10px;letter-spacing:0.02em">&#x26A0; 3.2% pkt loss</span>
+              </div>
+              <div class="pt-2 mt-0.5 border-t border-border-dim">
+                <span class="font-bold" style="color:#60a5fa" data-i18n="mon.terminal_status">3 healthy &middot; 1 warning</span>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 mt-3 border border-border-dim mon-stats-grid">
+            <div class="p-3 text-center border-r border-b border-border-dim mon-stat-cell">
+              <div class="font-mono text-lg font-bold text-blue-400" data-i18n="mon.stat_1_val">4</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="mon.stat_1_label">Hosts</div>
+            </div>
+            <div class="p-3 text-center border-b border-border-dim mon-stat-cell">
+              <div class="font-mono text-lg font-bold text-neon" data-i18n="mon.stat_2_val" id="mon-metrics-ps">847</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="mon.stat_2_label">Metrics/s</div>
+            </div>
+            <div class="p-3 text-center border-r border-border-dim mon-stat-cell">
+              <div class="font-mono text-lg font-bold text-neon" data-i18n="mon.stat_3_val">0</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="mon.stat_3_label">Alerts</div>
+            </div>
+            <div class="p-3 text-center mon-stat-cell">
+              <div class="font-mono text-lg font-bold text-indigo-400" data-i18n="mon.stat_4_val" id="mon-uptime-val">99.9%</div>
+              <div class="font-mono text-xs text-gray-600" data-i18n="mon.stat_4_label">Uptime</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN vs SOLUTION -->
 <section id="pain-solution" class="py-24 border-t border-border-dim">
   <div class="max-w-7xl mx-auto px-6">
-
     <div class="text-center mb-16 reveal">
-      <div class="section-label mb-3">// DIAGNOSTIC REPORT</div>
-      <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white mb-4">
+      <div class="section-label mb-3" data-i18n="pain.label">// DIAGNOSTIC REPORT</div>
+      <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white mb-4" data-i18n-html="pain.headline">
         Infrastructure Chaos<br>vs. <span class="text-neon">Architectural Order</span>
       </h2>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-        Most teams live in the left column. We move them to the right — permanently.
-      </p>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="pain.subtitle">Most teams live in the left column. We move them to the right &mdash; permanently.</p>
     </div>
-
     <div class="grid md:grid-cols-2 gap-0 border border-border-dim">
-
-      <!-- PAIN column -->
-      <div class="border-r border-border-dim p-8 bg-surface/30">
+      <div class="border-r border-border-dim p-5 sm:p-8 bg-surface/30">
         <div class="flex items-center gap-3 mb-8">
           <div class="status-dot offline"></div>
-          <span class="font-mono text-sm text-red-400 uppercase tracking-widest">Before — Chaos</span>
+          <span class="font-mono text-sm text-red-400 uppercase tracking-widest" data-i18n="pain.before_label">Before &mdash; Chaos</span>
         </div>
         <ul class="space-y-5">
-          <li class="flex items-start gap-3 text-gray-500">
-            <span class="font-mono text-red-500 mt-0.5 shrink-0">✗</span>
-            <div>
-              <div class="text-gray-300 font-500 mb-0.5">Manual deployments with SSH</div>
-              <div class="font-mono text-xs text-gray-600">Every release is a prayer. Rollbacks take hours.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3 text-gray-500">
-            <span class="font-mono text-red-500 mt-0.5 shrink-0">✗</span>
-            <div>
-              <div class="text-gray-300 font-500 mb-0.5">No monitoring until it's down</div>
-              <div class="font-mono text-xs text-gray-600">Customers find bugs before you do.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3 text-gray-500">
-            <span class="font-mono text-red-500 mt-0.5 shrink-0">✗</span>
-            <div>
-              <div class="text-gray-300 font-500 mb-0.5">Servers that only you understand</div>
-              <div class="font-mono text-xs text-gray-600">Bus factor = 1. No docs. No IaC.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3 text-gray-500">
-            <span class="font-mono text-red-500 mt-0.5 shrink-0">✗</span>
-            <div>
-              <div class="text-gray-300 font-500 mb-0.5">Scaling means clicking buttons</div>
-              <div class="font-mono text-xs text-gray-600">Traffic spikes cause 3am pages.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3 text-gray-500">
-            <span class="font-mono text-red-500 mt-0.5 shrink-0">✗</span>
-            <div>
-              <div class="text-gray-300 font-500 mb-0.5">Backups? What backups?</div>
-              <div class="font-mono text-xs text-gray-600">Last snapshot was 6 weeks ago.</div>
-            </div>
-          </li>
+          <li class="flex items-start gap-3"><span class="font-mono text-red-500 mt-0.5 shrink-0">&#x2717;</span><div><div class="text-gray-300 font-medium mb-0.5" data-i18n="pain.item_1_title">Manual deployments with SSH</div><div class="font-mono text-xs text-gray-600" data-i18n="pain.item_1_desc">Every release is a prayer. Rollbacks take hours.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-red-500 mt-0.5 shrink-0">&#x2717;</span><div><div class="text-gray-300 font-medium mb-0.5" data-i18n="pain.item_2_title">No monitoring until it&apos;s down</div><div class="font-mono text-xs text-gray-600" data-i18n="pain.item_2_desc">Customers find bugs before you do.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-red-500 mt-0.5 shrink-0">&#x2717;</span><div><div class="text-gray-300 font-medium mb-0.5" data-i18n="pain.item_3_title">Servers that only you understand</div><div class="font-mono text-xs text-gray-600" data-i18n="pain.item_3_desc">Bus factor = 1. No docs. No IaC.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-red-500 mt-0.5 shrink-0">&#x2717;</span><div><div class="text-gray-300 font-medium mb-0.5" data-i18n="pain.item_4_title">Scaling means clicking buttons</div><div class="font-mono text-xs text-gray-600" data-i18n="pain.item_4_desc">Traffic spikes cause 3am pages.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-red-500 mt-0.5 shrink-0">&#x2717;</span><div><div class="text-gray-300 font-medium mb-0.5" data-i18n="pain.item_5_title">Backups? What backups?</div><div class="font-mono text-xs text-gray-600" data-i18n="pain.item_5_desc">Last snapshot was 6 weeks ago.</div></div></li>
         </ul>
       </div>
-
-      <!-- SOLUTION column -->
-      <div class="p-8 relative">
-        <!-- Subtle glow on solution side -->
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 30% 50%, rgba(60,255,192,0.03) 0%, transparent 70%)"></div>
+      <div class="p-5 sm:p-8 relative">
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 30% 50%,rgba(60,255,192,0.03) 0%,transparent 70%)"></div>
         <div class="flex items-center gap-3 mb-8">
           <div class="status-dot online"></div>
-          <span class="font-mono text-sm text-neon uppercase tracking-widest">After — Sovereign</span>
+          <span class="font-mono text-sm text-neon uppercase tracking-widest" data-i18n="pain.after_label">After &mdash; Sovereign</span>
         </div>
         <ul class="space-y-5">
-          <li class="flex items-start gap-3">
-            <span class="font-mono text-neon mt-0.5 shrink-0">✓</span>
-            <div>
-              <div class="text-white font-500 mb-0.5">GitOps CI/CD pipeline</div>
-              <div class="font-mono text-xs text-gray-500">Push to main → tested, built, deployed. Zero human touch.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="font-mono text-neon mt-0.5 shrink-0">✓</span>
-            <div>
-              <div class="text-white font-500 mb-0.5">Full observability stack</div>
-              <div class="font-mono text-xs text-gray-500">Prometheus + Grafana + alerts. Know before users do.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="font-mono text-neon mt-0.5 shrink-0">✓</span>
-            <div>
-              <div class="text-white font-500 mb-0.5">Infrastructure as Code</div>
-              <div class="font-mono text-xs text-gray-500">Ansible + Terraform. Rebuild entire stack in minutes.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="font-mono text-neon mt-0.5 shrink-0">✓</span>
-            <div>
-              <div class="text-white font-500 mb-0.5">Auto-scaling with load balancing</div>
-              <div class="font-mono text-xs text-gray-500">Traffic spikes handled automatically. Sleep through launches.</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="font-mono text-neon mt-0.5 shrink-0">✓</span>
-            <div>
-              <div class="text-white font-500 mb-0.5">Automated backups + DR plan</div>
-              <div class="font-mono text-xs text-gray-500">Hourly snapshots. Cross-region replication. Tested monthly.</div>
-            </div>
-          </li>
+          <li class="flex items-start gap-3"><span class="font-mono text-neon mt-0.5 shrink-0">&#x2713;</span><div><div class="text-white font-medium mb-0.5" data-i18n="sol.item_1_title">GitOps CI/CD pipeline</div><div class="font-mono text-xs text-gray-500" data-i18n="sol.item_1_desc">Push to main &rarr; tested, built, deployed. Zero human touch.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-neon mt-0.5 shrink-0">&#x2713;</span><div><div class="text-white font-medium mb-0.5" data-i18n="sol.item_2_title">Full observability stack</div><div class="font-mono text-xs text-gray-500" data-i18n="sol.item_2_desc">Prometheus + Grafana + alerts. Know before users do.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-neon mt-0.5 shrink-0">&#x2713;</span><div><div class="text-white font-medium mb-0.5" data-i18n="sol.item_3_title">Infrastructure as Code</div><div class="font-mono text-xs text-gray-500" data-i18n="sol.item_3_desc">Ansible + Terraform. Rebuild entire stack in minutes.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-neon mt-0.5 shrink-0">&#x2713;</span><div><div class="text-white font-medium mb-0.5" data-i18n="sol.item_4_title">Auto-scaling with load balancing</div><div class="font-mono text-xs text-gray-500" data-i18n="sol.item_4_desc">Traffic spikes handled automatically. Sleep through launches.</div></div></li>
+          <li class="flex items-start gap-3"><span class="font-mono text-neon mt-0.5 shrink-0">&#x2713;</span><div><div class="text-white font-medium mb-0.5" data-i18n="sol.item_5_title">Automated backups + DR plan</div><div class="font-mono text-xs text-gray-500" data-i18n="sol.item_5_desc">Hourly snapshots. Cross-region replication. Tested monthly.</div></div></li>
         </ul>
       </div>
-
-    </div><!-- /grid -->
+    </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     SYSTEM MODULES (Services)
-══════════════════════════════════════════════════════════════ -->
+<!-- SERVICES -->
 <section id="services" class="py-24 border-t border-border-dim">
   <div class="max-w-7xl mx-auto px-6">
-
     <div class="mb-16 reveal">
-      <div class="section-label mb-3">// MODULE CATALOG</div>
+      <div class="section-label mb-3" data-i18n="services.label">// MODULE CATALOG</div>
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white">
-          System Modules
-        </h2>
-        <p class="text-gray-400 max-w-sm leading-relaxed">
-          Each module is a battle-tested building block. Combine them to architect your ideal stack.
-        </p>
+        <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white" data-i18n="services.headline">System Modules</h2>
+        <p class="text-gray-400 max-w-sm leading-relaxed" data-i18n="services.subtitle">Each module is a battle-tested building block. Combine them to architect your ideal stack.</p>
       </div>
     </div>
-
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4" data-stagger>
-
-      <!-- Module 01 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-lg">
-            ⬡
-          </div>
-          <span class="tag neon">MODULE-01</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">Containerization & Orchestration</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          Docker + Docker Swarm / Kubernetes deployments. Multi-service architectures with health checks, rollback policies, and secret management.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">Docker</span>
-          <span class="tag">K8s</span>
-          <span class="tag">Swarm</span>
-          <span class="tag">Helm</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-lg">&#x2B21;</div><span class="tag neon">MODULE-01</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m01_title">Containerization &amp; Orchestration</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m01_desc">Docker + Docker Swarm / Kubernetes deployments. Multi-service architectures with health checks, rollback policies, and secret management.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">Docker</span><span class="tag">K8s</span><span class="tag">Swarm</span><span class="tag">Helm</span></div>
       </div>
-
-      <!-- Module 02 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">
-            ⚡
-          </div>
-          <span class="tag blue">MODULE-02</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">CI/CD Pipeline Engineering</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          GitLab CI, GitHub Actions, Jenkins. From commit to production in under 3 minutes. Blue-green deployments, canary releases, automated rollbacks.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">GitLab CI</span>
-          <span class="tag">GitHub Actions</span>
-          <span class="tag">Ansible</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">&#x26A1;</div><span class="tag blue">MODULE-02</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m02_title">CI/CD Pipeline Engineering</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m02_desc">GitLab CI, GitHub Actions, Jenkins. From commit to production in under 3 minutes. Blue-green deployments, canary releases, automated rollbacks.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">GitLab CI</span><span class="tag">GitHub Actions</span><span class="tag">Ansible</span></div>
       </div>
-
-      <!-- Module 03 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-lg">
-            ◈
-          </div>
-          <span class="tag" style="border-color:rgba(99,102,241,0.3);color:#818cf8;background:rgba(99,102,241,0.08)">MODULE-03</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">Proxmox Virtualization</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          Bare-metal Proxmox clusters, LXC + VM provisioning, HA failover, ZFS storage pools, snapshot automation, and live migration.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">Proxmox</span>
-          <span class="tag">LXC</span>
-          <span class="tag">ZFS</span>
-          <span class="tag">Ceph</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-lg">&#x25C8;</div><span class="tag" style="border-color:rgba(99,102,241,0.3);color:#818cf8;background:rgba(99,102,241,0.08)">MODULE-03</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m03_title">Proxmox Virtualization</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m03_desc">Bare-metal Proxmox clusters, LXC + VM provisioning, HA failover, ZFS storage pools, snapshot automation, and live migration.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">Proxmox</span><span class="tag">LXC</span><span class="tag">ZFS</span><span class="tag">Ceph</span></div>
       </div>
-
-      <!-- Module 04 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">
-            ◎
-          </div>
-          <span class="tag amber">MODULE-04</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">Nginx & Reverse Proxy</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          High-performance Nginx configs, SSL termination, load balancing, rate limiting, geo-blocking, and web application firewall rules.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">Nginx</span>
-          <span class="tag">Traefik</span>
-          <span class="tag">HAProxy</span>
-          <span class="tag">Certbot</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">&#x25CE;</div><span class="tag amber">MODULE-04</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m04_title">Nginx &amp; Reverse Proxy</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m04_desc">High-performance Nginx configs, SSL termination, load balancing, rate limiting, geo-blocking, and web application firewall rules.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">Nginx</span><span class="tag">Traefik</span><span class="tag">HAProxy</span><span class="tag">Certbot</span></div>
       </div>
-
-      <!-- Module 05 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-lg">
-            ⊞
-          </div>
-          <span class="tag neon">MODULE-05</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">Monitoring & Observability</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          Prometheus + Grafana dashboards, alerting rules, log aggregation with ELK or Loki, distributed tracing, and on-call escalation.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">Prometheus</span>
-          <span class="tag">Grafana</span>
-          <span class="tag">Loki</span>
-          <span class="tag">Alertmanager</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-lg">&#x229E;</div><span class="tag neon">MODULE-05</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m05_title">Monitoring &amp; Observability</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m05_desc">Prometheus + Grafana dashboards, alerting rules, log aggregation with ELK or Loki, distributed tracing, and on-call escalation.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Loki</span><span class="tag">Alertmanager</span></div>
       </div>
-
-      <!-- Module 06 -->
       <div class="card p-6 reveal">
-        <div class="flex items-start justify-between mb-5">
-          <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">
-            ≡
-          </div>
-          <span class="tag blue">MODULE-06</span>
-        </div>
-        <h3 class="font-grotesk font-600 text-lg text-white mb-2">Infrastructure as Code</h3>
-        <p class="text-gray-500 text-sm leading-relaxed mb-5">
-          Terraform for cloud provisioning, Ansible playbooks for configuration management. Full environment reproducibility from a single command.
-        </p>
-        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim">
-          <span class="tag">Terraform</span>
-          <span class="tag">Ansible</span>
-          <span class="tag">Packer</span>
-          <span class="tag">Vault</span>
-        </div>
+        <div class="flex items-start justify-between mb-5"><div class="w-10 h-10 bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">&#x2261;</div><span class="tag blue">MODULE-06</span></div>
+        <h3 class="font-grotesk font-semibold text-lg text-white mb-2" data-i18n="services.m06_title">Infrastructure as Code</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5" data-i18n="services.m06_desc">Terraform for cloud provisioning, Ansible playbooks for configuration management. Full environment reproducibility from a single command.</p>
+        <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border-dim"><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Packer</span><span class="tag">Vault</span></div>
       </div>
-
-    </div><!-- /grid -->
+    </div>
   </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════
-     CASE STUDY
-══════════════════════════════════════════════════════════════ -->
-<section id="case-study" class="py-24 border-t border-border-dim bg-surface/20">
+<!-- LIVE PROJECTS -->
+<section id="projects" class="py-24 border-t border-border-dim bg-surface/20">
   <div class="max-w-7xl mx-auto px-6">
-
     <div class="mb-16 reveal">
-      <div class="section-label mb-3">// CASE STUDY — 001</div>
-      <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white max-w-2xl">
-        E-Commerce Platform:<br>
-        <span class="text-neon">Zero to 99.9% Uptime</span>
+      <div class="section-label mb-3" data-i18n="projects.label">// DEPLOYED SYSTEMS</div>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white" data-i18n="projects.headline">Live Projects</h2>
+        <p class="text-gray-400 max-w-sm leading-relaxed" data-i18n="projects.subtitle">Production systems running on self-hosted infrastructure.</p>
+      </div>
+    </div>
+    <div id="projects-grid" class="grid md:grid-cols-2 gap-6" data-stagger>
+      <!-- Populated by main.js from /data/content.json -->
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case-study" class="py-24 border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-16 reveal">
+      <div class="section-label mb-3" data-i18n="case.label">// CASE STUDY &mdash; 001</div>
+      <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white max-w-2xl" data-i18n-html="case.headline">
+        E-Commerce Platform:<br><span class="text-neon">Zero to 99.9% Uptime</span>
       </h2>
     </div>
-
-    <div class="grid lg:grid-cols-2 gap-12 items-start">
-
-      <!-- Left: Story + metrics -->
+    <div class="grid lg:grid-cols-2 gap-12 items-stretch">
       <div class="reveal-left">
         <div class="space-y-4 text-gray-400 leading-relaxed mb-10">
-          <p>
-            A growing e-commerce client was running a single VPS with manual deployments, no monitoring,
-            and a deploy process that regularly caused 30-minute outages during business hours.
-          </p>
-          <p>
-            Over 3 weeks, I re-architected their entire infrastructure: containerized all services,
-            built a GitLab CI pipeline, deployed a Proxmox HA cluster, and set up full observability.
-          </p>
-          <p class="text-white">
-            Result: zero unplanned downtime in 8 months. Deploy time dropped from 45 minutes to 90 seconds.
-          </p>
+          <p data-i18n="case.p1">A growing e-commerce client was running a single VPS with manual deployments, no monitoring, and a deploy process that regularly caused 30-minute outages during business hours.</p>
+          <p data-i18n="case.p2">Over 3 weeks, I re-architected their entire infrastructure: containerized all services, built a GitLab CI pipeline, deployed a Proxmox HA cluster, and set up full observability.</p>
+          <p class="text-white" data-i18n="case.p3">Result: zero unplanned downtime in 8 months. Deploy time dropped from 45 minutes to 90 seconds.</p>
         </div>
-
-        <!-- Outcome metrics -->
         <div class="grid grid-cols-2 gap-4 mb-10">
-          <div class="border border-border-dim p-5 bg-surface">
-            <div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider">Deploy Time</div>
-            <div class="font-grotesk text-3xl font-700 text-neon">90s</div>
-            <div class="font-mono text-xs text-gray-600 mt-1">was 45 min</div>
-          </div>
-          <div class="border border-border-dim p-5 bg-surface">
-            <div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider">Downtime</div>
-            <div class="font-grotesk text-3xl font-700 text-neon">0</div>
-            <div class="font-mono text-xs text-gray-600 mt-1">unplanned in 8 months</div>
-          </div>
-          <div class="border border-border-dim p-5 bg-surface">
-            <div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider">Cost Reduction</div>
-            <div class="font-grotesk text-3xl font-700 text-blue-400">38%</div>
-            <div class="font-mono text-xs text-gray-600 mt-1">infra cost vs cloud</div>
-          </div>
-          <div class="border border-border-dim p-5 bg-surface">
-            <div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider">Response Time</div>
-            <div class="font-grotesk text-3xl font-700 text-indigo-400">142ms</div>
-            <div class="font-mono text-xs text-gray-600 mt-1">p50 API response</div>
-          </div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_1_label">Deploy Time</div><div class="font-grotesk text-3xl font-bold text-neon" data-i18n="case.metric_1_val">90s</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_1_sub">was 45 min</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_2_label">Downtime</div><div class="font-grotesk text-3xl font-bold text-neon" data-i18n="case.metric_2_val">0</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_2_sub">unplanned in 8 months</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_3_label">Cost Reduction</div><div class="font-grotesk text-3xl font-bold text-blue-400" data-i18n="case.metric_3_val">38%</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_3_sub">infra cost vs cloud</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_4_label">Response Time</div><div class="font-grotesk text-3xl font-bold text-indigo-400" data-i18n="case.metric_4_val">142ms</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_4_sub">p50 API response</div></div>
         </div>
-
-        <!-- Tech stack used -->
         <div>
-          <div class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-3">Stack Used</div>
+          <div class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-3" data-i18n="case.stack_label">Stack Used</div>
           <div class="flex flex-wrap gap-2">
-            <span class="tag neon">Proxmox HA</span>
-            <span class="tag blue">Docker Swarm</span>
-            <span class="tag">GitLab CI</span>
-            <span class="tag">Nginx</span>
-            <span class="tag">Prometheus</span>
-            <span class="tag">Grafana</span>
-            <span class="tag">Ansible</span>
-            <span class="tag amber">Redis</span>
+            <span class="tag neon">Proxmox HA</span><span class="tag blue">Docker Swarm</span><span class="tag">GitLab CI</span>
+            <span class="tag">Nginx</span><span class="tag">Prometheus</span><span class="tag">Grafana</span>
+            <span class="tag">Ansible</span><span class="tag amber">Redis</span>
           </div>
         </div>
       </div>
-
-      <!-- Right: Architecture diagram -->
       <div class="reveal">
         <div class="terminal p-6">
-          <div class="font-mono text-xs text-gray-500 mb-6 uppercase tracking-widest">// Architecture Diagram</div>
-
-          <!-- Diagram layers -->
+          <div class="font-mono text-xs text-gray-500 mb-6 uppercase tracking-widest" data-i18n="case.arch_label">// Architecture Diagram</div>
           <div class="space-y-3">
-
-            <!-- Layer: Internet -->
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 1</span>
-              <div class="arch-node" style="flex:1;text-align:center;">⬡ Cloudflare CDN + DDoS Protection</div>
-            </div>
-
-            <!-- Arrow down -->
-            <div class="flex justify-center">
-              <div class="w-0.5 h-4 bg-border-dim relative">
-                <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">▼</span>
-              </div>
-            </div>
-
-            <!-- Layer: LB -->
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 2</span>
-              <div class="arch-node blue" style="flex:1;text-align:center;">⚖ Nginx Load Balancer (HA pair)</div>
-            </div>
-
-            <!-- Arrow + split -->
-            <div class="flex justify-center">
-              <div class="w-0.5 h-4 bg-border-dim relative">
-                <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">▼</span>
-              </div>
-            </div>
-
-            <!-- Layer: App nodes -->
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 3</span>
-              <div class="flex gap-2 flex-1">
-                <div class="arch-node active" style="flex:1;text-align:center;">⬡ App Node 1</div>
-                <div class="arch-node active" style="flex:1;text-align:center;">⬡ App Node 2</div>
-                <div class="arch-node active" style="flex:1;text-align:center;">⬡ App Node 3</div>
-              </div>
-            </div>
-
-            <!-- Arrow down -->
-            <div class="flex justify-center">
-              <div class="w-0.5 h-4 bg-border-dim relative">
-                <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">▼</span>
-              </div>
-            </div>
-
-            <!-- Layer: Data -->
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 4</span>
-              <div class="flex gap-2 flex-1">
-                <div class="arch-node amber" style="flex:1;text-align:center;">◎ Postgres HA</div>
-                <div class="arch-node amber" style="flex:1;text-align:center;">◎ Redis Cache</div>
-              </div>
-            </div>
-
-            <!-- Arrow down -->
-            <div class="flex justify-center">
-              <div class="w-0.5 h-4 bg-border-dim relative">
-                <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">▼</span>
-              </div>
-            </div>
-
-            <!-- Layer: Storage -->
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 5</span>
-              <div class="arch-node" style="flex:1;text-align:center;">⊞ Proxmox ZFS Storage Pool + Backups</div>
-            </div>
-
-          </div><!-- /diagram -->
-
-          <!-- Monitoring sidebar note -->
+            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 1</span><div class="arch-node" style="flex:1;text-align:center;">&#x2B21; Cloudflare CDN + DDoS Protection</div></div>
+            <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
+            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 2</span><div class="arch-node blue" style="flex:1;text-align:center;">&#x2696; Nginx Load Balancer (HA pair)</div></div>
+            <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
+            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 3</span><div class="flex gap-2 flex-1"><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 1</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 2</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 3</div></div></div>
+            <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
+            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 4</span><div class="flex gap-2 flex-1"><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Postgres HA</div><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Redis Cache</div></div></div>
+            <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
+            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 5</span><div class="arch-node" style="flex:1;text-align:center;">&#x229E; Proxmox ZFS Storage Pool + Backups</div></div>
+          </div>
           <div class="mt-6 pt-4 border-t border-border-dim flex items-center justify-between">
-            <span class="font-mono text-xs text-gray-600">MONITORING PLANE</span>
+            <span class="font-mono text-xs text-gray-600" data-i18n="case.monitoring_label">MONITORING PLANE</span>
             <div class="flex items-center gap-3">
               <span class="arch-node text-xs py-1" style="color:#3b82f6;border-color:rgba(59,130,246,0.4)">Prometheus</span>
               <span class="arch-node text-xs py-1" style="color:#3b82f6;border-color:rgba(59,130,246,0.4)">Grafana</span>
               <span class="arch-node text-xs py-1" style="color:#3b82f6;border-color:rgba(59,130,246,0.4)">Alertmanager</span>
             </div>
           </div>
-
-        </div><!-- /terminal -->
+        </div>
       </div>
-
-    </div><!-- /grid -->
+    </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     GITHUB ACTIVITY
-══════════════════════════════════════════════════════════════ -->
+<!-- GITHUB ACTIVITY -->
 <section id="github" class="py-24 border-t border-border-dim">
   <div class="max-w-7xl mx-auto px-6">
-
     <div class="mb-16 reveal">
-      <div class="section-label mb-3">// SYSTEM ACTIVITY LOG</div>
+      <div class="section-label mb-3" data-i18n="github.label">// SYSTEM ACTIVITY LOG</div>
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white">
-          Always Shipping
-        </h2>
-        <a href="https://github.com/hamdytech" target="_blank" rel="noopener"
+        <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white" data-i18n="github.headline">Always Shipping</h2>
+        <a data-content="github-link" href="https://github.com/ahmed2287" target="_blank" rel="noopener"
            class="btn-ghost font-mono text-sm px-5 py-2 inline-flex items-center gap-2 self-start">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-          </svg>
-          View on GitHub
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span data-i18n="github.view_btn">View on GitHub</span>
         </a>
       </div>
     </div>
-
     <div class="grid lg:grid-cols-3 gap-8">
-
-      <!-- Contribution grid -->
       <div class="lg:col-span-2 reveal">
         <div class="terminal p-6">
           <div class="flex items-center justify-between mb-5">
-            <span class="font-mono text-xs text-gray-500 uppercase tracking-widest">Contribution Activity — Last 52 Weeks</span>
-            <span class="font-mono text-xs text-neon">847 commits</span>
+            <span class="font-mono text-xs text-gray-500 uppercase tracking-widest" data-i18n="github.contrib_label">Contribution Activity &mdash; Last 52 Weeks</span>
+            <span class="font-mono text-xs text-neon" data-i18n="github.commits_count">847 commits</span>
           </div>
-          <!-- Grid: 52 cols × 7 rows -->
-          <div id="contrib-grid" class="flex gap-1 overflow-x-auto pb-2">
-            <!-- Generated by JS below -->
-          </div>
+          <div id="contrib-grid" class="flex gap-1 overflow-x-auto pb-2"></div>
           <div class="flex items-center gap-2 mt-4">
-            <span class="font-mono text-xs text-gray-600">Less</span>
-            <div class="contrib-cell level-0"></div>
-            <div class="contrib-cell level-1"></div>
-            <div class="contrib-cell level-2"></div>
-            <div class="contrib-cell level-3"></div>
-            <div class="contrib-cell level-4"></div>
-            <span class="font-mono text-xs text-gray-600">More</span>
+            <span class="font-mono text-xs text-gray-600" data-i18n="github.less">Less</span>
+            <div class="contrib-cell level-0"></div><div class="contrib-cell level-1"></div><div class="contrib-cell level-2"></div><div class="contrib-cell level-3"></div><div class="contrib-cell level-4"></div>
+            <span class="font-mono text-xs text-gray-600" data-i18n="github.more">More</span>
           </div>
         </div>
       </div>
-
-      <!-- Recent commits -->
       <div class="reveal">
         <div class="terminal h-full">
           <div class="terminal-header">
-            <div class="flex gap-1.5">
-              <div class="terminal-btn bg-red-500/70"></div>
-              <div class="terminal-btn bg-amber-500/70"></div>
-              <div class="terminal-btn bg-neon/70"></div>
-            </div>
-            <span class="ml-3 font-mono text-xs text-gray-500">recent commits</span>
+            <div class="flex gap-1.5"><div class="terminal-btn bg-red-500/70"></div><div class="terminal-btn bg-amber-500/70"></div><div class="terminal-btn bg-neon/70"></div></div>
+            <span class="ml-3 font-mono text-xs text-gray-500" data-i18n="github.recent_title">recent commits</span>
           </div>
           <div class="terminal-body space-y-4">
-
-            <div class="border-b border-border-dim pb-4">
-              <div class="font-mono text-xs text-neon mb-1">feat(nginx): add rate limiting per IP</div>
-              <div class="font-mono text-xs text-gray-600">proxmox-cluster · 2h ago</div>
-            </div>
-            <div class="border-b border-border-dim pb-4">
-              <div class="font-mono text-xs text-blue-400 mb-1">fix(ci): resolve docker build cache miss</div>
-              <div class="font-mono text-xs text-gray-600">ci-templates · 5h ago</div>
-            </div>
-            <div class="border-b border-border-dim pb-4">
-              <div class="font-mono text-xs text-neon mb-1">chore(ansible): update Debian 12 playbook</div>
-              <div class="font-mono text-xs text-gray-600">infra-ansible · 1d ago</div>
-            </div>
-            <div class="border-b border-border-dim pb-4">
-              <div class="font-mono text-xs text-amber-400 mb-1">docs(terraform): add module README</div>
-              <div class="font-mono text-xs text-gray-600">tf-modules · 2d ago</div>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-neon mb-1">feat(grafana): new K8s resource dashboard</div>
-              <div class="font-mono text-xs text-gray-600">monitoring-stack · 3d ago</div>
-            </div>
-
+            <div class="border-b border-border-dim pb-4"><div class="font-mono text-xs text-neon mb-1">feat(nginx): add rate limiting per IP</div><div class="font-mono text-xs text-gray-600">proxmox-cluster &middot; 2h ago</div></div>
+            <div class="border-b border-border-dim pb-4"><div class="font-mono text-xs text-blue-400 mb-1">fix(ci): resolve docker build cache miss</div><div class="font-mono text-xs text-gray-600">ci-templates &middot; 5h ago</div></div>
+            <div class="border-b border-border-dim pb-4"><div class="font-mono text-xs text-neon mb-1">chore(ansible): update Debian 12 playbook</div><div class="font-mono text-xs text-gray-600">infra-ansible &middot; 1d ago</div></div>
+            <div class="border-b border-border-dim pb-4"><div class="font-mono text-xs text-amber-400 mb-1">docs(terraform): add module README</div><div class="font-mono text-xs text-gray-600">tf-modules &middot; 2d ago</div></div>
+            <div><div class="font-mono text-xs text-neon mb-1">feat(grafana): new K8s resource dashboard</div><div class="font-mono text-xs text-gray-600">monitoring-stack &middot; 3d ago</div></div>
           </div>
         </div>
       </div>
-
-    </div><!-- /grid -->
-
-    <!-- Activity stats row -->
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 reveal">
-      <div class="border border-border-dim p-5 bg-surface text-center">
-        <div class="font-mono text-2xl font-700 text-neon mb-1">23</div>
-        <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Public Repos</div>
-      </div>
-      <div class="border border-border-dim p-5 bg-surface text-center">
-        <div class="font-mono text-2xl font-700 text-blue-400 mb-1">847</div>
-        <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Commits / Year</div>
-      </div>
-      <div class="border border-border-dim p-5 bg-surface text-center">
-        <div class="font-mono text-2xl font-700 text-indigo-400 mb-1">341</div>
-        <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">PRs Merged</div>
-      </div>
-      <div class="border border-border-dim p-5 bg-surface text-center">
-        <div class="font-mono text-2xl font-700 text-amber-400 mb-1">18</div>
-        <div class="font-mono text-xs text-gray-500 uppercase tracking-wider">Day Streak</div>
-      </div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-neon mb-1">23</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_1_label">Public Repos</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-blue-400 mb-1">847</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_2_label">Commits / Year</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-indigo-400 mb-1">341</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_3_label">PRs Merged</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-amber-400 mb-1">18</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_4_label">Day Streak</div></div>
     </div>
-
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     PRICING
-══════════════════════════════════════════════════════════════ -->
-<section id="pricing" class="py-24 border-t border-border-dim bg-surface/20">
-  <div class="max-w-7xl mx-auto px-6">
-
-    <div class="text-center mb-16 reveal">
-      <div class="section-label mb-3">// ENGAGEMENT TIERS</div>
-      <h2 class="font-grotesk font-700 text-4xl xl:text-5xl text-white mb-4">
-        Select Your Module Package
-      </h2>
-      <p class="text-gray-400 text-lg max-w-xl mx-auto mb-8">
-        Fixed-scope packages with clear deliverables. No hourly billing surprises.
-      </p>
-
-      <!-- Billing toggle -->
-      <div class="inline-flex items-center gap-4">
-        <span data-billing="monthly" class="font-mono text-sm text-neon transition-colors">Monthly</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input id="billing-toggle" type="checkbox" class="sr-only peer">
-          <div class="w-11 h-6 bg-border-dim peer-checked:bg-neon/30 border border-border-dim peer-checked:border-neon/50 transition-all relative">
-            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-gray-500 peer-checked:bg-neon peer-checked:translate-x-5 transition-all"></div>
-          </div>
-        </label>
-        <span data-billing="yearly" class="font-mono text-sm text-gray-500 transition-colors">
-          Yearly <span class="text-neon text-xs">-20%</span>
-        </span>
-      </div>
-    </div>
-
-    <!-- Pricing cards -->
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <!-- Tier 1: Starter -->
-      <div class="card p-8 reveal">
-        <div class="mb-6">
-          <span class="tag mb-4 inline-block">TIER — 01</span>
-          <h3 class="font-grotesk font-700 text-2xl text-white mb-2">Bootstrap</h3>
-          <p class="text-gray-500 text-sm">Perfect for startups getting serious about infrastructure.</p>
-        </div>
-        <div class="mb-8">
-          <span class="font-grotesk font-700 text-5xl text-white">
-            $<span data-price-monthly="799" data-price-yearly="639">799</span>
-          </span>
-          <span class="font-mono text-sm text-gray-500">/project</span>
-        </div>
-        <ul class="space-y-3 mb-8">
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>VPS setup + hardening (2 servers)
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Docker + Nginx deployment
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Basic CI/CD pipeline (GitHub Actions)
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>SSL + domain + DNS config
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>7-day support handover
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-600">
-            <span class="shrink-0">—</span>Monitoring stack
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-600">
-            <span class="shrink-0">—</span>HA failover
-          </li>
-        </ul>
-        <a href="#cta" class="btn-ghost font-mono text-sm px-6 py-3 w-full text-center block">
-          → Initialize Bootstrap
-        </a>
-      </div>
-
-      <!-- Tier 2: Production (featured) -->
-      <div class="card pricing-featured p-8 pt-10 reveal">
-        <div class="mb-6">
-          <span class="tag neon mb-4 inline-block">TIER — 02</span>
-          <h3 class="font-grotesk font-700 text-2xl text-white mb-2">Production</h3>
-          <p class="text-gray-500 text-sm">For teams shipping daily who can't afford downtime.</p>
-        </div>
-        <div class="mb-8">
-          <span class="font-grotesk font-700 text-5xl text-white">
-            $<span data-price-monthly="1899" data-price-yearly="1519">1,899</span>
-          </span>
-          <span class="font-mono text-sm text-gray-500">/project</span>
-        </div>
-        <ul class="space-y-3 mb-8">
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Everything in Bootstrap
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Proxmox HA cluster (3 nodes)
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Full observability (Prometheus + Grafana)
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>GitLab CI/CD with rollback
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>Automated backups + DR plan
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>30-day support
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-neon shrink-0">✓</span>IaC documentation handover
-          </li>
-        </ul>
-        <a href="#cta" class="btn-primary font-mono text-sm px-6 py-3 w-full text-center block">
-          → Initialize Production
-        </a>
-      </div>
-
-      <!-- Tier 3: Sovereign -->
-      <div class="card p-8 reveal">
-        <div class="mb-6">
-          <span class="tag blue mb-4 inline-block">TIER — 03</span>
-          <h3 class="font-grotesk font-700 text-2xl text-white mb-2">Sovereign</h3>
-          <p class="text-gray-500 text-sm">Full-stack DevOps ownership for growing companies.</p>
-        </div>
-        <div class="mb-8">
-          <span class="font-grotesk font-700 text-5xl text-white">
-            $<span data-price-monthly="3999" data-price-yearly="3199">3,999</span>
-          </span>
-          <span class="font-mono text-sm text-gray-500">/project</span>
-        </div>
-        <ul class="space-y-3 mb-8">
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Everything in Production
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Kubernetes / multi-cluster setup
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Terraform + Ansible full IaC
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Security hardening + WAF
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Custom Grafana dashboards
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>90-day ongoing support
-          </li>
-          <li class="flex items-center gap-3 text-sm text-gray-400">
-            <span class="text-blue-400 shrink-0">✓</span>Team training sessions (4h)
-          </li>
-        </ul>
-        <a href="#cta" class="btn-ghost font-mono text-sm px-6 py-3 w-full text-center block">
-          → Initialize Sovereign
-        </a>
-      </div>
-
-    </div><!-- /cards -->
-
-    <!-- Custom note -->
-    <div class="mt-8 border border-border-dim p-6 bg-surface flex flex-col md:flex-row items-start md:items-center gap-4 justify-between reveal">
-      <div>
-        <div class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-1">CUSTOM ENGAGEMENT</div>
-        <p class="text-gray-300 text-sm">
-          Need ongoing DevOps retainer, specific audit, or something outside these tiers?
-        </p>
-      </div>
-      <a href="#cta" class="btn-primary font-mono text-sm px-6 py-3 shrink-0">→ Request Custom Scope</a>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════
-     FINAL CTA
-══════════════════════════════════════════════════════════════ -->
-<section id="cta" class="py-32 border-t border-border-dim relative overflow-hidden">
-
-  <!-- Background glow -->
+<!-- BOOK A MEETING -->
+<section id="book" class="py-24 border-t border-border-dim relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-         style="background: radial-gradient(ellipse at center, rgba(59,130,246,0.08) 0%, transparent 70%)"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
+         style="background:radial-gradient(ellipse at center,rgba(60,255,192,0.05) 0%,transparent 70%)"></div>
   </div>
+  <div class="relative max-w-7xl mx-auto px-6">
 
-  <div class="relative max-w-5xl mx-auto px-6 text-center">
-
-    <div class="reveal">
-      <div class="section-label mb-6">// INITIALIZE SESSION</div>
-
-      <h2 class="font-grotesk font-700 text-5xl xl:text-6xl text-white mb-6 leading-tight">
-        Ready to Build<br>
-        <span class="shimmer-text">Sovereign Infrastructure?</span>
+    <!-- Header -->
+    <div class="reveal text-center mb-16">
+      <div class="section-label mb-3" data-i18n="book.label">// SCHEDULE SESSION</div>
+      <h2 class="font-grotesk font-bold text-4xl xl:text-5xl text-white mb-5 leading-tight">
+        <span data-i18n="book.headline_1">Book a</span>
+        <span class="shimmer-text" data-i18n="book.headline_2"> Free Discovery Call</span>
       </h2>
-
-      <p class="text-gray-400 text-xl leading-relaxed max-w-2xl mx-auto mb-12">
-        Tell me about your stack. I'll review it and send a concrete plan within 24 hours.
-        No sales call required to get started.
+      <p class="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto" data-i18n="book.subtitle">
+        30 minutes. No fluff. We review your infrastructure, identify quick wins, and map out a concrete plan.
       </p>
+    </div>
 
-      <!-- Terminal CTA block -->
-      <div class="terminal max-w-2xl mx-auto mb-10">
-        <div class="terminal-header">
-          <div class="flex gap-1.5">
-            <div class="terminal-btn bg-red-500/70"></div>
-            <div class="terminal-btn bg-amber-500/70"></div>
-            <div class="terminal-btn bg-neon/70"></div>
+    <!-- Content grid -->
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+
+      <!-- Left: Meeting types + checklist -->
+      <div class="space-y-4 reveal">
+
+        <!-- Meeting type cards -->
+        <div class="booking-type-card booking-type-highlight">
+          <div class="booking-type-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <span class="ml-3 font-mono text-xs text-gray-500">contact channel</span>
+          <div class="flex-1 min-w-0">
+            <div class="font-grotesk font-semibold text-white text-sm mb-0.5" data-i18n="book.type_1_name">Discovery Call</div>
+            <div class="font-mono text-xs text-gray-500" data-i18n="book.type_1_detail">30 min &middot; Free &middot; Video call</div>
+          </div>
+          <span class="booking-badge" data-i18n="book.type_1_badge">POPULAR</span>
         </div>
-        <div class="terminal-body space-y-3">
-          <div>
-            <span class="text-neon">$</span>
-            <span class="text-gray-400"> echo "project brief" | mail -s "DevOps Inquiry" </span>
-            <button data-copy="hello@hamdy.tech"
-                    class="text-blue-400 hover:text-blue-300 cursor-pointer transition-colors font-mono font-600">
-              hello@hamdy.tech
-            </button>
+
+        <div class="booking-type-card">
+          <div class="booking-type-icon" style="color:var(--blue)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
           </div>
-          <div class="text-gray-600 font-mono text-xs">
-            → Typical response time: &lt; 8 hours
+          <div class="flex-1 min-w-0">
+            <div class="font-grotesk font-semibold text-white text-sm mb-0.5" data-i18n="book.type_2_name">Technical Audit</div>
+            <div class="font-mono text-xs text-gray-500" data-i18n="book.type_2_detail">60 min &middot; Paid &middot; Deep dive</div>
           </div>
-          <div class="text-gray-600 font-mono text-xs">
-            → Availability: <span class="text-neon">OPEN</span> for new projects Q2 2026
+        </div>
+
+        <div class="booking-type-card">
+          <div class="booking-type-icon" style="color:#6366f1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-grotesk font-semibold text-white text-sm mb-0.5" data-i18n="book.type_3_name">Project Kickoff</div>
+            <div class="font-mono text-xs text-gray-500" data-i18n="book.type_3_detail">45 min &middot; Paid &middot; Team call</div>
+          </div>
+        </div>
+
+        <!-- What to expect terminal -->
+        <div class="terminal mt-2">
+          <div class="terminal-header">
+            <div class="flex gap-1.5"><div class="terminal-btn bg-red-500/70"></div><div class="terminal-btn bg-amber-500/70"></div><div class="terminal-btn bg-neon/70"></div></div>
+            <span class="ml-3 font-mono text-xs text-gray-500" data-i18n="book.expect_label">// WHAT TO EXPECT</span>
+          </div>
+          <div class="terminal-body space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <span class="text-neon font-mono text-xs mt-0.5 shrink-0">&#x2713;</span>
+              <span class="font-mono text-xs text-gray-400" data-i18n="book.expect_1">Review of your current infrastructure setup</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-neon font-mono text-xs mt-0.5 shrink-0">&#x2713;</span>
+              <span class="font-mono text-xs text-gray-400" data-i18n="book.expect_2">Identify bottlenecks and security gaps</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-neon font-mono text-xs mt-0.5 shrink-0">&#x2713;</span>
+              <span class="font-mono text-xs text-gray-400" data-i18n="book.expect_3">Map out a concrete 30-day action plan</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="text-neon font-mono text-xs mt-0.5 shrink-0">&#x2713;</span>
+              <span class="font-mono text-xs text-gray-400" data-i18n="book.expect_4">No commitment or sales pressure</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Action buttons -->
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="mailto:hello@hamdy.tech"
-           class="btn-primary font-grotesk font-600 text-base px-8 py-4 tracking-wide">
-          → Send Project Brief
-        </a>
-        <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
-           class="btn-book font-mono text-sm px-8 py-4">
-          📅 Book Appointment
-        </a>
-      </div>
+      <!-- Right: CTA card -->
+      <div class="reveal">
+        <div class="booking-cta-card">
+          <div class="booking-cta-orb"></div>
+          <div class="relative z-10 flex flex-col items-center text-center">
+            <!-- Calendar icon -->
+            <div class="booking-cal-icon mb-6">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <line x1="8" y1="14" x2="8" y2="14"/>
+                <line x1="12" y1="14" x2="12" y2="14"/>
+                <line x1="16" y1="14" x2="16" y2="14"/>
+                <line x1="8" y1="18" x2="8" y2="18"/>
+                <line x1="12" y1="18" x2="12" y2="18"/>
+              </svg>
+            </div>
+            <h3 class="font-grotesk font-bold text-2xl text-white mb-3" data-i18n="book.cta_headline">Ready to talk?</h3>
+            <p class="font-mono text-sm text-gray-400 mb-8 max-w-xs leading-relaxed" data-i18n="book.cta_subtitle">
+              Pick a time that works for you. The calendar handles the rest.
+            </p>
+            <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
+               class="btn-schedule font-grotesk font-semibold text-base px-10 py-4 w-full max-w-xs inline-flex items-center justify-center gap-3 mb-5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span data-i18n="book.cta_btn">Schedule a Meeting</span>
+            </a>
+            <p class="font-mono text-xs text-gray-600" data-i18n="book.cta_note">Free 30-min call &middot; No credit card required</p>
 
-      <!-- Social / contact row -->
-      <div class="flex items-center justify-center gap-6 mt-12 pt-8 border-t border-border-dim">
-        <a href="https://github.com/hamdytech" target="_blank" rel="noopener"
-           class="font-mono text-xs text-gray-500 hover:text-neon transition-colors flex items-center gap-2">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-          </svg>
-          GitHub
-        </a>
-        <a href="https://linkedin.com/in/hamdytech" target="_blank" rel="noopener"
-           class="font-mono text-xs text-gray-500 hover:text-blue-400 transition-colors">
-          LinkedIn
-        </a>
-        <button data-copy="hello@hamdy.tech"
-                class="font-mono text-xs text-gray-500 hover:text-neon transition-colors cursor-pointer">
-          hello@hamdy.tech ↗ copy
-        </button>
-      </div>
+            <!-- Divider -->
+            <div class="w-full border-t border-border-dim my-7"></div>
 
-    </div><!-- /reveal -->
+            <!-- Quick stats -->
+            <div class="grid grid-cols-3 w-full gap-0 border border-border-dim">
+              <div class="p-4 text-center border-r border-border-dim">
+                <div class="font-mono text-xl font-bold text-neon mb-1" data-i18n="book.stat_1_val">&lt;8h</div>
+                <div class="font-mono text-xs text-gray-600" data-i18n="book.stat_1">Response</div>
+              </div>
+              <div class="p-4 text-center border-r border-border-dim">
+                <div class="font-mono text-xl font-bold text-blue-400 mb-1" data-i18n="book.stat_2_val">30m</div>
+                <div class="font-mono text-xs text-gray-600" data-i18n="book.stat_2">Duration</div>
+              </div>
+              <div class="p-4 text-center">
+                <div class="font-mono text-xl font-bold text-indigo-400 mb-1" data-i18n="book.stat_3_val">Free</div>
+                <div class="font-mono text-xs text-gray-600" data-i18n="book.stat_3">Discovery</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact" class="py-32 border-t border-border-dim relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full" style="background:radial-gradient(ellipse at center,rgba(59,130,246,0.06) 0%,transparent 70%)"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full" style="background:radial-gradient(ellipse at center,rgba(60,255,192,0.05) 0%,transparent 70%)"></div>
+  </div>
+  <div class="relative max-w-5xl mx-auto px-6">
+    <div class="reveal text-center mb-16">
+      <div class="section-label mb-6" data-i18n="contact.label">// INITIALIZE SESSION</div>
+      <h2 class="font-grotesk font-bold text-4xl sm:text-5xl xl:text-6xl text-white mb-6 leading-tight" data-i18n-html="contact.headline">
+        Ready to Build <span class="shimmer-text">Sovereign Infrastructure?</span>
+      </h2>
+      <p class="text-gray-400 text-xl leading-relaxed max-w-2xl mx-auto" data-i18n="contact.subtitle">
+        Tell me about your stack. I&apos;ll review it and send a concrete plan within 24 hours. No sales call required to get started.
+      </p>
+    </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════════════════════════ -->
+    <!-- Terminal block -->
+    <div class="terminal max-w-2xl mx-auto mb-10 reveal">
+      <div class="terminal-header">
+        <div class="flex gap-1.5"><div class="terminal-btn bg-red-500/70"></div><div class="terminal-btn bg-amber-500/70"></div><div class="terminal-btn bg-neon/70"></div></div>
+        <span class="ml-3 font-mono text-xs text-gray-500" data-i18n="contact.terminal_title">contact channel</span>
+      </div>
+      <div class="terminal-body space-y-3">
+        <div>
+          <span class="text-neon">$</span>
+          <span class="text-gray-400"> echo &quot;project brief&quot; | mail -s &quot;DevOps Inquiry&quot; </span>
+          <button data-copy="email" data-copy-value="ahmedhamdy807@outlook.com"
+                  class="text-blue-400 hover:text-blue-300 cursor-pointer transition-colors font-mono font-semibold">
+            ahmedhamdy807@outlook.com
+          </button>
+        </div>
+        <div class="text-gray-600 font-mono text-xs" data-i18n="contact.terminal_response">&rarr; Typical response time: &lt; 8 hours</div>
+        <div class="font-mono text-xs text-gray-600">
+          <span data-i18n="contact.terminal_availability">&rarr; Availability:</span>
+          <span class="text-neon ml-1" data-i18n="contact.terminal_status">OPEN for new projects Q2 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact cards -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10 reveal">
+      <a data-content="email-link" href="mailto:ahmedhamdy807@outlook.com" class="contact-card contact-card-email group">
+        <div class="contact-icon transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="min-w-0">
+          <div class="font-mono text-xs text-gray-500 mb-0.5" data-i18n="contact.email_label">Email</div>
+          <div class="font-mono text-xs text-white truncate" data-content="email">ahmedhamdy807@outlook.com</div>
+        </div>
+      </a>
+      <a data-content="whatsapp-link" href="https://wa.me/201119433658" target="_blank" rel="noopener" class="contact-card contact-card-wa group">
+        <div class="contact-icon transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="min-w-0">
+          <div class="font-mono text-xs text-gray-500 mb-0.5" data-i18n="contact.phone_label">Phone / WhatsApp</div>
+          <div class="font-mono text-xs text-white" data-content="phone">01119433658</div>
+        </div>
+      </a>
+      <a data-content="linkedin-link" href="https://www.linkedin.com/in/ahmed-hamdy-ab58a3109/" target="_blank" rel="noopener" class="contact-card contact-card-li group">
+        <div class="contact-icon transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div class="min-w-0">
+          <div class="font-mono text-xs text-gray-500 mb-0.5" data-i18n="contact.linkedin_label">LinkedIn</div>
+          <div class="font-mono text-xs text-white truncate">Ahmed Hamdy</div>
+        </div>
+      </a>
+      <a data-content="github-link" href="https://github.com/ahmed2287" target="_blank" rel="noopener" class="contact-card contact-card-gh group">
+        <div class="contact-icon transition-colors">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div class="min-w-0">
+          <div class="font-mono text-xs text-gray-500 mb-0.5" data-i18n="contact.github_label">GitHub</div>
+          <div class="font-mono text-xs text-white">ahmed2287</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-4 reveal">
+      <a data-content="email-link" href="mailto:ahmedhamdy807@outlook.com"
+         class="btn-primary font-grotesk font-semibold text-base px-8 py-4 tracking-wide inline-flex items-center justify-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span data-i18n="contact.cta_email">Send Email</span>
+      </a>
+      <a data-content="whatsapp-link" href="https://wa.me/201119433658" target="_blank" rel="noopener"
+         class="btn-book font-mono text-sm px-8 py-4 inline-flex items-center justify-center gap-2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-i18n="contact.cta_whatsapp">WhatsApp</span>
+      </a>
+      <a data-content="linkedin-link" href="https://www.linkedin.com/in/ahmed-hamdy-ab58a3109/" target="_blank" rel="noopener"
+         class="btn-ghost font-mono text-sm px-8 py-4 inline-flex items-center justify-center gap-2">
+        <span data-i18n="contact.cta_linkedin">LinkedIn</span>
+      </a>
+    </div>
+
+    <!-- Copy row -->
+    <div class="flex items-center justify-center gap-6 mt-12 pt-8 border-t border-border-dim reveal">
+      <button data-copy="email" data-copy-value="ahmedhamdy807@outlook.com"
+              class="font-mono text-xs text-gray-500 hover:text-neon transition-colors cursor-pointer">
+        ahmedhamdy807@outlook.com &#x2197; copy
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer class="border-t border-border-dim bg-surface/30 py-10">
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-
-      <!-- Brand -->
       <div class="flex items-center gap-3">
         <img src="/My-Logo.png" alt="HamdyTech" class="h-8 w-auto object-contain logo-img opacity-80 hover:opacity-100 transition-opacity">
         <div>
-          <div class="font-grotesk font-700 text-sm text-white">HamdyTech</div>
-          <div class="font-mono text-xs text-gray-600">DevOps &amp; Cloud Automation</div>
+          <div class="font-grotesk font-bold text-sm text-white">Ahmed Hamdy</div>
+          <div class="font-mono text-xs text-gray-600" data-i18n="footer.tagline">DevOps &amp; Cloud Automation</div>
         </div>
       </div>
-
-      <!-- Nav links -->
       <div class="flex flex-wrap gap-6">
-        <a href="#automation-hub" class="font-mono text-xs text-neon hover:opacity-70 transition-opacity">Automation Hub</a>
-        <a href="#services"    class="font-mono text-xs text-gray-500 hover:text-neon transition-colors">Services</a>
-        <a href="#case-study"  class="font-mono text-xs text-gray-500 hover:text-neon transition-colors">Case Study</a>
-        <a href="#pricing"     class="font-mono text-xs text-gray-500 hover:text-neon transition-colors">Pricing</a>
-        <a href="https://appointments.hamdyzone.icu" target="_blank" rel="noopener"
-           class="font-mono text-xs text-gray-500 hover:text-neon transition-colors">Book Appointment</a>
+        <a href="#automation-hub" class="font-mono text-xs text-neon hover:opacity-70 transition-opacity" data-i18n="footer.nav_hub">Automation Hub</a>
+        <a href="#services"    class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_services">Services</a>
+        <a href="#projects"    class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_projects">Projects</a>
+        <a href="#case-study"  class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_case">Case Study</a>
+        <a href="#contact"     class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_contact">Contact</a>
+        <a href="#book"        class="font-mono text-xs text-neon hover:opacity-70 transition-opacity" data-i18n="footer.nav_book">Book</a>
       </div>
-
-      <!-- Status -->
       <div class="flex items-center gap-3">
         <span class="status-dot online"></span>
         <span class="font-mono text-xs text-gray-500">
-          All systems operational · <span class="text-neon">2026</span>
+          <span data-i18n="footer.status">All systems operational</span> &middot; <span class="text-neon">2026</span>
         </span>
       </div>
-
-    </div><!-- /flex -->
+    </div>
   </div>
 </footer>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     GITHUB CONTRIBUTION GRID — generated inline
-══════════════════════════════════════════════════════════════ -->
-<script>
-(function() {
-  const grid = document.getElementById('contrib-grid');
-  if (!grid) return;
-  const WEEKS = 52;
-  const DAYS  = 7;
-  // Weighted random level
-  function level() {
-    const r = Math.random();
-    if (r < 0.35) return 0;
-    if (r < 0.55) return 1;
-    if (r < 0.73) return 2;
-    if (r < 0.88) return 3;
-    return 4;
-  }
-  for (let w = 0; w < WEEKS; w++) {
-    const col = document.createElement('div');
-    col.className = 'flex flex-col gap-1';
-    for (let d = 0; d < DAYS; d++) {
-      const cell = document.createElement('div');
-      const l = level();
-      cell.className = 'contrib-cell level-' + l;
-      col.appendChild(cell);
-    }
-    grid.appendChild(col);
-  }
-})();
-</script>
-
-<!-- Main JS -->
 <script src="js/main.js"></script>
-
 </body>
 </html>

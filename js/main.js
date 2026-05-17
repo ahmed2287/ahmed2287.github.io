@@ -1,10 +1,199 @@
 /* ============================================================
    HamdyTech — main.js
-   Log streaming, metrics, animations, interactivity
+   i18n, content loading, log streaming, metrics, animations
    ============================================================ */
 
 (function () {
   'use strict';
+
+  /* ══════════════════════════════════════════════════════════
+     I18N — lightweight translation system
+  ══════════════════════════════════════════════════════════ */
+  const i18n = {
+    lang: localStorage.getItem('ht-lang') || 'en',
+    strings: {},
+
+    async load(lang) {
+      try {
+        const res = await fetch('/data/' + lang + '.json');
+        if (!res.ok) throw new Error('Failed to load ' + lang + '.json');
+        this.strings = await res.json();
+        this.lang = lang;
+        localStorage.setItem('ht-lang', lang);
+        this._apply();
+      } catch (e) {
+        console.warn('[i18n] Could not load language:', lang, e);
+      }
+    },
+
+    t(key) {
+      return this.strings[key] !== undefined ? this.strings[key] : key;
+    },
+
+    _apply() {
+      const isRTL = this.lang === 'ar';
+      document.documentElement.lang = this.lang;
+      document.documentElement.dir  = isRTL ? 'rtl' : 'ltr';
+
+      /* Plain text nodes */
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const val = this.t(el.dataset.i18n);
+        if (val !== el.dataset.i18n) el.textContent = val;
+      });
+
+      /* HTML content (safe — values come from our own JSON) */
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const val = this.t(el.dataset.i18nHtml);
+        if (val !== el.dataset.i18nHtml) el.innerHTML = val;
+      });
+
+      /* Pill lang switcher (desktop) */
+      const pill = document.getElementById('lang-switcher');
+      if (pill) {
+        pill.classList.toggle('ar', isRTL);
+        pill.querySelectorAll('.lang-switch-option').forEach(opt => {
+          opt.classList.toggle('active', opt.dataset.lang === this.lang);
+        });
+      }
+
+      /* Mobile lang button */
+      const mobileBtn = document.getElementById('lang-switcher-mobile');
+      if (mobileBtn) mobileBtn.textContent = isRTL ? 'EN' : 'AR';
+
+      /* Notify content module so it can re-render project descriptions */
+      document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: this.lang } }));
+    },
+
+    toggle() {
+      this.load(this.lang === 'ar' ? 'en' : 'ar');
+    }
+  };
+
+  /* ══════════════════════════════════════════════════════════
+     CONTENT — loads content.json and populates dynamic areas
+  ══════════════════════════════════════════════════════════ */
+  const content = {
+    data: {},
+
+    async load() {
+      try {
+        const res = await fetch('/data/content.json');
+        if (!res.ok) throw new Error('content.json not found');
+        this.data = await res.json();
+        this._renderContact();
+        this._renderSocial();
+        this._renderProjects();
+        this._wireCV();
+      } catch (e) {
+        console.warn('[content] Could not load content.json:', e);
+      }
+    },
+
+    _renderContact() {
+      const { contact } = this.data;
+      if (!contact) return;
+
+      document.querySelectorAll('[data-content="email"]').forEach(el => {
+        el.textContent = contact.email;
+        if (el.tagName === 'A') el.href = 'mailto:' + contact.email;
+      });
+      document.querySelectorAll('[data-content="email-link"]').forEach(el => {
+        el.href = 'mailto:' + contact.email;
+      });
+      document.querySelectorAll('[data-content="phone"]').forEach(el => {
+        el.textContent = contact.phone;
+      });
+      document.querySelectorAll('[data-content="whatsapp-link"]').forEach(el => {
+        el.href = 'https://wa.me/' + contact.whatsapp;
+      });
+      document.querySelectorAll('[data-content="tel-link"]').forEach(el => {
+        el.href = 'tel:+' + contact.whatsapp;
+      });
+      /* Update copy button value only, leave text for i18n */
+      document.querySelectorAll('[data-copy="email"]').forEach(el => {
+        el.dataset.copyValue = contact.email;
+        /* Only update textContent if the element hasn't been translated yet */
+        if (!el.dataset.i18n) {
+          el.textContent = contact.email + ' \u2197 copy';
+        }
+      });
+    },
+
+    _renderSocial() {
+      const { social } = this.data;
+      if (!social) return;
+      document.querySelectorAll('[data-content="github-link"]').forEach(el => {
+        el.href = social.github;
+      });
+      document.querySelectorAll('[data-content="linkedin-link"]').forEach(el => {
+        el.href = social.linkedin;
+      });
+    },
+
+    _wireCV() {
+      const cv = this.data.cv || '/assets/cv.pdf';
+      document.querySelectorAll('[data-content="cv-link"]').forEach(el => {
+        el.href = cv;
+        el.setAttribute('download', 'Ahmed Hamdy.pdf');
+      });
+    },
+
+    _renderProjects() {
+      const grid = document.getElementById('projects-grid');
+      if (!grid || !this.data.projects) return;
+      const lang = i18n.lang;
+      grid.innerHTML = this.data.projects.map((p, idx) => {
+        const title    = (lang === 'ar' && p.titleAr) ? p.titleAr : p.title;
+        const desc     = (lang === 'ar' && p.descriptionAr) ? p.descriptionAr : p.description;
+        const tagClass = p.tagColor === 'blue' ? 'blue' : 'neon';
+        const delay    = idx * 120;
+        const liveLabel = i18n.t('projects.status_live') !== 'projects.status_live'
+          ? i18n.t('projects.status_live') : 'LIVE';
+        const viewLabel = i18n.t('projects.view_btn') !== 'projects.view_btn'
+          ? i18n.t('projects.view_btn') : 'View Live \u2192';
+        return `
+          <div class="project-card p-6 reveal" style="transition-delay:${delay}ms">
+            <div class="flex items-start justify-between mb-5">
+              <div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-xl">
+                ${p.icon}
+              </div>
+              <div class="flex items-center gap-2 flex-wrap justify-end">
+                <span class="tag ${tagClass}">${p.id.toUpperCase()}</span>
+                <span class="tag neon" style="font-size:9px">
+                  <span class="status-dot online" style="width:5px;height:5px;display:inline-block;vertical-align:middle;margin-right:4px"></span>${liveLabel}
+                </span>
+              </div>
+            </div>
+            <h3 class="font-grotesk font-semibold text-lg text-white mb-2">${title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">${desc}</p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              ${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+            <div class="pt-4 border-t border-border-dim">
+              <a href="${p.url}" target="_blank" rel="noopener"
+                 class="btn-ghost font-mono text-xs px-4 py-2 inline-flex items-center gap-2">
+                ${viewLabel}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </a>
+            </div>
+          </div>`;
+      }).join('');
+
+      /* Re-observe newly inserted cards */
+      if (window._revealObserver) {
+        grid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
+      }
+    }
+  };
+
+  /* Re-render projects on language change */
+  document.addEventListener('langchange', () => {
+    if (content.data.projects) content._renderProjects();
+  });
 
   /* ── Fake log entries ──────────────────────────────────── */
   const LOG_ENTRIES = [
@@ -12,51 +201,36 @@
     { level: 'ok',   msg: 'docker: service api_gateway scaled to 3 replicas' },
     { level: 'info', msg: 'proxmox: VM-104 (web-prod) CPU 11% MEM 2.1GB' },
     { level: 'ok',   msg: 'certbot: certificate renewed — 89 days remaining' },
-    { level: 'info', msg: 'backup: snapshot pve-storage-01 → completed 4.1GB' },
+    { level: 'info', msg: 'backup: snapshot pve-storage-01 \u2192 completed 4.1GB' },
     { level: 'ok',   msg: 'gitlab-ci: pipeline #3847 passed in 01m 22s' },
     { level: 'info', msg: 'netdata: avg response time 142ms (p99: 381ms)' },
-    { level: 'ok',   msg: 'dns: zone hamdy.tech propagated (TTL 300)' },
-    { level: 'warn', msg: 'disk: /dev/sda3 at 78% — monitor recommended' },
+    { level: 'ok',   msg: 'dns: zone hamdyzone.icu propagated (TTL 300)' },
+    { level: 'warn', msg: 'disk: /dev/sda3 at 78% \u2014 monitor recommended' },
     { level: 'ok',   msg: 'firewall: ufw rules synced (42 active rules)' },
     { level: 'info', msg: 'ansible: playbook site.yml finished 14/14 hosts' },
-    { level: 'ok',   msg: 'redis: replication lag 0ms — in sync' },
-    { level: 'info', msg: 'cron: daily-report generated → /var/reports/' },
+    { level: 'ok',   msg: 'redis: replication lag 0ms \u2014 in sync' },
+    { level: 'info', msg: 'cron: daily-report generated \u2192 /var/reports/' },
     { level: 'ok',   msg: 'traefik: TLS handshake 0.8ms (ECDHE-RSA-AES256)' },
     { level: 'ok',   msg: 'monitoring: all 9 services reporting HEALTHY' },
-    { level: 'info', msg: 'k8s: pod rollout finished — 0 restarts in 24h' },
-    { level: 'ok',   msg: 'postgres: vacuum analyze completed — 0 dead tuples' },
+    { level: 'info', msg: 'k8s: pod rollout finished \u2014 0 restarts in 24h' },
+    { level: 'ok',   msg: 'postgres: vacuum analyze completed \u2014 0 dead tuples' },
     { level: 'info', msg: 'cadvisor: container memory budget 68% utilized' },
-    { level: 'warn', msg: 'swap: 12% usage — consider adding RAM' },
-    { level: 'ok',   msg: 'haproxy: sticky sessions active — session store OK' },
+    { level: 'warn', msg: 'swap: 12% usage \u2014 consider adding RAM' },
+    { level: 'ok',   msg: 'haproxy: sticky sessions active \u2014 session store OK' },
   ];
 
-  const LEVEL_CLASS = {
-    ok:   'text-neon',
-    info: 'text-blue-400',
-    warn: 'text-amber-400',
-    err:  'text-red-400',
-  };
-  const LEVEL_PREFIX = {
-    ok:   '✓',
-    info: '›',
-    warn: '⚠',
-    err:  '✗',
-  };
+  const LEVEL_CLASS  = { ok: 'text-neon', info: 'text-blue-400', warn: 'text-amber-400', err: 'text-red-400' };
+  const LEVEL_PREFIX = { ok: '\u2713', info: '\u203a', warn: '\u26a0', err: '\u2717' };
 
-  /* ── Pad time string ───────────────────────────────────── */
   function ts() {
     const n = new Date();
-    const h = String(n.getHours()).padStart(2,'0');
-    const m = String(n.getMinutes()).padStart(2,'0');
-    const s = String(n.getSeconds()).padStart(2,'0');
-    return `${h}:${m}:${s}`;
+    return [n.getHours(), n.getMinutes(), n.getSeconds()]
+      .map(v => String(v).padStart(2, '0')).join(':');
   }
 
-  /* ── Start log streaming ───────────────────────────────── */
   function startLogStream(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return;
-
     let idx = 0;
     function addLine() {
       const entry = LOG_ENTRIES[idx % LOG_ENTRIES.length];
@@ -68,26 +242,14 @@
         `<span class="${LEVEL_CLASS[entry.level]} shrink-0">${LEVEL_PREFIX[entry.level]}</span>` +
         `<span class="text-gray-300">${entry.msg}</span>`;
       el.appendChild(line);
-      // fade in
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => { line.classList.remove('opacity-0'); });
-      });
-      // keep max 12 lines
-      const lines = el.children;
-      if (lines.length > 12) lines[0].remove();
-      // scroll to bottom
+      requestAnimationFrame(() => requestAnimationFrame(() => line.classList.remove('opacity-0')));
+      if (el.children.length > 12) el.children[0].remove();
       el.parentElement.scrollTop = el.parentElement.scrollHeight;
     }
-
-    // Pre-populate 6 lines
-    for (let i = 0; i < 6; i++) {
-      setTimeout(() => addLine(), i * 120);
-    }
-    // Stream new line every 3-5s
+    for (let i = 0; i < 6; i++) setTimeout(addLine, i * 120);
     setInterval(addLine, Math.random() * 2000 + 2800);
   }
 
-  /* ── Live metric counters ──────────────────────────────── */
   function animateCounter(el, target, suffix) {
     let current = 0;
     const step = target / 40;
@@ -98,15 +260,12 @@
     }, 35);
   }
 
-  /* ── Animate metric bars ───────────────────────────────── */
   function animateMetricBars() {
     document.querySelectorAll('[data-metric-width]').forEach(bar => {
-      const w = bar.dataset.metricWidth;
-      bar.style.width = w;
+      bar.style.width = bar.dataset.metricWidth;
     });
   }
 
-  /* ── IntersectionObserver reveals ─────────────────────── */
   function initReveal() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -116,27 +275,23 @@
         }
       });
     }, { threshold: 0.12 });
-
     document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
+    window._revealObserver = observer;
   }
 
-  /* ── Staggered reveal for grid children ────────────────── */
   function initStagger() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        const children = entry.target.querySelectorAll(':scope > .reveal');
-        children.forEach((child, i) => {
+        entry.target.querySelectorAll(':scope > .reveal').forEach((child, i) => {
           setTimeout(() => child.classList.add('visible'), i * 100);
         });
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('[data-stagger]').forEach(el => observer.observe(el));
   }
 
-  /* ── Live uptime ticker ────────────────────────────────── */
   function startUptimeTicker() {
     const el = document.getElementById('uptime-val');
     if (!el) return;
@@ -153,19 +308,13 @@
     setInterval(render, 1000);
   }
 
-  /* ── Mobile nav toggle ─────────────────────────────────── */
   function initMobileNav() {
     const btn  = document.getElementById('nav-toggle');
     const menu = document.getElementById('mobile-menu');
     if (!btn || !menu) return;
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('open');
-      const icon = btn.querySelector('[data-icon]');
-      if (icon) icon.dataset.icon = menu.classList.contains('open') ? 'close' : 'menu';
-    });
+    btn.addEventListener('click', () => menu.classList.toggle('open'));
   }
 
-  /* ── Smooth nav link close on mobile ──────────────────── */
   function initNavLinks() {
     const menu = document.getElementById('mobile-menu');
     if (!menu) return;
@@ -174,38 +323,21 @@
     });
   }
 
-  /* ── Pricing toggle: monthly / yearly ─────────────────── */
-  function initPricingToggle() {
-    const toggle    = document.getElementById('billing-toggle');
-    const labels    = document.querySelectorAll('[data-billing]');
-    const prices    = document.querySelectorAll('[data-price-monthly]');
-    if (!toggle) return;
-    toggle.addEventListener('change', () => {
-      const yearly = toggle.checked;
-      prices.forEach(p => {
-        p.textContent = yearly ? p.dataset.priceYearly : p.dataset.priceMonthly;
-      });
-      labels.forEach(l => {
-        l.classList.toggle('text-neon', l.dataset.billing === (yearly ? 'yearly' : 'monthly'));
-        l.classList.toggle('text-gray-500', l.dataset.billing !== (yearly ? 'yearly' : 'monthly'));
+  function initCopyButtons() {
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('[data-copy]');
+      if (!btn) return;
+      const value = btn.dataset.copyValue || btn.dataset.copy;
+      if (!value) return;
+      navigator.clipboard.writeText(value).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = i18n.t('contact.copied') !== 'contact.copied'
+          ? i18n.t('contact.copied') : 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
       });
     });
   }
 
-  /* ── Copy email to clipboard ───────────────────────────── */
-  function initCopyEmail() {
-    document.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        navigator.clipboard.writeText(btn.dataset.copy).then(() => {
-          const orig = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(() => { btn.textContent = orig; }, 1800);
-        });
-      });
-    });
-  }
-
-  /* ── Active nav highlight on scroll ───────────────────── */
   function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
     const links    = document.querySelectorAll('nav a[href^="#"]');
@@ -224,27 +356,170 @@
     sections.forEach(s => observer.observe(s));
   }
 
-  /* ── Init everything on DOMContentLoaded ──────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
+  /* ── Language switcher pill ───────────────────────────────── */
+  function initLangSwitcher() {
+    /* Desktop pill */
+    const pill = document.getElementById('lang-switcher');
+    if (pill) {
+      pill.addEventListener('click', () => i18n.toggle());
+      pill.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); i18n.toggle(); }
+      });
+    }
+    /* Mobile button */
+    const mobileBtn = document.getElementById('lang-switcher-mobile');
+    if (mobileBtn) mobileBtn.addEventListener('click', () => i18n.toggle());
+  }
+
+  /* ── Top banner with localStorage persistence ─────────────── */
+  function initBanner() {
+    const banner = document.getElementById('top-banner');
+    if (!banner) return;
+
+    /* Hide immediately if previously dismissed */
+    if (localStorage.getItem('ht-banner-closed') === '1') {
+      banner.style.display = 'none';
+      return;
+    }
+
+    /* Set CSS variable to banner height so nav and body offset correctly */
+    function applyBannerHeight() {
+      const h = banner.offsetHeight;
+      document.documentElement.style.setProperty('--banner-h', h + 'px');
+    }
+    applyBannerHeight();
+
+    /* Re-calculate on resize (e.g. text wrap changes) */
+    const onResize = () => applyBannerHeight();
+    window.addEventListener('resize', onResize);
+
+    /* Wire close button */
+    const closeBtn = document.getElementById('banner-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        banner.style.display = 'none';
+        document.documentElement.style.setProperty('--banner-h', '0px');
+        localStorage.setItem('ht-banner-closed', '1');
+        window.removeEventListener('resize', onResize);
+      });
+    }
+  }
+
+  function initContribGrid() {
+    const grid = document.getElementById('contrib-grid');
+    if (!grid || grid.children.length) return;
+
+    /* Generate a realistic-looking activity pattern */
+    const weights = [0.3, 0.2, 0.18, 0.17, 0.15]; // level 0-4 probabilities
+    function level() {
+      const r = Math.random();
+      let acc = 0;
+      for (let i = 0; i < weights.length; i++) {
+        acc += weights[i];
+        if (r < acc) return i;
+      }
+      return 0;
+    }
+
+    for (let w = 0; w < 52; w++) {
+      const col = document.createElement('div');
+      col.className = 'flex flex-col gap-1';
+      /* Simulate some "busy" weeks and some quiet weeks */
+      const weekBias = Math.random();
+      for (let d = 0; d < 7; d++) {
+        const cell = document.createElement('div');
+        const lv = weekBias > 0.6 ? Math.min(level() + 1, 4) : level();
+        cell.className = 'contrib-cell level-' + lv;
+        col.appendChild(cell);
+      }
+      grid.appendChild(col);
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     LIVE MONITORING METRICS — realistic micro-fluctuations
+  ══════════════════════════════════════════════════════════ */
+  function initLiveMonMetrics() {
+    /* Latency entries: id, base value, allowed variance */
+    const AGENTS = [
+      { id: 'mon-lat-1', base: 21, spread: 4 },
+      { id: 'mon-lat-2', base: 18, spread: 3 },
+      { id: 'mon-lat-3', base: 25, spread: 5 },
+    ];
+
+    /* Metrics/s fluctuates around 847 */
+    const metricsEl = document.getElementById('mon-metrics-ps');
+    const uptimeEl  = document.getElementById('mon-uptime-val');
+    let uptimeBase  = 99.94; /* small decimal drift */
+
+    function flashEl(el) {
+      if (!el) return;
+      el.style.transition = 'opacity 0.12s ease';
+      el.style.opacity    = '0.45';
+      setTimeout(() => { el.style.opacity = '1'; }, 130);
+    }
+
+    function tickLatency() {
+      /* Update one random agent latency */
+      const agent = AGENTS[Math.floor(Math.random() * AGENTS.length)];
+      const el    = document.getElementById(agent.id);
+      if (!el) return;
+      const delta  = (Math.random() * agent.spread * 2) - agent.spread;
+      const newVal = Math.max(agent.base - agent.spread, Math.min(agent.base + agent.spread, Math.round(agent.base + delta)));
+      el.textContent = newVal + 'ms';
+      flashEl(el);
+    }
+
+    function tickMetrics() {
+      if (!metricsEl) return;
+      const base   = 847;
+      const newVal = base + Math.floor(Math.random() * 21) - 10;
+      metricsEl.textContent = newVal;
+      flashEl(metricsEl);
+    }
+
+    function tickUptime() {
+      if (!uptimeEl) return;
+      /* Tiny random walk: ±0.001% */
+      uptimeBase = Math.max(99.90, Math.min(99.99, uptimeBase + (Math.random() * 0.006 - 0.002)));
+      uptimeEl.textContent = uptimeBase.toFixed(1) + '%';
+    }
+
+    /* Stagger intervals so they don't all fire at once */
+    setInterval(tickLatency,  3200);
+    setInterval(tickMetrics,  5100);
+    setInterval(tickUptime,   7800);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     BOOT
+  ══════════════════════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', async () => {
+    /* Banner must run first so --banner-h is set before layout */
+    initBanner();
+
+    await content.load();
+    await i18n.load(i18n.lang);
+
     startLogStream('log-stream');
     startUptimeTicker();
+    initLiveMonMetrics();
     initReveal();
     initStagger();
     initMobileNav();
     initNavLinks();
-    initPricingToggle();
-    initCopyEmail();
+    initCopyButtons();
     initScrollSpy();
+    initLangSwitcher();
+    initContribGrid();
 
-    // Animate metric bars after short delay
     setTimeout(animateMetricBars, 800);
 
-    // Animate hero stat counters
-    const counters = document.querySelectorAll('[data-counter]');
-    counters.forEach(el => {
+    document.querySelectorAll('[data-counter]').forEach(el => {
       const target = parseFloat(el.dataset.counter);
       const suffix = el.dataset.suffix || '';
       setTimeout(() => animateCounter(el, target, suffix), 600);
     });
   });
+
 })();
