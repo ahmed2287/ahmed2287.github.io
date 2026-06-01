@@ -63,8 +63,8 @@
     if (reduce) { gsap.set(el, { opacity: 1, x: 0, y: 0 }); return; }
     gsap.set(el, hiddenState(el));
     gsap.to(el, {
-      opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      opacity: 1, x: 0, y: 0, duration: 0.95, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
     });
   }
 
@@ -81,11 +81,11 @@
     items.forEach(el => { el._htRevealed = true; gsap.set(el, hiddenState(el)); });
 
     ScrollTrigger.batch('.reveal, .reveal-left', {
-      start: 'top 88%',
+      start: 'top 90%',
       once: true,
       onEnter: batch => gsap.to(batch, {
         opacity: 1, x: 0, y: 0,
-        duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true
+        duration: 0.95, ease: 'power2.out', stagger: 0.12, overwrite: true
       })
     });
   }
@@ -97,15 +97,23 @@
     if (reduce) return;
     const left     = document.querySelector('#hero .grid > div');
     const terminal = document.querySelector('#hero .terminal');
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    if (left) {
-      gsap.set(left.children, { opacity: 0, y: 26 });
-      tl.to(left.children, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12 }, 0.1);
-    }
-    if (terminal) {
-      gsap.set(terminal, { opacity: 0, y: 32, scale: 0.985 });
-      tl.to(terminal, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, 0.35);
+    /* Hide immediately so nothing shows behind the loader */
+    if (left)     gsap.set(left.children, { opacity: 0, y: 26 });
+    if (terminal) gsap.set(terminal, { opacity: 0, y: 32, scale: 0.985 });
+
+    const play = () => {
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      if (left)     tl.to(left.children, { opacity: 1, y: 0, duration: 1.1, stagger: 0.14 }, 0.1);
+      if (terminal) tl.to(terminal, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0.4);
+    };
+
+    /* If the loader (experience.js) is running, wait for it to lift so the
+       entrance isn't wasted behind the overlay. Otherwise play now. */
+    if (window.HTLoader && window.HTLoader.active) {
+      document.addEventListener('ht:loaded', play, { once: true });
+    } else {
+      play();
     }
   }
 
@@ -114,7 +122,7 @@
   ══════════════════════════════════════════════════════════ */
   function initParticles() {
     if (reduce || !window.tsParticles) return;
-    const count    = isMobile ? 18 : 42;
+    const count    = isMobile ? 14 : 30;
     const linkDist = isMobile ? 110 : 150;
 
     const loading = tsParticles.load({
@@ -127,10 +135,10 @@
         particles: {
           number: { value: count, density: { enable: true, area: 900 } },
           color:  { value: ['#3cffc0', '#3b82f6', '#6366f1'] },
-          links:  { enable: true, color: '#3cffc0', distance: linkDist, opacity: 0.18, width: 1 },
-          move:   { enable: true, speed: isMobile ? 0.4 : 0.75, outModes: { default: 'bounce' } },
-          opacity: { value: 0.5 },
-          size:    { value: { min: 1, max: 2.6 } }
+          links:  { enable: true, color: '#3cffc0', distance: linkDist, opacity: 0.12, width: 1 },
+          move:   { enable: true, speed: isMobile ? 0.3 : 0.45, outModes: { default: 'bounce' } },
+          opacity: { value: 0.38 },
+          size:    { value: { min: 1, max: 2.4 } }
         },
         interactivity: {
           events: { onHover: { enable: !isMobile, mode: 'grab' } },
@@ -150,10 +158,12 @@
     const el = document.getElementById('hero-typed');
     if (!el) return;
     const cmds = [
-      './deploy infrastructure',
-      'kubectl apply -f cluster.yaml',
-      'terraform apply -auto-approve',
-      'ansible-playbook site.yml'
+      'deploy infrastructure',
+      'docker compose up -d',
+      'kubectl get nodes',
+      'systemctl status nginx',
+      'monitoring active',
+      'deployment successful'
     ];
     if (reduce) { el.textContent = cmds[0]; return; }
 
@@ -272,15 +282,15 @@
     gsap.utils.toArray('.automation-hub-orb, .monitoring-platform-orb').forEach(orb => {
       const section = orb.closest('section') || orb;
       gsap.to(orb, {
-        yPercent: 18, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true }
+        yPercent: 10, ease: 'none',
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1 }
       });
     });
     const heroGlow = document.querySelector('#hero .rounded-full');
     if (heroGlow) {
       gsap.to(heroGlow, {
-        yPercent: 22, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+        yPercent: 14, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
       });
     }
   }
@@ -326,10 +336,10 @@
   function initLenis() {
     if (reduce || !window.Lenis) return null;
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.25,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5
+      touchMultiplier: 1.4
     });
     /* Disable native smooth-scroll (custom.css :33) so it can't fight
        Lenis — inline style wins over the stylesheet rule. */
@@ -337,12 +347,32 @@
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(time => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
+    window.HTAnim.lenis = lenis;
     return lenis;
   }
 
-  function initAnchors(lenis) {
-    const navEl = document.querySelector('nav');
-    const navH  = () => (navEl ? navEl.offsetHeight : 72);
+  /* Shared smooth-scroll-to-target, accounting for the fixed banner +
+     nav. Exposed on window.HTAnim so the command palette (experience.js)
+     can reuse the exact same scroll behaviour. */
+  function scrollToTarget(target, opts) {
+    const el = typeof target === 'string' ? document.querySelector(target) : target;
+    if (!el) return;
+    const nav = document.querySelector('nav');
+    const row = nav && nav.querySelector('.max-w-7xl');
+    const navH = row ? row.offsetHeight : (nav ? nav.offsetHeight : 64);
+    const bannerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) || 0;
+    const offset = navH + bannerH + 8;
+    const lenis = window.HTAnim.lenis;
+    if (lenis) {
+      lenis.scrollTo(el, { offset: -offset, duration: (opts && opts.duration) || 1.2 });
+    } else {
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+    }
+  }
+  window.HTAnim.scrollTo = scrollToTarget;
+
+  function initAnchors() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       const id = a.getAttribute('href');
       if (!id || id.length < 2) return;
@@ -350,12 +380,7 @@
         const target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        const offset = navH() + 8;
-        if (lenis) lenis.scrollTo(target, { offset: -offset, duration: 1.2 });
-        else {
-          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
+        scrollToTarget(target);
         const menu = document.getElementById('mobile-menu');
         if (menu) menu.classList.remove('open');
       });
@@ -366,8 +391,8 @@
      BOOT
   ══════════════════════════════════════════════════════════ */
   ready(() => {
-    const lenis = initLenis();
-    initAnchors(lenis);
+    initLenis();
+    initAnchors();
     setupReveals();
     initHero();
     initParticles();

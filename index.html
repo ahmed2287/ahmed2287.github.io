@@ -39,9 +39,53 @@
   </script>
   <link rel="stylesheet" href="css/custom.css">
   <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/experience.css">
+  <link rel="stylesheet" href="css/brand.css">
 </head>
 
 <body class="bg-obsidian text-gray-200">
+
+<!-- CINEMATIC LOADER -->
+<div class="loader" id="loader" role="status" aria-label="Loading">
+  <div class="loader-mark">
+    <img src="/My-Logo.png" alt="HamdyTech">
+    <span>HamdyTech</span>
+  </div>
+  <div class="loader-lines">
+    <div class="loader-line">Initializing infrastructure</div>
+    <div class="loader-line">Loading services</div>
+    <div class="loader-line">Starting secure connections</div>
+    <div class="loader-line">Deployment ready</div>
+  </div>
+  <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- AURORA ATMOSPHERE -->
+<div class="aurora-bg" aria-hidden="true">
+  <div class="aurora-blob aurora-1"></div>
+  <div class="aurora-blob aurora-2"></div>
+  <div class="aurora-blob aurora-3"></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<!-- COMMAND PALETTE (Ctrl/⌘ + K) -->
+<div class="cmdk-overlay" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette" aria-hidden="true">
+  <div class="cmdk">
+    <div class="cmdk-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="cmdk-input" type="text" placeholder="Type a command or search…" aria-label="Search commands" autocomplete="off" spellcheck="false">
+      <span class="cmdk-hint">ESC</span>
+    </div>
+    <ul class="cmdk-list" role="listbox"></ul>
+  </div>
+</div>
+<button class="cmdk-trigger" id="cmdk-trigger" aria-label="Open command palette">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <span>Search</span><kbd>⌘K</kbd>
+</button>
 
 <!-- TOP BANNER -->
 <div id="top-banner" class="top-banner">
@@ -127,22 +171,24 @@
   <div class="hero-grid-bg absolute inset-0 pointer-events-none"></div>
   <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
        style="background:radial-gradient(ellipse at center,rgba(60,255,192,0.04) 0%,transparent 70%)"></div>
-  <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
-    <div class="grid lg:grid-cols-2 gap-12 xl:gap-16 items-center">
+  <div class="relative max-w-7xl mx-auto px-6 w-full">
+    <div class="hero-shell">
       <div>
-        <div class="inline-flex items-center gap-2 border border-neon/30 bg-neon/5 px-3 py-1.5 mb-8">
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow">DevOps &middot; Infrastructure &middot; Automation</div>
+        <div class="hero-status inline-flex items-center gap-2 border border-neon/25 bg-neon/5 px-3 py-1.5">
           <span class="status-dot online"></span>
-          <span class="font-mono text-xs text-neon tracking-widest" data-i18n="hero.badge">SYSTEM ONLINE &mdash; ALL SERVICES OPERATIONAL</span>
+          <span class="font-mono text-xs text-neon tracking-widest" data-i18n="hero.badge">ALL SYSTEMS OPERATIONAL</span>
         </div>
-        <h1 class="font-grotesk font-bold text-4xl sm:text-5xl xl:text-6xl leading-[1.05] tracking-tight text-white mb-6">
-          <span data-i18n="hero.headline_1">Automate Your</span><br>
-          <span class="shimmer-text" data-i18n="hero.headline_2">Infrastructure with HamdyTech</span>
+        <h1 class="font-grotesk text-white">
+          <span data-i18n="hero.headline_1">Infrastructure that</span><br>
+          <span class="accent" data-i18n="hero.headline_2">survives production.</span>
         </h1>
-        <p class="text-gray-400 text-lg leading-relaxed max-w-lg mb-10" data-i18n-html="hero.description">
-          We provide <span class="text-white font-medium">DevOps automation</span>, cloud infrastructure,
-          and smart deployment solutions to help you <span class="text-white font-medium">scale faster</span>.
+        <p class="hero-sub" data-i18n-html="hero.description">
+          I design, automate, and operate systems built to <strong>stay up</strong> &mdash;
+          under load, under failure, under pressure.
         </p>
-        <!-- CTAs: Primary = Download CV, Secondary = View Projects -->
+        <p class="hero-philosophy" data-i18n="hero.philosophy">// Reliability is engineered, not hoped for.</p>
+        <!-- CTAs: Primary = Download CV, Secondary = View Work -->
         <div class="flex flex-wrap gap-3 mb-12">
           <a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link"
              class="btn-cv text-sm px-7 py-3.5 tracking-wide">
@@ -157,7 +203,7 @@
           </a>
         </div>
         <!-- Stats -->
-        <div class="grid grid-cols-3 gap-4 pt-8 border-t border-border-dim">
+        <div class="hero-stats grid grid-cols-3 gap-4 pt-8 border-t border-border-dim">
           <div>
             <div class="font-mono text-3xl font-bold text-neon mb-1"><span data-counter="47" data-suffix="">47</span>+</div>
             <div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="hero.stat_1">Systems Deployed</div>
@@ -220,6 +266,112 @@
           <span class="font-mono text-xs text-gray-500" data-i18n="hero.uptime_label">UPTIME</span>
           <span id="uptime-val" class="font-mono text-xs text-neon">47d 14h 22m 11s</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE — LIVE DEPLOYMENT TOPOLOGY -->
+<section id="architecture" class="signature border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="signature-inner">
+      <!-- Narrative -->
+      <div class="reveal-left">
+        <div class="section-label mb-3" data-i18n="sig.label">LIVE SYSTEM</div>
+        <h2 class="font-grotesk text-white mb-5">
+          <span data-i18n="sig.headline_1">Architecture</span>
+          <span class="accent" data-i18n="sig.headline_2"> in motion.</span>
+        </h2>
+        <p class="text-lg" data-i18n="sig.sub">
+          A production topology I run every day: traffic enters at the edge, load-balances
+          across stateless app nodes, and settles into a replicated data layer — observed end to end.
+        </p>
+        <div class="topo-legend">
+          <span><i style="background:var(--neon)"></i><span data-i18n="sig.legend_flow">live traffic</span></span>
+          <span><i style="background:#4ade80"></i><span data-i18n="sig.legend_healthy">healthy</span></span>
+          <span><i style="background:var(--amber)"></i><span data-i18n="sig.legend_warn">degraded</span></span>
+        </div>
+
+        <!-- CI/CD pipeline strip -->
+        <div class="font-mono text-xs text-gray-500 tracking-widest mt-10 mb-2" data-i18n="sig.pipeline_label">CONTINUOUS DELIVERY</div>
+        <div class="pipeline">
+          <div class="pipe-stage"><span class="pipe-dot"></span>commit</div>
+          <div class="pipe-stage"><span class="pipe-dot"></span>test</div>
+          <div class="pipe-stage"><span class="pipe-dot"></span>build</div>
+          <div class="pipe-stage"><span class="pipe-dot"></span>deploy</div>
+          <div class="pipe-stage"><span class="pipe-dot"></span>live</div>
+        </div>
+      </div>
+
+      <!-- Topology diagram -->
+      <div class="topo reveal" aria-label="Deployment topology diagram">
+        <svg viewBox="0 0 520 350" role="img">
+          <!-- base edges -->
+          <g>
+            <path class="topo-edge" d="M260,62 L260,108"/>
+            <path class="topo-edge" d="M260,150 L100,198"/>
+            <path class="topo-edge" d="M260,150 L260,198"/>
+            <path class="topo-edge" d="M260,150 L420,198"/>
+            <path class="topo-edge" d="M100,240 L180,288"/>
+            <path class="topo-edge" d="M260,240 L180,288"/>
+            <path class="topo-edge" d="M260,240 L360,288"/>
+            <path class="topo-edge" d="M420,240 L360,288"/>
+          </g>
+          <!-- flowing data -->
+          <g>
+            <path class="topo-flow" d="M260,62 L260,108"/>
+            <path class="topo-flow" d="M260,150 L100,198"/>
+            <path class="topo-flow" d="M260,150 L260,198"/>
+            <path class="topo-flow" d="M260,150 L420,198"/>
+            <path class="topo-flow blue" d="M100,240 L180,288"/>
+            <path class="topo-flow blue" d="M260,240 L180,288"/>
+            <path class="topo-flow indigo" d="M260,240 L360,288"/>
+            <path class="topo-flow indigo" d="M420,240 L360,288"/>
+          </g>
+          <!-- nodes -->
+          <g class="topo-node live">
+            <rect x="200" y="22" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="312" cy="30" r="3"/>
+            <text x="260" y="40" text-anchor="middle">Cloudflare</text>
+            <text x="260" y="52" text-anchor="middle" class="topo-sub">edge · DDoS</text>
+          </g>
+          <g class="topo-node live">
+            <rect x="200" y="110" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="312" cy="118" r="3"/>
+            <text x="260" y="128" text-anchor="middle">Nginx LB</text>
+            <text x="260" y="140" text-anchor="middle" class="topo-sub">HA pair</text>
+          </g>
+          <g class="topo-node live">
+            <rect x="40" y="200" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="152" cy="208" r="3"/>
+            <text x="100" y="218" text-anchor="middle">app-01</text>
+            <text x="100" y="230" text-anchor="middle" class="topo-sub">stateless</text>
+          </g>
+          <g class="topo-node live">
+            <rect x="200" y="200" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="312" cy="208" r="3"/>
+            <text x="260" y="218" text-anchor="middle">app-02</text>
+            <text x="260" y="230" text-anchor="middle" class="topo-sub">stateless</text>
+          </g>
+          <g class="topo-node">
+            <rect x="360" y="200" width="120" height="40" rx="3"/>
+            <circle class="topo-dot amber" cx="472" cy="208" r="3"/>
+            <text x="420" y="218" text-anchor="middle">app-03</text>
+            <text x="420" y="230" text-anchor="middle" class="topo-sub">scaling…</text>
+          </g>
+          <g class="topo-node live">
+            <rect x="120" y="290" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="232" cy="298" r="3"/>
+            <text x="180" y="308" text-anchor="middle">Postgres</text>
+            <text x="180" y="320" text-anchor="middle" class="topo-sub">primary</text>
+          </g>
+          <g class="topo-node live">
+            <rect x="300" y="290" width="120" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="412" cy="298" r="3"/>
+            <text x="360" y="308" text-anchor="middle">Redis</text>
+            <text x="360" y="320" text-anchor="middle" class="topo-sub">cache</text>
+          </g>
+        </svg>
       </div>
     </div>
   </div>
@@ -689,8 +841,13 @@
         </div>
         <div class="case-tl-step reveal">
           <div class="case-tl-dot">06</div>
-          <div class="case-tl-title" data-i18n="case.tl_operations_title">Operations</div>
-          <div class="case-tl-desc" data-i18n="case.tl_operations_desc">Full observability with Prometheus, Grafana, and alerting &mdash; plus hourly snapshots and a tested disaster-recovery plan.</div>
+          <div class="case-tl-title" data-i18n="case.tl_monitoring_title">Monitoring</div>
+          <div class="case-tl-desc" data-i18n="case.tl_monitoring_desc">Full observability with Prometheus, Grafana, and alerting rules &mdash; issues are caught and paged before users ever notice.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">07</div>
+          <div class="case-tl-title" data-i18n="case.tl_scaling_title">Scaling</div>
+          <div class="case-tl-desc" data-i18n="case.tl_scaling_desc">Auto-scaling with load balancing and hourly snapshots &mdash; traffic spikes are absorbed automatically and recovery is one tested command away.</div>
         </div>
       </div>
     </div>
@@ -795,6 +952,41 @@
       <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-blue-400 mb-1" data-counter="847">847</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_2_label">Commits / Year</div></div>
       <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-indigo-400 mb-1" data-counter="341">341</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_3_label">PRs Merged</div></div>
       <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-amber-400 mb-1" data-counter="18">18</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_4_label">Day Streak</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATING PRINCIPLES — brand personality -->
+<section id="principles" class="principles border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal">
+      <div class="section-label mb-3" data-i18n="phil.label">// OPERATING PRINCIPLES</div>
+      <h2 class="font-grotesk text-white" data-i18n="phil.headline">How I think about systems.</h2>
+      <p class="text-lg principles-lead mt-5" data-i18n="phil.lead">
+        Tools change; the discipline doesn't. A few principles guide every system I build and operate.
+      </p>
+    </div>
+    <div class="principles-list" data-stagger>
+      <div class="principle reveal">
+        <span class="principle-no">01</span>
+        <h3 data-i18n="phil.p1_title">Automate what repeats.</h3>
+        <p data-i18n="phil.p1_desc">If I do it twice by hand, it becomes code. Toil is treated as a bug, not a routine.</p>
+      </div>
+      <div class="principle reveal">
+        <span class="principle-no">02</span>
+        <h3 data-i18n="phil.p2_title">Design for failure.</h3>
+        <p data-i18n="phil.p2_desc">Every system fails eventually. Mine fail safely, recover on their own, and page no one at 3 AM.</p>
+      </div>
+      <div class="principle reveal">
+        <span class="principle-no">03</span>
+        <h3 data-i18n="phil.p3_title">Observability first.</h3>
+        <p data-i18n="phil.p3_desc">You can't operate what you can't see. Metrics, logs, and traces ship before launch — never after.</p>
+      </div>
+      <div class="principle reveal">
+        <span class="principle-no">04</span>
+        <h3 data-i18n="phil.p4_title">Own the whole stack.</h3>
+        <p data-i18n="phil.p4_desc">From bare metal to TLS. No black boxes, no lock-in, no surprises when it matters most.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1086,6 +1278,8 @@
 <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
 <!-- animations.js MUST load before main.js (defines window._revealObserver + window.HTAnim) -->
 <script src="js/animations.js"></script>
+<!-- experience.js after animations.js (reuses window.HTAnim); sets window.HTLoader before main.js boots -->
+<script src="js/experience.js"></script>
 <script src="js/main.js"></script>
 
 <!-- Chatwoot Custom Bubble -->
