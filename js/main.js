@@ -504,8 +504,13 @@
     startLogStream('log-stream');
     startUptimeTicker();
     initLiveMonMetrics();
-    initReveal();
-    initStagger();
+    /* Reveal + counters are owned by animations.js (GSAP/ScrollTrigger)
+       when present. These run only as a fallback if that stack failed
+       to load (window.HTAnim is then undefined). */
+    if (!(window.HTAnim && window.HTAnim.enabled)) {
+      initReveal();
+      initStagger();
+    }
     initMobileNav();
     initNavLinks();
     initCopyButtons();
@@ -515,11 +520,13 @@
 
     setTimeout(animateMetricBars, 800);
 
-    document.querySelectorAll('[data-counter]').forEach(el => {
-      const target = parseFloat(el.dataset.counter);
-      const suffix = el.dataset.suffix || '';
-      setTimeout(() => animateCounter(el, target, suffix), 600);
-    });
+    if (!(window.HTAnim && window.HTAnim.enabled)) {
+      document.querySelectorAll('[data-counter]').forEach(el => {
+        const target = parseFloat(el.dataset.counter);
+        const suffix = el.dataset.suffix || '';
+        setTimeout(() => animateCounter(el, target, suffix), 600);
+      });
+    }
   });
 
 })();

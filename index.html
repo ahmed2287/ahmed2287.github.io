@@ -38,6 +38,7 @@
     }
   </script>
   <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body class="bg-obsidian text-gray-200">
@@ -59,6 +60,7 @@
 
 <!-- NAVIGATION -->
 <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="#hero" class="flex items-center gap-3 group">
       <img src="/My-Logo.png" alt="HamdyTech Logo" class="h-9 w-auto object-contain logo-img">
@@ -89,7 +91,7 @@
         </svg>
         CV
       </a>
-    </div>
+    </div>  
     <button id="nav-toggle" class="md:hidden text-gray-400 hover:text-neon transition-colors p-1">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
@@ -121,6 +123,7 @@
 
 <!-- HERO -->
 <section id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  <div id="hero-particles" aria-hidden="true"></div>
   <div class="hero-grid-bg absolute inset-0 pointer-events-none"></div>
   <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
        style="background:radial-gradient(ellipse at center,rgba(60,255,192,0.04) 0%,transparent 70%)"></div>
@@ -183,7 +186,7 @@
           <span class="font-mono text-xs text-neon/60 hidden sm:block">&bull; LIVE</span>
         </div>
         <div class="px-4 pt-4 pb-2 font-mono text-sm">
-          <span class="text-neon">hamdy@arch-terminal</span><span class="text-gray-600">:</span><span class="text-blue-400">~</span><span class="text-gray-400">$ ./system-status --watch</span>
+          <span class="text-neon">hamdy@arch-terminal</span><span class="text-gray-600">:</span><span class="text-blue-400">~</span><span class="text-gray-400">$ </span><span id="hero-typed" class="text-gray-300">./system-status --watch</span><span class="type-cursor"></span>
         </div>
         <div class="overflow-y-auto px-4 pb-4" style="height:200px">
           <div id="log-stream" class="space-y-0.5 terminal-body !p-0"></div>
@@ -653,6 +656,45 @@
         E-Commerce Platform:<br><span class="text-neon">Zero to 99.9% Uptime</span>
       </h2>
     </div>
+
+    <!-- Storytelling timeline: Problem → Operations -->
+    <div class="case-timeline">
+      <div class="section-label mb-8 reveal" data-i18n="case.tl_label">// DEPLOYMENT JOURNEY</div>
+      <div class="case-tl-track">
+        <div class="case-tl-progress"></div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">01</div>
+          <div class="case-tl-title" data-i18n="case.tl_problem_title">The Problem</div>
+          <div class="case-tl-desc" data-i18n="case.tl_problem_desc">A single VPS, manual SSH deploys, and zero monitoring &mdash; every release risked a 30-minute outage during business hours.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">02</div>
+          <div class="case-tl-title" data-i18n="case.tl_architecture_title">Architecture</div>
+          <div class="case-tl-desc" data-i18n="case.tl_architecture_desc">Mapped a layered, highly-available design: CDN edge, load-balanced app tier, and a replicated data layer with clear failure domains.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">03</div>
+          <div class="case-tl-title" data-i18n="case.tl_infrastructure_title">Infrastructure</div>
+          <div class="case-tl-desc" data-i18n="case.tl_infrastructure_desc">Provisioned a Proxmox HA cluster with ZFS storage pools, containerized every service, and codified it all with Ansible &amp; Terraform.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">04</div>
+          <div class="case-tl-title" data-i18n="case.tl_networking_title">Networking</div>
+          <div class="case-tl-desc" data-i18n="case.tl_networking_desc">Nginx HA reverse proxy with SSL termination, rate limiting, and a Cloudflare edge for DDoS protection and global caching.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">05</div>
+          <div class="case-tl-title" data-i18n="case.tl_deployment_title">Deployment</div>
+          <div class="case-tl-desc" data-i18n="case.tl_deployment_desc">A GitOps CI/CD pipeline: push to main &rarr; tested, built, and rolled out with zero-downtime blue-green releases in under 90 seconds.</div>
+        </div>
+        <div class="case-tl-step reveal">
+          <div class="case-tl-dot">06</div>
+          <div class="case-tl-title" data-i18n="case.tl_operations_title">Operations</div>
+          <div class="case-tl-desc" data-i18n="case.tl_operations_desc">Full observability with Prometheus, Grafana, and alerting &mdash; plus hourly snapshots and a tested disaster-recovery plan.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="grid lg:grid-cols-2 gap-12 items-stretch">
       <div class="reveal-left">
         <div class="space-y-4 text-gray-400 leading-relaxed mb-10">
@@ -661,10 +703,10 @@
           <p class="text-white" data-i18n="case.p3">Result: zero unplanned downtime in 8 months. Deploy time dropped from 45 minutes to 90 seconds.</p>
         </div>
         <div class="grid grid-cols-2 gap-4 mb-10">
-          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_1_label">Deploy Time</div><div class="font-grotesk text-3xl font-bold text-neon" data-i18n="case.metric_1_val">90s</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_1_sub">was 45 min</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_1_label">Deploy Time</div><div class="font-grotesk text-3xl font-bold text-neon" data-i18n="case.metric_1_val" data-counter="90" data-suffix="s">90s</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_1_sub">was 45 min</div></div>
           <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_2_label">Downtime</div><div class="font-grotesk text-3xl font-bold text-neon" data-i18n="case.metric_2_val">0</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_2_sub">unplanned in 8 months</div></div>
-          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_3_label">Cost Reduction</div><div class="font-grotesk text-3xl font-bold text-blue-400" data-i18n="case.metric_3_val">38%</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_3_sub">infra cost vs cloud</div></div>
-          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_4_label">Response Time</div><div class="font-grotesk text-3xl font-bold text-indigo-400" data-i18n="case.metric_4_val">142ms</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_4_sub">p50 API response</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_3_label">Cost Reduction</div><div class="font-grotesk text-3xl font-bold text-blue-400" data-i18n="case.metric_3_val" data-counter="38" data-suffix="%">38%</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_3_sub">infra cost vs cloud</div></div>
+          <div class="border border-border-dim p-5 bg-surface"><div class="font-mono text-xs text-gray-500 mb-2 uppercase tracking-wider" data-i18n="case.metric_4_label">Response Time</div><div class="font-grotesk text-3xl font-bold text-indigo-400" data-i18n="case.metric_4_val" data-counter="142" data-suffix="ms">142ms</div><div class="font-mono text-xs text-gray-600 mt-1" data-i18n="case.metric_4_sub">p50 API response</div></div>
         </div>
         <div>
           <div class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-3" data-i18n="case.stack_label">Stack Used</div>
@@ -679,15 +721,15 @@
         <div class="terminal p-6">
           <div class="font-mono text-xs text-gray-500 mb-6 uppercase tracking-widest" data-i18n="case.arch_label">// Architecture Diagram</div>
           <div class="space-y-3">
-            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 1</span><div class="arch-node" style="flex:1;text-align:center;">&#x2B21; Cloudflare CDN + DDoS Protection</div></div>
+            <div class="flex items-center gap-2 arch-reveal"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 1</span><div class="arch-node" style="flex:1;text-align:center;">&#x2B21; Cloudflare CDN + DDoS Protection</div></div>
             <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
-            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 2</span><div class="arch-node blue" style="flex:1;text-align:center;">&#x2696; Nginx Load Balancer (HA pair)</div></div>
+            <div class="flex items-center gap-2 arch-reveal"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 2</span><div class="arch-node blue" style="flex:1;text-align:center;">&#x2696; Nginx Load Balancer (HA pair)</div></div>
             <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
-            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 3</span><div class="flex gap-2 flex-1"><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 1</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 2</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 3</div></div></div>
+            <div class="flex items-center gap-2 arch-reveal"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 3</span><div class="flex gap-2 flex-1"><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 1</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 2</div><div class="arch-node active" style="flex:1;text-align:center;">&#x2B21; App Node 3</div></div></div>
             <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
-            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 4</span><div class="flex gap-2 flex-1"><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Postgres HA</div><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Redis Cache</div></div></div>
+            <div class="flex items-center gap-2 arch-reveal"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 4</span><div class="flex gap-2 flex-1"><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Postgres HA</div><div class="arch-node amber" style="flex:1;text-align:center;">&#x25CE; Redis Cache</div></div></div>
             <div class="flex justify-center"><div class="w-0.5 h-4 bg-border-dim relative"><span class="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gray-600 text-xs">&#x25BC;</span></div></div>
-            <div class="flex items-center gap-2"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 5</span><div class="arch-node" style="flex:1;text-align:center;">&#x229E; Proxmox ZFS Storage Pool + Backups</div></div>
+            <div class="flex items-center gap-2 arch-reveal"><span class="font-mono text-xs text-gray-600 w-16 shrink-0">LAYER 5</span><div class="arch-node" style="flex:1;text-align:center;">&#x229E; Proxmox ZFS Storage Pool + Backups</div></div>
           </div>
           <div class="mt-6 pt-4 border-t border-border-dim flex items-center justify-between">
             <span class="font-mono text-xs text-gray-600" data-i18n="case.monitoring_label">MONITORING PLANE</span>
@@ -749,10 +791,10 @@
       </div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 reveal">
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-neon mb-1">23</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_1_label">Public Repos</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-blue-400 mb-1">847</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_2_label">Commits / Year</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-indigo-400 mb-1">341</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_3_label">PRs Merged</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-amber-400 mb-1">18</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_4_label">Day Streak</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-neon mb-1" data-counter="23">23</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_1_label">Public Repos</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-blue-400 mb-1" data-counter="847">847</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_2_label">Commits / Year</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-indigo-400 mb-1" data-counter="341">341</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_3_label">PRs Merged</div></div>
+      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-amber-400 mb-1" data-counter="18">18</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_4_label">Day Streak</div></div>
     </div>
   </div>
 </section>
@@ -1037,6 +1079,140 @@
   </div>
 </footer>
 
+<!-- Motion stack: GSAP + ScrollTrigger + Lenis + tsParticles -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+<!-- animations.js MUST load before main.js (defines window._revealObserver + window.HTAnim) -->
+<script src="js/animations.js"></script>
 <script src="js/main.js"></script>
+
+<!-- Chatwoot Custom Bubble -->
+<style>
+  #cw-custom-bubble {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99999;
+    width: 56px;
+    height: 56px;
+    background: #0e0e0e;
+    border: 1.5px solid #3cffc0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px rgba(60,255,192,0.25);
+    transition: box-shadow 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+  }
+  #cw-custom-bubble:hover {
+    box-shadow: 0 0 32px rgba(60,255,192,0.5);
+    transform: scale(1.08);
+  }
+  #cw-custom-bubble svg { transition: opacity 0.2s; }
+  #cw-custom-bubble .icon-close { display: none; }
+  #cw-custom-bubble.open .icon-chat { display: none; }
+  #cw-custom-bubble.open .icon-close { display: block; }
+</style>
+
+<button id="cw-custom-bubble" aria-label="Chat with us">
+  <svg class="icon-chat" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3cffc0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3cffc0" stroke-width="2" stroke-linecap="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<script>
+  window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"","hideMessageBubble":true};
+  (function(d,t) {
+    var BASE_URL="https://chatwoot.hamdyzone.icu";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'uHtTXtpuB8LyaAsMs6upfNMy',
+        baseUrl: BASE_URL
+      });
+    }
+  })(document,"script");
+
+  (function() {
+    var btn = document.getElementById('cw-custom-bubble');
+
+    btn.addEventListener('click', function() {
+      if (window.$chatwoot) {
+        window.$chatwoot.toggle();
+      }
+    });
+
+    var THEME_CSS = [
+      /* base */
+      'html,body{background:#0e0e0e!important;color:#e5e7eb!important}',
+
+      /* header */
+      '.chat-header--active,.conversation-header,.header-title--wrap{background:#0e0e0e!important;border-bottom:1px solid #2a2a2a!important}',
+      '.header-title,.title,.sub-title,.conversation-title{color:#e5e7eb!important}',
+
+      /* main areas */
+      '.conversation-wrap,.contact-conversation,.chat-wrap,.woot-widget-container,'
+      + '.messages-container,.view-box,.conversation-box{background:#141414!important}',
+
+      /* agent bubbles — dark; user bubbles keep the configured brand color */
+      '.chat-bubble.agent{background:#1c1c1c!important;color:#e5e7eb!important;border:1px solid #2a2a2a!important}',
+      '.chat-content{color:inherit!important}',
+
+      /* reply / input bar */
+      '.reply-area,.reply-editor,.chat-footer,.chat-editor,'
+      + '.reply-editor--note,.editor-wrap{background:#141414!important;border-top:1px solid #2a2a2a!important}',
+      '.ProseMirror,.reply-editor__input{color:#e5e7eb!important;background:transparent!important}',
+      '.ProseMirror p.is-editor-empty:first-child::before{color:#6b7280!important}',
+
+      /* tabs background only — active color comes from Chatwoot brand color */
+      '.tab-button{background:#141414!important;color:#9ca3af!important}',
+
+      /* powered-by bar */
+      '.chat-footer--branding,.powered-by{background:#0e0e0e!important;border-top:1px solid #2a2a2a!important;color:#4b5563!important}',
+
+      /* scrollbar */
+      '::-webkit-scrollbar{width:4px;background:#0e0e0e}'
+      + '::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:2px}'
+    ].join('\n');
+
+    function injectTheme(iframe) {
+      try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc || !doc.head) return false;
+        var existing = doc.getElementById('cw-site-theme');
+        if (existing) return true;
+        var s = doc.createElement('style');
+        s.id = 'cw-site-theme';
+        s.textContent = THEME_CSS;
+        doc.head.appendChild(s);
+        return true;
+      } catch(e) { return false; }
+    }
+
+    window.addEventListener('chatwoot:ready', function() {
+      setInterval(function() {
+        var holder = document.querySelector('.woot-widget-holder');
+        if (!holder) return;
+
+        /* sync open/close state */
+        var cs = window.getComputedStyle(holder);
+        var visible = cs.display !== 'none' && cs.visibility !== 'hidden' && parseFloat(cs.opacity) > 0;
+        btn.classList.toggle('open', visible);
+
+        /* inject theme into every iframe inside the holder */
+        holder.querySelectorAll('iframe').forEach(function(f) { injectTheme(f); });
+      }, 250);
+    });
+  })();
+</script>
 </body>
 </html>

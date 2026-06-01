@@ -1,0 +1,258 @@
+/* ============================================================
+   HamdyTech — animations.css
+   Motion layer: Lenis smooth-scroll, GSAP handoff, hero particle
+   network, case-study storytelling timeline, reduced-motion.
+   Loaded AFTER custom.css so these rules win where they overlap.
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════
+   LENIS SMOOTH SCROLL
+   When JS boots Lenis it adds `.lenis` to <html>. We must
+   disable native smooth-scroll (set in custom.css) so the two
+   don't fight, then apply Lenis' recommended base rules.
+══════════════════════════════════════════════════════════ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto !important; /* override custom.css :33 */
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════
+   GSAP HANDOFF
+   When animations.js is active it adds `.gsap-enabled` to
+   <html>. We neutralise the CSS-transition reveal system
+   (custom.css .reveal/.reveal-left) so GSAP fully owns the
+   initial state + animation — no double-animation / flash.
+   If GSAP never loads, this block never applies and the old
+   IntersectionObserver fallback in main.js keeps working.
+══════════════════════════════════════════════════════════ */
+html.gsap-enabled .reveal,
+html.gsap-enabled .reveal-left {
+  transition: none !important;
+}
+/* GSAP sets the hidden state inline via gsap.set(); these are
+   just safety defaults until the script runs on the next frame. */
+html.gsap-enabled .reveal,
+html.gsap-enabled .reveal-left {
+  opacity: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   Pinned to the bottom edge of the nav's top row (JS sets `top`
+   so the expanding mobile menu can't move it). Fill is driven by
+   a scrubbed ScrollTrigger via transform: scaleX().
+══════════════════════════════════════════════════════════ */
+.scroll-progress {
+  /* Absolute within <nav> (which is the containing block — it has a
+     backdrop-filter). top = nav top-row height so the bar sits on the
+     navbar's bottom edge, unaffected by the banner or the mobile menu. */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%; /* JS overrides with the top-row height */
+  height: 2px;
+  z-index: 51;
+  pointer-events: none;
+  overflow: hidden;
+}
+.scroll-progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+  background: linear-gradient(90deg, var(--neon) 0%, #7affdb 50%, var(--blue) 100%);
+  box-shadow: 0 0 10px rgba(60, 255, 192, 0.45);
+}
+[dir="rtl"] .scroll-progress-bar { transform-origin: right center; }
+
+/* ══════════════════════════════════════════════════════════
+   HERO PARTICLE NETWORK
+══════════════════════════════════════════════════════════ */
+#hero { position: relative; }
+#hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Fade the network toward the edges so it reads as ambient */
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 55%, transparent 100%);
+}
+#hero-particles canvas { display: block; }
+/* Keep hero content above the particle canvas + grid bg */
+#hero > .relative { position: relative; z-index: 2; }
+#hero .hero-grid-bg { z-index: 1; }
+
+/* ══════════════════════════════════════════════════════════
+   MAGNETIC BUTTONS
+   JS drives transform; this just hints the compositor.
+══════════════════════════════════════════════════════════ */
+.btn-cv, .btn-hub, .btn-mon, .btn-schedule, .btn-primary {
+  will-change: transform;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HERO TERMINAL TYPEWRITER
+══════════════════════════════════════════════════════════ */
+#hero-typed { white-space: pre; }
+.type-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--neon);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink-cursor 1s step-end infinite;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CASE STUDY — STORYTELLING TIMELINE
+══════════════════════════════════════════════════════════ */
+.case-timeline {
+  position: relative;
+  margin: 0 0 4rem;
+  padding-inline-start: 4px;
+}
+.case-tl-track {
+  position: relative;
+  /* the rail sits under the dots */
+  padding-inline-start: 34px;
+}
+/* The full rail (dim) */
+.case-tl-track::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 13px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+/* The progress rail (neon) — JS scales its height via scrub */
+.case-tl-progress {
+  position: absolute;
+  inset-inline-start: 13px;
+  top: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--neon) 0%, var(--blue) 100%);
+  transform-origin: top center;
+  transform: scaleY(0);
+  height: calc(100% - 12px);
+  box-shadow: 0 0 12px rgba(60, 255, 192, 0.5);
+}
+
+.case-tl-step {
+  position: relative;
+  padding: 0 0 2.25rem;
+}
+.case-tl-step:last-child { padding-bottom: 0; }
+
+.case-tl-dot {
+  position: absolute;
+  inset-inline-start: -34px;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  transition: border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+/* JS adds .is-active once a step's dot passes the scroll midpoint */
+.case-tl-step.is-active .case-tl-dot {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: rgba(60, 255, 192, 0.06);
+  box-shadow: 0 0 16px rgba(60, 255, 192, 0.35);
+}
+.case-tl-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.01em;
+}
+.case-tl-step.is-active .case-tl-title { color: var(--neon); }
+.case-tl-desc {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-2);
+  max-width: 46ch;
+}
+.case-tl-phase {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* RTL: rail + dots flip to the right; logical props handle most,
+   but the fixed pixel offsets need mirroring. */
+[dir="rtl"] .case-tl-desc { direction: rtl; text-align: right; }
+[dir="rtl"] .case-tl-phase,
+[dir="rtl"] .case-tl-dot { direction: ltr; }
+
+/* ── Architecture diagram progressive reveal ──────────────── */
+html.gsap-enabled .arch-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Soften the particle mask on small screens (less GPU work) */
+  #hero-particles {
+    -webkit-mask-image: radial-gradient(ellipse 95% 80% at 50% 40%, #000 60%, transparent 100%);
+    mask-image: radial-gradient(ellipse 95% 80% at 50% 40%, #000 60%, transparent 100%);
+  }
+  .case-tl-desc { font-size: 11px; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   JS already skips Lenis/particles/parallax; this is the CSS
+   safety net so nothing is left hidden or moving.
+══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html.gsap-enabled .reveal,
+  html.gsap-enabled .reveal-left,
+  html.gsap-enabled .arch-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .case-tl-progress { transform: scaleY(1) !important; }
+  .case-tl-step .case-tl-dot {
+    border-color: var(--neon);
+    color: var(--neon);
+  }
+  #hero-particles { display: none !important; }
+  .type-cursor { animation: none; }
+}
