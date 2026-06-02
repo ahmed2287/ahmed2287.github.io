@@ -305,7 +305,7 @@
 
       <!-- Topology diagram -->
       <div class="topo reveal" aria-label="Deployment topology diagram">
-        <svg viewBox="0 0 520 350" role="img">
+        <svg viewBox="0 0 520 416" role="img">
           <!-- base edges -->
           <g>
             <path class="topo-edge" d="M260,62 L260,108"/>
@@ -316,6 +316,8 @@
             <path class="topo-edge" d="M260,240 L180,288"/>
             <path class="topo-edge" d="M260,240 L360,288"/>
             <path class="topo-edge" d="M420,240 L360,288"/>
+            <path class="topo-edge" d="M180,330 L260,366"/>
+            <path class="topo-edge" d="M360,330 L260,366"/>
           </g>
           <!-- flowing data -->
           <g>
@@ -327,6 +329,8 @@
             <path class="topo-flow blue" d="M260,240 L180,288"/>
             <path class="topo-flow indigo" d="M260,240 L360,288"/>
             <path class="topo-flow indigo" d="M420,240 L360,288"/>
+            <path class="topo-flow indigo" d="M180,330 L260,366"/>
+            <path class="topo-flow indigo" d="M360,330 L260,366"/>
           </g>
           <!-- nodes -->
           <g class="topo-node live">
@@ -371,9 +375,43 @@
             <text x="360" y="308" text-anchor="middle">Redis</text>
             <text x="360" y="320" text-anchor="middle" class="topo-sub">cache</text>
           </g>
+          <g class="topo-node live">
+            <rect x="130" y="368" width="260" height="40" rx="3"/>
+            <circle class="topo-dot pulse" cx="382" cy="376" r="3"/>
+            <text x="260" y="386" text-anchor="middle">Prometheus · Grafana · Backups</text>
+            <text x="260" y="398" text-anchor="middle" class="topo-sub">observability + hourly snapshots</text>
+          </g>
         </svg>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- MEASURABLE OUTCOMES — honest results band -->
+<section id="outcomes" class="outcomes border-t border-border-dim">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="outcomes-head reveal">
+      <div class="section-label mb-3" data-i18n="out.label">// MEASURABLE OUTCOMES</div>
+      <h2 class="font-grotesk text-white" data-i18n="out.headline">Engineered results, not promises.</h2>
+    </div>
+    <div class="outcomes-grid" data-stagger>
+      <div class="outcome reveal">
+        <div class="outcome-val"><span data-counter="90" data-suffix="s">90s</span></div>
+        <div class="outcome-label" data-i18n="out.m1_label">From commit to live</div>
+        <div class="outcome-sub" data-i18n="out.m1_sub">previously 45 minutes</div>
+      </div>
+      <div class="outcome reveal">
+        <div class="outcome-val" data-i18n="out.m2_val">0</div>
+        <div class="outcome-label" data-i18n="out.m2_label">Unplanned outages</div>
+        <div class="outcome-sub" data-i18n="out.m2_sub">8 months in production</div>
+      </div>
+      <div class="outcome reveal">
+        <div class="outcome-val"><span data-counter="99.9" data-decimals="1" data-suffix="%">99.9%</span></div>
+        <div class="outcome-label" data-i18n="out.m3_label">Measured uptime</div>
+        <div class="outcome-sub" data-i18n="out.m3_sub">not a marketing number</div>
+      </div>
+    </div>
+    <p class="outcomes-note reveal" data-i18n="out.note">Every figure is measured from real production work — the full engagement is below.</p>
   </div>
 </section>
 
@@ -946,12 +984,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 reveal">
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-neon mb-1" data-counter="23">23</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_1_label">Public Repos</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-blue-400 mb-1" data-counter="847">847</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_2_label">Commits / Year</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-indigo-400 mb-1" data-counter="341">341</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_3_label">PRs Merged</div></div>
-      <div class="border border-border-dim p-5 bg-surface text-center"><div class="font-mono text-2xl font-bold text-amber-400 mb-1" data-counter="18">18</div><div class="font-mono text-xs text-gray-500 uppercase tracking-wider" data-i18n="github.stat_4_label">Day Streak</div></div>
     </div>
   </div>
 </section>

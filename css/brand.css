@@ -232,6 +232,57 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════
+   5b · MEASURABLE OUTCOMES — editorial results band
+   Big numbers, hairline rules, no boxes (breaks card fatigue).
+══════════════════════════════════════════════════════════ */
+.outcomes-head { max-width: 40rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.outcomes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+@media (max-width: 720px) { .outcomes-grid { grid-template-columns: 1fr; } }
+.outcome {
+  padding: 1.75rem clamp(1.25rem, 3vw, 2.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+}
+.outcome:last-child { border-inline-end: none; }
+@media (max-width: 720px) { .outcome { border-inline-end: none; } }
+.outcome-val {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 1.8rem + 3.4vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--neon);
+  margin-bottom: 0.85rem;
+}
+.outcome:nth-child(2) .outcome-val { color: #fff; }
+.outcome:nth-child(3) .outcome-val { color: #93c5fd; }
+.outcome-label {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: #e8e8e8;
+  margin-bottom: 0.3rem;
+}
+.outcome-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 0.01em;
+}
+.outcomes-note {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-3);
+  margin-top: 2rem;
+  letter-spacing: 0.01em;
+}
+[dir="rtl"] .outcome-sub, [dir="rtl"] .outcomes-note { direction: rtl; }
+
+/* ══════════════════════════════════════════════════════════
    6 · SIGNATURE — live deployment topology + CI/CD flow
 ══════════════════════════════════════════════════════════ */
 .signature {
