@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solutions — HamdyTech</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://hamdyzone.icu/solution.html">
+  <script>
+    /* Legacy URL — Infrastructure was renamed to Solutions. Redirect to
+       solution.html, mapping old category slugs to the new ones. */
+    (function () {
+      var MAP = {
+        'proxmox-clusters': 'virtualization',
+        'docker-platforms': 'devops',
+        'erpnext-deployments': 'erp',
+        'monitoring-systems': 'monitoring',
+        'reverse-proxy-solutions': 'virtualization',
+        'high-availability-architectures': 'virtualization'
+      };
+      var id = new URLSearchParams(location.search).get('id');
+      var slug = (id && MAP[id]) || id || 'virtualization';
+      location.replace('solution.html?id=' + encodeURIComponent(slug));
+    })();
+  </script>
+</head>
+<body>
+  <noscript><a href="solution.html?id=virtualization">Continue to Solutions</a></noscript>
+</body>
+</html>

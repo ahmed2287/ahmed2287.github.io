@@ -176,21 +176,31 @@
       else if (a.href) window.open(a.href, a.target || '_self', 'noopener');
       close();
     };
+    /* Navigate to another internal page (solution / about). */
+    const nav = url => { close(); window.location.href = url; };
+    /* Open an external live product domain in a new, isolated tab. */
+    const ext = url => { window.open(url, '_blank', 'noopener,noreferrer'); close(); };
 
     /* Command registry — labels in English (power-user tool). */
     const COMMANDS = [
       { group: 'Navigate', icon: '▸', label: 'Home',                run: () => goto('#hero') },
-      { group: 'Navigate', icon: '▸', label: 'Architecture',        run: () => goto('#architecture') },
-      { group: 'Navigate', icon: '▸', label: 'Automation Hub',      run: () => goto('#automation-hub') },
-      { group: 'Navigate', icon: '▸', label: 'HamdyHost — VPS',     run: () => goto('#hamdyhost') },
-      { group: 'Navigate', icon: '▸', label: 'Monitoring Platform', run: () => goto('#monitoring-platform') },
-      { group: 'Navigate', icon: '▸', label: 'Services',            run: () => goto('#services') },
-      { group: 'Navigate', icon: '▸', label: 'Projects',            run: () => goto('#projects') },
-      { group: 'Navigate', icon: '▸', label: 'Case Study',          run: () => goto('#case-study') },
-      { group: 'Navigate', icon: '▸', label: 'Operating Principles', run: () => goto('#principles') },
-      { group: 'Navigate', icon: '▸', label: 'GitHub Activity',     run: () => goto('#github') },
       { group: 'Navigate', icon: '▸', label: 'Book a Meeting',      run: () => goto('#book') },
+      { group: 'Navigate', icon: '▸', label: 'Services',            run: () => goto('#services') },
+      { group: 'Navigate', icon: '▸', label: 'Architecture',        run: () => goto('#architecture') },
+      { group: 'Navigate', icon: '▸', label: 'About',              run: () => nav('about.html') },
       { group: 'Navigate', icon: '▸', label: 'Contact',             run: () => goto('#contact') },
+      { group: 'Projects', icon: '◎', label: 'Monitoring Platform',        meta: 'live ↗', run: () => ext('https://monitoring.hamdyzone.icu') },
+      { group: 'Projects', icon: '▣', label: 'HamdyHost — VPS',            meta: 'live ↗', run: () => ext('https://hosting.hamdyzone.icu') },
+      { group: 'Projects', icon: '⚡', label: 'Automation Hub',             meta: 'live ↗', run: () => ext('https://automation-hub.hamdyzone.icu') },
+      { group: 'Projects', icon: '⊞', label: 'HR Platform',                meta: 'live ↗', run: () => ext('https://attendance.hamdyzone.icu') },
+      { group: 'Projects', icon: '✦', label: 'AI Agent',                   meta: 'live ↗', run: () => ext('https://agent.hamdyzone.icu') },
+      { group: 'Projects', icon: '✎', label: 'Content Creation Platform',  meta: 'live ↗', run: () => ext('https://content-generator.hamdyzone.icu') },
+      { group: 'Solutions', icon: '▦', label: 'Virtualization & Private Cloud', run: () => nav('solution.html?id=virtualization') },
+      { group: 'Solutions', icon: '■', label: 'ERP & Business Systems',        run: () => nav('solution.html?id=erp') },
+      { group: 'Solutions', icon: '▤', label: 'File & Collaboration',          run: () => nav('solution.html?id=file-collaboration') },
+      { group: 'Solutions', icon: '✉', label: 'Internal Communication',        run: () => nav('solution.html?id=internal-communication') },
+      { group: 'Solutions', icon: '⎇', label: 'DevOps & Version Control',      run: () => nav('solution.html?id=devops') },
+      { group: 'Solutions', icon: '◎', label: 'Monitoring & Observability',    run: () => nav('solution.html?id=monitoring') },
       { group: 'Actions', icon: '↓',  label: 'Download CV',   meta: 'PDF',      run: () => { const a = document.querySelector('[data-content="cv-link"]'); if (a) a.click(); close(); } },
       { group: 'Actions', icon: '✉',  label: 'Send Email',     meta: 'mail',     run: () => openLink('[data-content="email-link"]') },
       { group: 'Actions', icon: '◆',  label: 'WhatsApp',       meta: 'chat',     run: () => openLink('[data-content="whatsapp-link"]') },

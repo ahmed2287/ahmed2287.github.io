@@ -1,0 +1,443 @@
+{
+  "virtualization": {
+    "slug": "virtualization",
+    "tagColor": "blue",
+    "icon": "▦",
+    "poweredBy": "Proxmox VE",
+    "hero": {
+      "eyebrow": "Virtualization & Private Cloud",
+      "eyebrowAr": "المحاكاة الافتراضية والسحابة الخاصة",
+      "title": "Virtualization & Private Cloud",
+      "titleAr": "المحاكاة الافتراضية والسحابة الخاصة",
+      "tagline": "Turn your own hardware into a resilient private cloud — the elasticity and automation of the cloud, on infrastructure you own, without the recurring bill or vendor lock-in.",
+      "taglineAr": "حوّل عتادك إلى سحابة خاصة مرنة — مرونة السحابة وأتمتتها على بنية تملكها، دون فاتورة متكررة أو ارتباط بمزوّد."
+    },
+    "businessValue": {
+      "body": "Most teams either overpay for public-cloud capacity they could own outright, or run critical workloads on a single server with no failover plan. A Proxmox-based private cloud solves both. It consolidates your servers into a self-healing cluster where virtual machines and containers move freely across hardware, capacity is added on demand, and a failed node never takes production down with it. You trade unpredictable monthly invoices for assets you control — and gain the operational maturity of a real cloud platform.",
+      "bodyAr": "تدفع معظم الفرق أكثر من اللازم مقابل سعة سحابة عامة كان يمكنها امتلاكها، أو تشغّل أحمالًا حرجة على خادم واحد دون خطة لتجاوز الفشل. تحل سحابة Proxmox الخاصة المشكلتين معًا: تدمج خوادمك في عنقود ذاتي الإصلاح تتنقل فيه الأجهزة الافتراضية والحاويات بحرية عبر العتاد، وتُضاف السعة عند الطلب، ولا تُسقط عقدة معطّلة الإنتاج معها. تستبدل فواتير شهرية غير متوقعة بأصول تتحكم بها — وتكتسب نضج منصة سحابية حقيقية."
+    },
+    "outcomes": [
+      { "icon": "▼", "title": "Reduce Infrastructure Cost", "titleAr": "خفّض تكلفة البنية التحتية", "desc": "Own your capacity instead of renting it — drop recurring per-VM cloud bills and run more workloads on the same hardware.", "descAr": "امتلك سعتك بدلًا من استئجارها — تخلّص من فواتير السحابة المتكررة لكل جهاز وشغّل أحمالًا أكثر على العتاد نفسه." },
+      { "icon": "⛨", "title": "Improve Reliability", "titleAr": "ارفع الموثوقية", "desc": "Self-healing high availability restarts failed workloads on healthy nodes automatically — no single server takes production down.", "descAr": "توافر عالٍ ذاتي الإصلاح يعيد تشغيل الأحمال المعطّلة على عقد سليمة تلقائيًا — لا خادم واحد يُسقط الإنتاج." },
+      { "icon": "⚙", "title": "Simplify Operations", "titleAr": "بسّط العمليات", "desc": "One console for every VM, container, snapshot, and backup — provision in minutes, migrate live, scale without downtime.", "descAr": "وحدة تحكم واحدة لكل جهاز وحاوية ولقطة ونسخة احتياطية — جهّز في دقائق، ورحّل حيًّا، ووسّع دون توقف." }
+    ],
+    "deliverables": [
+      { "title": "Proxmox VE Cluster", "titleAr": "عنقود Proxmox VE", "desc": "Multi-node cluster designed, installed, and quorum-verified for production.", "descAr": "عنقود متعدد العقد مُصمَّم ومُثبَّت ومُتحقَّق من نصابه للإنتاج." },
+      { "title": "Ceph Distributed Storage", "titleAr": "تخزين Ceph الموزّع", "desc": "Replicated storage pools so no single disk or node ever loses data.", "descAr": "مجمعات تخزين منسوخة فلا يفقد أي قرص أو عقدة البيانات." },
+      { "title": "HA & Live Migration", "titleAr": "التوافر العالي والترحيل الحي", "desc": "Automatic failover and zero-downtime workload migration between nodes.", "descAr": "تجاوز فشل تلقائي وترحيل أحمال بين العقد دون توقف." },
+      { "title": "Automated Backups", "titleAr": "نسخ احتياطي مؤتمت", "desc": "Scheduled snapshots and off-cluster backups, verified for restore.", "descAr": "لقطات مجدولة ونسخ خارج العنقود، مُتحقَّق منها للاستعادة." },
+      { "title": "Network & Firewall", "titleAr": "الشبكة والجدار الناري", "desc": "Segmented VLANs and per-VM firewall rules for strong tenant isolation.", "descAr": "شبكات VLAN مُجزّأة وقواعد جدار ناري لكل جهاز لعزل قوي للمستأجرين." },
+      { "title": "Capacity Plan & Runbook", "titleAr": "خطة السعة ودليل التشغيل", "desc": "Sizing guidance and an operational runbook handed to your team.", "descAr": "إرشادات الحجم ودليل تشغيل يُسلَّم لفريقك." }
+    ],
+    "technologies": [
+      { "name": "Proxmox VE", "role": "Hypervisor platform", "roleAr": "منصة المحاكاة الافتراضية" },
+      { "name": "Ceph", "role": "Distributed storage", "roleAr": "تخزين موزّع" },
+      { "name": "Corosync", "role": "Cluster messaging", "roleAr": "مراسلة العنقود" },
+      { "name": "ZFS", "role": "Local snapshots", "roleAr": "لقطات محلية" },
+      { "name": "KVM", "role": "Virtual machines", "roleAr": "أجهزة افتراضية" },
+      { "name": "LXC", "role": "Containers", "roleAr": "حاويات" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "Three or more Proxmox nodes form a quorum-backed cluster; Corosync handles cluster messaging while Ceph provides replicated, distributed storage. Workloads run as KVM VMs or LXC containers and migrate live between nodes. If a node fails, HA orchestration restarts its guests on healthy peers within seconds.",
+      "descriptionAr": "تشكّل ثلاث عقد Proxmox أو أكثر عنقودًا مدعومًا بنصاب؛ يتولى Corosync مراسلة العنقود بينما يوفّر Ceph تخزينًا موزّعًا ومنسوخًا. تعمل الأحمال كأجهزة KVM أو حاويات LXC وتُرحَّل حيًّا بين العقد. عند تعطّل عقدة، تعيد منظومة التوافر العالي تشغيل ضيوفها على أقران سليمة خلال ثوانٍ.",
+      "nodes": [
+        { "label": "Proxmox Node 1", "tone": "neon" },
+        { "label": "Proxmox Node 2", "tone": "neon" },
+        { "label": "Ceph Storage", "tone": "blue" },
+        { "label": "Backups", "tone": "" }
+      ]
+    },
+    "useCases": [
+      { "title": "Private Clouds", "titleAr": "السحب الخاصة", "desc": "Self-service VM platforms with cloud agility on owned hardware.", "descAr": "منصات أجهزة افتراضية بخدمة ذاتية ومرونة سحابية على عتاد مملوك." },
+      { "title": "Hosting Providers", "titleAr": "مزوّدو الاستضافة", "desc": "Multi-tenant VPS and dedicated workloads with strong isolation.", "descAr": "خوادم افتراضية متعددة المستأجرين وأحمال مخصصة بعزل قوي." },
+      { "title": "Internal IT", "titleAr": "تقنية المعلومات الداخلية", "desc": "Consolidate sprawling physical servers into one managed cluster.", "descAr": "دمج الخوادم الفعلية المتناثرة في عنقود واحد مُدار." },
+      { "title": "Production Infrastructure", "titleAr": "بنية الإنتاج", "desc": "Run business-critical apps with automatic failover and zero-downtime maintenance.", "descAr": "شغّل التطبيقات الحرجة مع تجاوز فشل تلقائي وصيانة دون توقف." }
+    ],
+    "highlights": [
+      { "icon": "⬢", "title": "High Availability", "titleAr": "توافر عالٍ", "desc": "Guests auto-restart on healthy nodes within seconds of a failure.", "descAr": "يعيد الضيوف التشغيل تلقائيًا على عقد سليمة خلال ثوانٍ من العطل." },
+      { "icon": "⇄", "title": "Live Migration", "titleAr": "ترحيل حي", "desc": "Move running VMs between hosts with no service interruption.", "descAr": "انقل الأجهزة العاملة بين المضيفين دون انقطاع الخدمة." },
+      { "icon": "▦", "title": "Replicated Storage", "titleAr": "تخزين منسوخ", "desc": "Ceph keeps multiple copies of every block — no single point of loss.", "descAr": "يحتفظ Ceph بنسخ متعددة من كل كتلة — لا نقطة فقدان وحيدة." },
+      { "icon": "↺", "title": "Automated Backups", "titleAr": "نسخ احتياطي مؤتمت", "desc": "Scheduled snapshots and off-cluster backups, tested for restore.", "descAr": "لقطات مجدولة ونسخ خارج العنقود مُختبَرة للاستعادة." },
+      { "icon": "⊟", "title": "Network Isolation", "titleAr": "عزل الشبكة", "desc": "Per-VM firewalls and segmented VLANs keep tenants separated.", "descAr": "جدران نارية لكل جهاز وشبكات VLAN مُجزّأة تفصل المستأجرين." },
+      { "icon": "⚷", "title": "Role-Based Access", "titleAr": "وصول حسب الأدوار", "desc": "Granular permissions across the cluster, audited end to end.", "descAr": "صلاحيات دقيقة عبر العنقود، مُدقّقة من البداية للنهاية." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design a private cloud that scales with your business — reliable, fully owned, and built to last.",
+      "bodyAr": "لنصمم سحابة خاصة تنمو مع أعمالك — موثوقة ومملوكة بالكامل ومبنية لتدوم.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  },
+
+  "erp": {
+    "slug": "erp",
+    "tagColor": "blue",
+    "icon": "■",
+    "poweredBy": "ERPNext",
+    "hero": {
+      "eyebrow": "ERP & Business Systems",
+      "eyebrowAr": "تخطيط الموارد وأنظمة الأعمال",
+      "title": "ERP & Business Systems",
+      "titleAr": "تخطيط الموارد وأنظمة الأعمال",
+      "tagline": "Run your entire business on one open-source platform — accounting, inventory, HR, sales, and manufacturing in a single system you own, tuned and safeguarded for real production load.",
+      "taglineAr": "أدِر أعمالك بالكامل على منصة واحدة مفتوحة المصدر — محاسبة ومخزون وموارد بشرية ومبيعات وتصنيع في نظام واحد تملكه، مضبوط ومؤمَّن لحمل إنتاجي حقيقي."
+    },
+    "businessValue": {
+      "body": "Disconnected spreadsheets and siloed tools quietly cost businesses time, accuracy, and money — data is re-entered, reports never reconcile, and no one fully trusts the numbers. ERPNext consolidates operations into one source of truth covering finance, inventory, HR, CRM, and manufacturing, with no per-seat licensing. Deployed and tuned for production — backed up, monitored, and HTTPS-secured — it becomes the reliable operational backbone your team actually wants to use.",
+      "bodyAr": "تُكلّف الجداول المنفصلة والأدوات المعزولة الشركات بهدوء وقتًا ودقة ومالًا — تُعاد البيانات يدويًا، ولا تتطابق التقارير، ولا أحد يثق بالأرقام تمامًا. يدمج ERPNext العمليات في مصدر حقيقة واحد يغطي المالية والمخزون والموارد البشرية وإدارة العملاء والتصنيع، دون ترخيص لكل مستخدم. وبنشره وضبطه للإنتاج — منسوخًا ومراقَبًا ومؤمَّنًا بـ HTTPS — يصبح العمود التشغيلي الموثوق الذي يرغب فريقك فعلًا في استخدامه."
+    },
+    "outcomes": [
+      { "icon": "↻", "title": "Streamline Operations", "titleAr": "بسّط العمليات", "desc": "Replace manual, error-prone workflows with automated, connected processes across every department.", "descAr": "استبدل العمليات اليدوية المعرّضة للأخطاء بعمليات مؤتمتة ومترابطة عبر كل قسم." },
+      { "icon": "◎", "title": "Centralize Data", "titleAr": "وحّد البيانات", "desc": "One source of truth for finance, inventory, and customers — reports that finally reconcile.", "descAr": "مصدر حقيقة واحد للمالية والمخزون والعملاء — تقارير تتطابق أخيرًا." },
+      { "icon": "↗", "title": "Improve Productivity", "titleAr": "ارفع الإنتاجية", "desc": "Eliminate duplicate entry and per-seat fees; the team works in one system it trusts.", "descAr": "ألغِ الإدخال المكرر ورسوم كل مستخدم؛ يعمل الفريق في نظام واحد يثق به." }
+    ],
+    "deliverables": [
+      { "title": "Production Deployment", "titleAr": "نشر إنتاجي", "desc": "ERPNext installed, hardened, and HTTPS-secured for real load.", "descAr": "ERPNext مُثبَّت ومُحصَّن ومؤمَّن بـ HTTPS لحمل حقيقي." },
+      { "title": "Database Tuning", "titleAr": "ضبط قاعدة البيانات", "desc": "MariaDB indexed and tuned to keep pages fast at scale.", "descAr": "MariaDB مُفهرَس ومضبوط لإبقاء الصفحات سريعة عند التوسع." },
+      { "title": "Data Migration", "titleAr": "ترحيل البيانات", "desc": "Existing records migrated into ERPNext and reconciled.", "descAr": "ترحيل السجلات الحالية إلى ERPNext وتسويتها." },
+      { "title": "Module Configuration", "titleAr": "إعداد الوحدات", "desc": "Accounts, Stock, HR, and CRM configured to your processes.", "descAr": "الحسابات والمخزون والموارد البشرية وإدارة العملاء مُعدّة لعملياتك." },
+      { "title": "Backups & Restore Drills", "titleAr": "النسخ وتمارين الاستعادة", "desc": "Encrypted off-site backups with verified restore procedures.", "descAr": "نسخ احتياطية مشفّرة خارجية بإجراءات استعادة مُتحقَّق منها." },
+      { "title": "Monitoring & Handover", "titleAr": "المراقبة والتسليم", "desc": "Health monitoring wired and full documentation handed over.", "descAr": "مراقبة الصحة مربوطة وتوثيق كامل مُسلَّم." }
+    ],
+    "technologies": [
+      { "name": "Frappe / ERPNext", "role": "Application framework", "roleAr": "إطار التطبيق" },
+      { "name": "MariaDB", "role": "Primary database", "roleAr": "قاعدة البيانات الأساسية" },
+      { "name": "Redis", "role": "Cache & queues", "roleAr": "التخزين المؤقت والطوابير" },
+      { "name": "Nginx", "role": "Reverse proxy + SSL", "roleAr": "وكيل عكسي + SSL" },
+      { "name": "Supervisor", "role": "Process management", "roleAr": "إدارة العمليات" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "Frappe/ERPNext runs in containers behind Nginx, with MariaDB tuned for the workload, Redis for caching and queues, and background workers handling scheduled jobs. Daily backups stream off-site and the whole stack is health-monitored.",
+      "descriptionAr": "يعمل Frappe/ERPNext في حاويات خلف Nginx، مع MariaDB مضبوط للحمل، وRedis للتخزين المؤقت والطوابير، وعمال خلفية يديرون المهام المجدولة. تُبثّ النسخ الاحتياطية اليومية خارج الموقع وتُراقَب الحزمة بأكملها.",
+      "nodes": [
+        { "label": "Nginx", "tone": "neon" },
+        { "label": "ERPNext", "tone": "blue" },
+        { "label": "MariaDB", "tone": "" },
+        { "label": "Redis + Workers", "tone": "neon" }
+      ]
+    },
+    "useCases": [
+      { "title": "Manufacturing", "titleAr": "التصنيع", "desc": "BOMs, production planning, and stock tied to live accounting.", "descAr": "قوائم المواد وتخطيط الإنتاج والمخزون مرتبطة بمحاسبة حية." },
+      { "title": "Services", "titleAr": "الخدمات", "desc": "Projects, timesheets, and billing in one connected flow.", "descAr": "المشاريع وسجلات الوقت والفوترة في تدفق مترابط واحد." },
+      { "title": "Retail", "titleAr": "التجزئة", "desc": "POS, inventory, and multi-warehouse stock in real time.", "descAr": "نقاط البيع والمخزون والمستودعات المتعددة لحظيًا." },
+      { "title": "Education", "titleAr": "التعليم", "desc": "Admissions, fees, and HR on a single open platform.", "descAr": "القبول والرسوم والموارد البشرية على منصة مفتوحة واحدة." }
+    ],
+    "highlights": [
+      { "icon": "↺", "title": "Off-site Backups", "titleAr": "نسخ احتياطي خارجي", "desc": "Encrypted, tested, and one command away from restore.", "descAr": "مشفّرة ومُختبَرة وأمر واحد للاستعادة." },
+      { "icon": "⤢", "title": "Tuned for Scale", "titleAr": "مضبوط للتوسع", "desc": "Stays responsive through month-end close and peak load.", "descAr": "يبقى سريعًا خلال إقفال الشهر وذروة الحمل." },
+      { "icon": "⚷", "title": "Role-Based Access", "titleAr": "وصول حسب الأدوار", "desc": "Granular permissions protect sensitive financial data.", "descAr": "صلاحيات دقيقة تحمي البيانات المالية الحساسة." },
+      { "icon": "⛨", "title": "HTTPS Security", "titleAr": "أمان HTTPS", "desc": "Enforced TLS and a patched framework on every deploy.", "descAr": "TLS مفروض وإطار مُحدّث في كل نشر." },
+      { "icon": "◎", "title": "Monitored 24/7", "titleAr": "مراقبة على مدار الساعة", "desc": "Health and queue depth tracked continuously.", "descAr": "تُتابَع الصحة وعمق الطابور باستمرار." },
+      { "icon": "↻", "title": "Disaster Recovery", "titleAr": "التعافي من الكوارث", "desc": "Restore drills prove you can recover, not just back up.", "descAr": "تمارين الاستعادة تثبت قدرتك على التعافي لا النسخ فقط." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design an ERP foundation that scales with your business and the data behind it.",
+      "bodyAr": "لنصمم أساس ERP ينمو مع أعمالك ومع البيانات خلفها.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  },
+
+  "file-collaboration": {
+    "slug": "file-collaboration",
+    "tagColor": "neon",
+    "icon": "▤",
+    "poweredBy": "Nextcloud",
+    "hero": {
+      "eyebrow": "File & Collaboration Platforms",
+      "eyebrowAr": "منصات الملفات والتعاون",
+      "title": "File & Collaboration Platforms",
+      "titleAr": "منصات الملفات والتعاون",
+      "tagline": "A private alternative to Dropbox and Google Workspace — file sync, sharing, calendars, and document editing on storage you own, with no per-user tax and no data leaving your walls.",
+      "taglineAr": "بديل خاص لـ Dropbox وGoogle Workspace — مزامنة الملفات والمشاركة والتقويمات وتحرير المستندات على تخزين تملكه، دون ضريبة لكل مستخدم ودون مغادرة البيانات لجدرانك."
+    },
+    "businessValue": {
+      "body": "Every file shared through a consumer cloud is a file you no longer fully control — and a recurring per-user bill that grows with your headcount. A self-hosted Nextcloud gives teams the same sync, sharing, calendars, and real-time document editing they expect, but on infrastructure you own with encryption keys you hold. For organizations with privacy, IP, or data-residency requirements, it turns \"we hope our vendor is compliant\" into \"our data never left the building.\"",
+      "bodyAr": "كل ملف يُشارَك عبر سحابة استهلاكية هو ملف لم تعد تتحكم به بالكامل — وفاتورة متكررة لكل مستخدم تنمو مع عدد موظفيك. يمنح Nextcloud ذاتي الاستضافة الفرق المزامنة والمشاركة والتقويمات وتحرير المستندات لحظيًا كما يتوقعون، لكن على بنية تملكها بمفاتيح تشفير بحوزتك. للمؤسسات ذات متطلبات الخصوصية أو الملكية الفكرية أو إقامة البيانات، يحوّل ذلك \"نأمل امتثال مزوّدنا\" إلى \"بياناتنا لم تغادر المبنى\"."
+    },
+    "outcomes": [
+      { "icon": "⛁", "title": "Own Your Data", "titleAr": "امتلك بياناتك", "desc": "Files, keys, and access policies stay on infrastructure you control.", "descAr": "تبقى الملفات والمفاتيح وسياسات الوصول على بنية تتحكم بها." },
+      { "icon": "▼", "title": "Cut Subscription Cost", "titleAr": "خفّض تكلفة الاشتراك", "desc": "Add users without growing a per-seat cloud bill.", "descAr": "أضف مستخدمين دون تضخّم فاتورة سحابية لكل مقعد." },
+      { "icon": "⊞", "title": "Collaborate Securely", "titleAr": "تعاون بأمان", "desc": "Sync, share, and co-edit documents with granular, audited permissions.", "descAr": "زامِن وشارِك وحرّر المستندات معًا بصلاحيات دقيقة ومُدقّقة." }
+    ],
+    "deliverables": [
+      { "title": "Nextcloud Deployment", "titleAr": "نشر Nextcloud", "desc": "Installed, hardened, and tuned for responsive file sync.", "descAr": "مُثبَّت ومُحصَّن ومضبوط لمزامنة ملفات سريعة." },
+      { "title": "Storage Integration", "titleAr": "دمج التخزين", "desc": "Object or block storage attached for the data layer.", "descAr": "تخزين كائنات أو كتل مُرفَق لطبقة البيانات." },
+      { "title": "Encryption & 2FA", "titleAr": "التشفير والمصادقة الثنائية", "desc": "Server-side encryption and enforced two-factor authentication.", "descAr": "تشفير من جانب الخادم ومصادقة ثنائية مفروضة." },
+      { "title": "Document Editing", "titleAr": "تحرير المستندات", "desc": "Collabora or OnlyOffice wired for real-time co-editing.", "descAr": "Collabora أو OnlyOffice مربوط للتحرير التعاوني اللحظي." },
+      { "title": "Backups & Versioning", "titleAr": "النسخ والإصدارات", "desc": "Automated backups and file version history configured.", "descAr": "نسخ احتياطية مؤتمتة وسجل إصدارات الملفات مُعدّ." },
+      { "title": "User Onboarding", "titleAr": "إضافة المستخدمين", "desc": "Groups, quotas, and sharing policies set up for your team.", "descAr": "المجموعات والحصص وسياسات المشاركة مُعدّة لفريقك." }
+    ],
+    "technologies": [
+      { "name": "Nextcloud", "role": "Collaboration suite", "roleAr": "حزمة التعاون" },
+      { "name": "Nginx", "role": "Reverse proxy + TLS", "roleAr": "وكيل عكسي + TLS" },
+      { "name": "PHP-FPM", "role": "Application runtime", "roleAr": "بيئة تشغيل التطبيق" },
+      { "name": "MariaDB", "role": "Metadata store", "roleAr": "مخزن البيانات الوصفية" },
+      { "name": "Redis", "role": "Locking & cache", "roleAr": "القفل والتخزين المؤقت" },
+      { "name": "Collabora", "role": "Document editing", "roleAr": "تحرير المستندات" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "Nextcloud runs behind Nginx with PHP-FPM, a MariaDB metadata store, and Redis for file locking and caching. Object or block storage holds the data layer, while a background cron handles previews, sync, and housekeeping. TLS terminates at the edge and only encrypted traffic reaches clients.",
+      "descriptionAr": "يعمل Nextcloud خلف Nginx مع PHP-FPM ومخزن بيانات وصفية MariaDB، وRedis لقفل الملفات والتخزين المؤقت. يحتفظ تخزين الكائنات أو الكتل بطبقة البيانات، بينما تتولى مهمة cron في الخلفية المعاينات والمزامنة والصيانة. يُنهى TLS عند الحافة ولا تصل سوى الحركة المشفّرة للعملاء.",
+      "nodes": [
+        { "label": "Nginx + TLS", "tone": "neon" },
+        { "label": "Nextcloud", "tone": "blue" },
+        { "label": "MariaDB + Redis", "tone": "" },
+        { "label": "Object Storage", "tone": "neon" }
+      ]
+    },
+    "useCases": [
+      { "title": "Professional Services", "titleAr": "الخدمات المهنية", "desc": "Share deliverables with clients under your own brand and control.", "descAr": "شارك المخرجات مع العملاء تحت علامتك وسيطرتك." },
+      { "title": "Healthcare & Legal", "titleAr": "الصحة والقانون", "desc": "Keep sensitive documents on compliant, in-house storage.", "descAr": "احتفظ بالمستندات الحساسة على تخزين داخلي متوافق." },
+      { "title": "Education", "titleAr": "التعليم", "desc": "Shared drives and calendars for staff and students.", "descAr": "أقراص مشتركة وتقويمات للموظفين والطلاب." },
+      { "title": "Remote Teams", "titleAr": "الفرق عن بُعد", "desc": "Sync and co-edit across locations without a third party.", "descAr": "زامِن وحرّر معًا عبر المواقع دون طرف ثالث." }
+    ],
+    "highlights": [
+      { "icon": "⛨", "title": "End-to-End TLS", "titleAr": "TLS من طرف لطرف", "desc": "Encrypted in transit; only the proxy is internet-facing.", "descAr": "مشفّر أثناء النقل؛ الوكيل وحده مواجه للإنترنت." },
+      { "icon": "⛁", "title": "Server-Side Encryption", "titleAr": "تشفير من جانب الخادم", "desc": "Data at rest encrypted with keys you control.", "descAr": "البيانات الساكنة مشفّرة بمفاتيح تتحكم بها." },
+      { "icon": "⚷", "title": "Two-Factor Auth", "titleAr": "مصادقة ثنائية", "desc": "Enforced 2FA and brute-force protection by default.", "descAr": "مصادقة ثنائية مفروضة وحماية من القوة الغاشمة افتراضيًا." },
+      { "icon": "↺", "title": "Versioned Backups", "titleAr": "نسخ مُؤرشَفة", "desc": "Restore any file to an earlier version on demand.", "descAr": "استعد أي ملف إلى إصدار أقدم عند الطلب." },
+      { "icon": "⊞", "title": "Granular Sharing", "titleAr": "مشاركة دقيقة", "desc": "Per-file, per-group, and expiring share links.", "descAr": "روابط مشاركة لكل ملف ولكل مجموعة وبصلاحية منتهية." },
+      { "icon": "▤", "title": "Audit Logging", "titleAr": "تسجيل التدقيق", "desc": "Every access and change is recorded and reviewable.", "descAr": "كل وصول وتغيير مُسجّل وقابل للمراجعة." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design a collaboration platform that scales with your team — private, secure, and fully yours.",
+      "bodyAr": "لنصمم منصة تعاون تنمو مع فريقك — خاصة وآمنة وملكك بالكامل.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  },
+
+  "internal-communication": {
+    "slug": "internal-communication",
+    "tagColor": "blue",
+    "icon": "✉",
+    "poweredBy": "Mattermost + Rocket.Chat",
+    "hero": {
+      "eyebrow": "Internal Communication",
+      "eyebrowAr": "التواصل الداخلي",
+      "title": "Internal Communication",
+      "titleAr": "التواصل الداخلي",
+      "tagline": "Self-hosted team chat your organization fully owns — Slack-grade messaging, channels, and integrations on-premise, where every message and file stays inside your perimeter.",
+      "taglineAr": "دردشة فرق ذاتية الاستضافة تملكها مؤسستك بالكامل — مراسلة وقنوات وتكاملات بمستوى Slack داخليًا، حيث تبقى كل رسالة وملف داخل محيطك."
+    },
+    "businessValue": {
+      "body": "Team chat holds an organization's most sensitive conversations — strategy, credentials, customer data — yet it's usually handed to a third party that stores and mines it. A self-hosted Mattermost or Rocket.Chat deployment keeps every message, file, and bot inside your network, with no per-user pricing and no vendor reading over your shoulder. You keep the productivity of modern messaging and add deep integration with your own tools and pipelines — without the compliance headache of a hosted platform.",
+      "bodyAr": "تحمل دردشة الفريق أكثر محادثات المؤسسة حساسية — الاستراتيجية وبيانات الاعتماد وبيانات العملاء — ومع ذلك تُسلَّم عادةً لطرف ثالث يخزّنها ويُنقّب فيها. نشر Mattermost أو Rocket.Chat ذاتي الاستضافة يبقي كل رسالة وملف وروبوت داخل شبكتك، دون تسعير لكل مستخدم ودون مزوّد يطّلع على محادثاتك. تحتفظ بإنتاجية المراسلة الحديثة وتضيف تكاملًا عميقًا مع أدواتك وخطوط أنابيبك — دون صداع الامتثال لمنصة مستضافة."
+    },
+    "outcomes": [
+      { "icon": "⛨", "title": "Keep Conversations Private", "titleAr": "أبقِ المحادثات خاصة", "desc": "No third party stores, reads, or retains your messages.", "descAr": "لا طرف ثالث يخزّن أو يقرأ أو يحتفظ برسائلك." },
+      { "icon": "▼", "title": "Remove Per-Seat Fees", "titleAr": "أزِل رسوم كل مقعد", "desc": "Scale the whole organization onto chat without a growing subscription.", "descAr": "وسّع المؤسسة بأكملها على الدردشة دون اشتراك متنامٍ." },
+      { "icon": "⚙", "title": "Integrate Everything", "titleAr": "ادمج كل شيء", "desc": "Wire chat to your CI/CD, alerts, and internal tools via authenticated webhooks and bots.", "descAr": "اربط الدردشة بـ CI/CD وتنبيهاتك وأدواتك الداخلية عبر خطافات وروبوتات موثّقة." }
+    ],
+    "deliverables": [
+      { "title": "Chat Server Deployment", "titleAr": "نشر خادم الدردشة", "desc": "Mattermost or Rocket.Chat installed and production-hardened.", "descAr": "Mattermost أو Rocket.Chat مُثبَّت ومُحصَّن للإنتاج." },
+      { "title": "Database & Storage", "titleAr": "قاعدة البيانات والتخزين", "desc": "PostgreSQL and object storage configured for messages and files.", "descAr": "PostgreSQL وتخزين الكائنات مُعدّان للرسائل والملفات." },
+      { "title": "SSO Integration", "titleAr": "تكامل الدخول الموحّد", "desc": "Single sign-on wired to your existing identity provider.", "descAr": "الدخول الموحّد مربوط بمزوّد هويتك الحالي." },
+      { "title": "TLS & Retention", "titleAr": "TLS والاحتفاظ", "desc": "HTTPS, backups, and a message retention policy applied.", "descAr": "HTTPS والنسخ الاحتياطي وسياسة الاحتفاظ بالرسائل مُطبَّقة." },
+      { "title": "Integrations", "titleAr": "التكاملات", "desc": "Bots, webhooks, and CI/CD alerts connected to channels.", "descAr": "روبوتات وخطافات وتنبيهات CI/CD متصلة بالقنوات." },
+      { "title": "Admin Training", "titleAr": "تدريب المسؤولين", "desc": "Admin walkthrough and operational handover.", "descAr": "جولة إرشادية للمسؤولين وتسليم تشغيلي." }
+    ],
+    "technologies": [
+      { "name": "Mattermost", "role": "Team messaging", "roleAr": "مراسلة الفرق" },
+      { "name": "Rocket.Chat", "role": "Alternative platform", "roleAr": "منصة بديلة" },
+      { "name": "PostgreSQL", "role": "Message store", "roleAr": "مخزن الرسائل" },
+      { "name": "Nginx", "role": "Reverse proxy + WSS", "roleAr": "وكيل عكسي + WSS" },
+      { "name": "Redis", "role": "Sessions & cache", "roleAr": "الجلسات والتخزين المؤقت" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "The chat server runs in a container behind Nginx, backed by PostgreSQL for messages and object storage for file uploads. WebSocket connections carry real-time messaging, push notifications route through a relay, and integrations connect over authenticated webhooks.",
+      "descriptionAr": "يعمل خادم الدردشة في حاوية خلف Nginx، مدعومًا بـ PostgreSQL للرسائل وتخزين الكائنات لرفع الملفات. تحمل اتصالات WebSocket المراسلة اللحظية، وتُوجَّه الإشعارات عبر مُرحِّل، وتتصل التكاملات عبر خطافات موثّقة.",
+      "nodes": [
+        { "label": "Nginx + WSS", "tone": "neon" },
+        { "label": "Chat Server", "tone": "blue" },
+        { "label": "PostgreSQL", "tone": "" },
+        { "label": "Object Storage", "tone": "neon" }
+      ]
+    },
+    "useCases": [
+      { "title": "Regulated Industries", "titleAr": "القطاعات المنظَّمة", "desc": "Finance, healthcare, and gov teams that can't use public SaaS.", "descAr": "فرق المال والصحة والحكومة التي لا يمكنها استخدام SaaS العام." },
+      { "title": "Engineering Teams", "titleAr": "فرق الهندسة", "desc": "Chat wired to deploys, alerts, and incident channels.", "descAr": "دردشة مربوطة بالنشر والتنبيهات وقنوات الحوادث." },
+      { "title": "Distributed Workforces", "titleAr": "قوى عاملة موزّعة", "desc": "Reliable async and real-time comms across time zones.", "descAr": "تواصل غير متزامن ولحظي موثوق عبر المناطق الزمنية." },
+      { "title": "Security-Conscious Orgs", "titleAr": "مؤسسات تهتم بالأمان", "desc": "Full control over data residency and retention.", "descAr": "تحكم كامل في إقامة البيانات والاحتفاظ بها." }
+    ],
+    "highlights": [
+      { "icon": "⛁", "title": "Data Sovereignty", "titleAr": "سيادة البيانات", "desc": "Messages and files never leave infrastructure you own.", "descAr": "الرسائل والملفات لا تغادر بنية تملكها." },
+      { "icon": "⚙", "title": "SSO Integration", "titleAr": "تكامل الدخول الموحّد", "desc": "Connect your existing identity provider for one login.", "descAr": "اربط مزوّد هويتك الحالي لتسجيل دخول واحد." },
+      { "icon": "⛨", "title": "End-to-End TLS", "titleAr": "TLS من طرف لطرف", "desc": "Encrypted transport for every message and call.", "descAr": "نقل مشفّر لكل رسالة ومكالمة." },
+      { "icon": "▤", "title": "Audit Logs", "titleAr": "سجلات التدقيق", "desc": "Compliance-grade records of access and activity.", "descAr": "سجلات بمستوى الامتثال للوصول والنشاط." },
+      { "icon": "⇄", "title": "Deep Integrations", "titleAr": "تكاملات عميقة", "desc": "Bots and webhooks tie chat to your whole stack.", "descAr": "روبوتات وخطافات تربط الدردشة بحزمتك كاملة." },
+      { "icon": "↺", "title": "Self-Hosted Backups", "titleAr": "نسخ ذاتية الاستضافة", "desc": "Scheduled, encrypted backups under your control.", "descAr": "نسخ مجدولة ومشفّرة تحت سيطرتك." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design secure communication infrastructure that scales with your organization.",
+      "bodyAr": "لنصمم بنية تواصل آمنة تنمو مع مؤسستك.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  },
+
+  "devops": {
+    "slug": "devops",
+    "tagColor": "neon",
+    "icon": "⎇",
+    "poweredBy": "GitLab",
+    "hero": {
+      "eyebrow": "DevOps & Version Control",
+      "eyebrowAr": "DevOps والتحكم في الإصدارات",
+      "title": "DevOps & Version Control",
+      "titleAr": "DevOps والتحكم في الإصدارات",
+      "tagline": "Bring your entire software delivery lifecycle in-house — source control, code review, CI/CD, container registry, and releases on a private GitLab you own end to end.",
+      "taglineAr": "اجلب دورة تسليم برمجياتك بالكامل إلى الداخل — التحكم في المصدر ومراجعة الكود وCI/CD وسجل الحاويات والإصدارات على GitLab خاص تملكه من البداية للنهاية."
+    },
+    "businessValue": {
+      "body": "When your source code, build minutes, and deployment secrets live on someone else's platform, you're paying for metered runners and trusting a vendor with your crown-jewel IP. A self-hosted GitLab consolidates the whole delivery lifecycle — repos, reviews, pipelines, registry, and releases — inside your network, where build capacity is bounded only by your hardware and pipelines can reach internal systems no SaaS runner could. It's a productivity multiplier and a security boundary in one.",
+      "bodyAr": "حين يقبع كودك المصدري ودقائق البناء وأسرار النشر على منصة غيرك، فأنت تدفع مقابل مشغّلات محسوبة بعداد وتأتمن مزوّدًا على أثمن ملكيتك الفكرية. يدمج GitLab ذاتي الاستضافة دورة التسليم بأكملها — المستودعات والمراجعات وخطوط الأنابيب والسجل والإصدارات — داخل شبكتك، حيث لا تُقيّد سعة البناء إلا بعتادك وتستطيع خطوط الأنابيب الوصول لأنظمة داخلية لا يقدر عليها أي مشغّل SaaS. إنه مضاعِف للإنتاجية وحد أمني في آن."
+    },
+    "outcomes": [
+      { "icon": "⛨", "title": "Protect Your IP", "titleAr": "احمِ ملكيتك الفكرية", "desc": "Source code and secrets never leave infrastructure you own.", "descAr": "الكود المصدري والأسرار لا تغادر بنية تملكها." },
+      { "icon": "⚡", "title": "Ship Faster", "titleAr": "أطلِق أسرع", "desc": "Parallel runners and local caching cut pipeline times and unblock releases.", "descAr": "المشغّلات المتوازية والتخزين المؤقت المحلي تقلّص أزمنة الأنابيب وتفك حصار الإصدارات." },
+      { "icon": "▼", "title": "Eliminate Metered Cost", "titleAr": "ألغِ التكلفة المحسوبة", "desc": "Run unlimited CI/CD minutes on hardware you already pay for.", "descAr": "شغّل دقائق CI/CD بلا حدود على عتاد تدفع ثمنه أصلًا." }
+    ],
+    "deliverables": [
+      { "title": "GitLab Deployment", "titleAr": "نشر GitLab", "desc": "Installed, hardened, and backed up for team-wide use.", "descAr": "مُثبَّت ومُحصَّن ومنسوخ احتياطيًا للاستخدام على مستوى الفريق." },
+      { "title": "CI/CD Runners", "titleAr": "مشغّلات CI/CD", "desc": "A Docker runner fleet registered for parallel pipelines.", "descAr": "أسطول مشغّلات Docker مُسجَّل لخطوط أنابيب متوازية." },
+      { "title": "Container Registry", "titleAr": "سجل الحاويات", "desc": "Private image registry and artifact storage enabled.", "descAr": "سجل صور خاص وتخزين أدوات مُفعَّل." },
+      { "title": "Pipeline Automation", "titleAr": "أتمتة خطوط الأنابيب", "desc": "Reusable CI/CD templates and deploy hooks per project.", "descAr": "قوالب CI/CD قابلة لإعادة الاستخدام وخطافات نشر لكل مشروع." },
+      { "title": "Access & SSO", "titleAr": "الوصول والدخول الموحّد", "desc": "Protected branches, SSO, and least-privilege access controls.", "descAr": "فروع محمية ودخول موحّد وضبط وصول بأقل امتياز." },
+      { "title": "Repo Migration", "titleAr": "ترحيل المستودعات", "desc": "Repositories migrated from GitHub or Bitbucket.", "descAr": "ترحيل المستودعات من GitHub أو Bitbucket." }
+    ],
+    "technologies": [
+      { "name": "GitLab", "role": "Git & DevOps platform", "roleAr": "منصة Git وDevOps" },
+      { "name": "GitLab Runner", "role": "CI/CD execution", "roleAr": "تنفيذ CI/CD" },
+      { "name": "Docker", "role": "Isolated job runners", "roleAr": "مشغّلات مهام معزولة" },
+      { "name": "PostgreSQL", "role": "Application database", "roleAr": "قاعدة بيانات التطبيق" },
+      { "name": "Redis", "role": "Cache & queues", "roleAr": "التخزين المؤقت والطوابير" },
+      { "name": "Container Registry", "role": "Image storage", "roleAr": "تخزين الصور" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "GitLab runs behind Nginx with PostgreSQL and Redis backing the app, while CI/CD runners execute jobs in isolated Docker containers. A built-in container registry stores images, artifacts persist to object storage, and webhooks trigger deploys to downstream environments.",
+      "descriptionAr": "يعمل GitLab خلف Nginx مع PostgreSQL وRedis لدعم التطبيق، بينما تنفّذ مشغّلات CI/CD المهام في حاويات Docker معزولة. يخزّن سجل حاويات مدمج الصور، وتُحفظ الأدوات في تخزين الكائنات، وتُطلق الخطافات النشر إلى البيئات اللاحقة.",
+      "nodes": [
+        { "label": "GitLab", "tone": "neon" },
+        { "label": "CI/CD Runners", "tone": "blue" },
+        { "label": "Container Registry", "tone": "" },
+        { "label": "Deploy Targets", "tone": "neon" }
+      ]
+    },
+    "useCases": [
+      { "title": "Software Teams", "titleAr": "فرق البرمجيات", "desc": "One home for code, review, CI/CD, and releases.", "descAr": "بيت واحد للكود والمراجعة وCI/CD والإصدارات." },
+      { "title": "Agencies", "titleAr": "الوكالات", "desc": "Isolated projects and registries per client.", "descAr": "مشاريع وسجلات معزولة لكل عميل." },
+      { "title": "Regulated Codebases", "titleAr": "قواعد كود منظَّمة", "desc": "Keep IP and audit trails inside your network.", "descAr": "أبقِ الملكية الفكرية وسجلات التدقيق داخل شبكتك." },
+      { "title": "Platform Engineering", "titleAr": "هندسة المنصات", "desc": "Self-service pipelines and golden images for teams.", "descAr": "خطوط أنابيب بخدمة ذاتية وصور قياسية للفرق." }
+    ],
+    "highlights": [
+      { "icon": "⛁", "title": "Private Source Control", "titleAr": "تحكم خاص في المصدر", "desc": "Your code never leaves infrastructure you own.", "descAr": "كودك لا يغادر بنية تملكها أبدًا." },
+      { "icon": "⚡", "title": "Unmetered CI/CD", "titleAr": "CI/CD غير محسوب", "desc": "Run as many pipelines as your hardware allows.", "descAr": "شغّل خطوط أنابيب بقدر ما يسمح عتادك." },
+      { "icon": "⎇", "title": "Protected Branches", "titleAr": "فروع محمية", "desc": "Enforced reviews and merge rules on critical code.", "descAr": "مراجعات مفروضة وقواعد دمج على الكود الحرج." },
+      { "icon": "⛨", "title": "Secret Scanning", "titleAr": "فحص الأسرار", "desc": "Catch leaked credentials before they ship.", "descAr": "اكتشف بيانات الاعتماد المسرّبة قبل إطلاقها." },
+      { "icon": "▦", "title": "Container Registry", "titleAr": "سجل الحاويات", "desc": "Local image pulls at LAN speed, every deploy.", "descAr": "سحب الصور محليًا بسرعة الشبكة في كل نشر." },
+      { "icon": "↺", "title": "Automated Backups", "titleAr": "نسخ احتياطي مؤتمت", "desc": "Scheduled, encrypted, and restore-tested.", "descAr": "مجدولة ومشفّرة ومُختبَرة للاستعادة." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design a delivery platform that scales with your engineering team.",
+      "bodyAr": "لنصمم منصة تسليم تنمو مع فريقك الهندسي.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  },
+
+  "monitoring": {
+    "slug": "monitoring",
+    "tagColor": "neon",
+    "icon": "◎",
+    "poweredBy": "Prometheus + Grafana + Loki + Alertmanager + Node Exporter",
+    "hero": {
+      "eyebrow": "Monitoring & Observability",
+      "eyebrowAr": "المراقبة والقابلية للرصد",
+      "title": "Monitoring & Observability",
+      "titleAr": "المراقبة والقابلية للرصد",
+      "tagline": "See problems before your users do — a complete observability stack that turns blind spots into dashboards and incidents into alerts that reach the right person in seconds.",
+      "taglineAr": "اكتشف المشكلات قبل مستخدميك — حزمة رصد كاملة تحوّل النقاط العمياء إلى لوحات والحوادث إلى تنبيهات تصل للشخص المناسب في ثوانٍ."
+    },
+    "businessValue": {
+      "body": "You can't fix what you can't see, and downtime discovered by a customer is downtime that has already cost you. A proper observability stack — Prometheus, Grafana, Loki, and Alertmanager — turns guesswork into evidence: it surfaces regressions before they escalate, cuts mean-time-to-resolution from hours to minutes, and gives you the data to prove your uptime. Self-hosted and open-source, it scales from one server to hundreds with no per-host billing, so visibility is never the line item you cut.",
+      "bodyAr": "لا يمكنك إصلاح ما لا تراه، والتوقف الذي يكتشفه العميل توقفٌ كلّفك بالفعل. حزمة رصد سليمة — Prometheus وGrafana وLoki وAlertmanager — تحوّل التخمين إلى أدلة: تُظهر التراجع قبل تصاعده، وتقلّص متوسط زمن الحل من ساعات إلى دقائق، وتمنحك بيانات تثبت زمن تشغيلك. ذاتية الاستضافة ومفتوحة المصدر، تتوسع من خادم واحد إلى المئات دون فوترة لكل مضيف، فلا تصبح الرؤية أبدًا البند الذي تقتطعه."
+    },
+    "outcomes": [
+      { "icon": "▼", "title": "Reduce Downtime", "titleAr": "قلّل التوقف", "desc": "Catch regressions and capacity issues before they become outages.", "descAr": "اكتشف التراجع ومشكلات السعة قبل أن تصبح انقطاعات." },
+      { "icon": "⚡", "title": "Detect Incidents Faster", "titleAr": "اكتشف الحوادث أسرع", "desc": "Escalating alerts page the right person the moment something breaks.", "descAr": "تنبيهات متصاعدة تنبّه الشخص المناسب لحظة حدوث العطل." },
+      { "icon": "◎", "title": "Improve Visibility", "titleAr": "حسّن الرؤية", "desc": "Metrics, logs, and trends for every service in one pane of glass.", "descAr": "مقاييس وسجلات واتجاهات لكل خدمة في لوحة واحدة موحّدة." }
+    ],
+    "deliverables": [
+      { "title": "Prometheus Deployment", "titleAr": "نشر Prometheus", "desc": "Production-ready metrics collection and scrape configuration.", "descAr": "جمع مقاييس جاهز للإنتاج وإعداد للجمع." },
+      { "title": "Grafana Dashboards", "titleAr": "لوحات Grafana", "desc": "Tailored dashboards for every service tier.", "descAr": "لوحات مُخصَّصة لكل طبقة خدمة." },
+      { "title": "Loki Log Aggregation", "titleAr": "تجميع السجلات بـ Loki", "desc": "Centralized logs correlated to your metrics.", "descAr": "سجلات مركزية مرتبطة بمقاييسك." },
+      { "title": "Alertmanager Routing", "titleAr": "توجيه Alertmanager", "desc": "Alert rules and escalation that page the right person.", "descAr": "قواعد تنبيه وتصعيد تنبّه الشخص المناسب." },
+      { "title": "Node Exporter Rollout", "titleAr": "نشر Node Exporter", "desc": "Host and service exporters deployed across your fleet.", "descAr": "مُصدّرات المضيف والخدمة منشورة عبر أسطولك." },
+      { "title": "Uptime & Runbook", "titleAr": "زمن التشغيل ودليل التشغيل", "desc": "Uptime monitoring and an on-call runbook for incidents.", "descAr": "مراقبة زمن التشغيل ودليل مناوبة للحوادث." }
+    ],
+    "technologies": [
+      { "name": "Prometheus", "role": "Metrics & scraping", "roleAr": "المقاييس والجمع" },
+      { "name": "Grafana", "role": "Dashboards", "roleAr": "اللوحات" },
+      { "name": "Loki", "role": "Log aggregation", "roleAr": "تجميع السجلات" },
+      { "name": "Alertmanager", "role": "Alert routing", "roleAr": "توجيه التنبيهات" },
+      { "name": "Node Exporter", "role": "Host metrics", "roleAr": "مقاييس المضيف" },
+      { "name": "Docker", "role": "Containerized core", "roleAr": "نواة محتواة" },
+      { "name": "Linux", "role": "Host OS", "roleAr": "نظام المضيف" }
+    ],
+    "architecture": {
+      "description": "Prometheus scrapes metrics, Loki ingests logs, and exporters cover hosts, containers, and databases. Grafana unifies the view; Alertmanager routes notifications with escalation so the right person is paged at the right time.",
+      "descriptionAr": "يجمع Prometheus المقاييس، ويستوعب Loki السجلات، وتغطي المُصدّرات المضيفين والحاويات وقواعد البيانات. يوحّد Grafana العرض؛ ويوجّه Alertmanager الإشعارات مع تصعيد ليصل التنبيه إلى الشخص المناسب في الوقت المناسب.",
+      "nodes": [
+        { "label": "Exporters", "tone": "neon" },
+        { "label": "Prometheus", "tone": "blue" },
+        { "label": "Grafana", "tone": "" },
+        { "label": "Alertmanager", "tone": "neon" }
+      ]
+    },
+    "useCases": [
+      { "title": "SaaS Platforms", "titleAr": "منصات SaaS", "desc": "Centralized monitoring for distributed services.", "descAr": "مراقبة مركزية للخدمات الموزّعة." },
+      { "title": "ERP Systems", "titleAr": "أنظمة ERP", "desc": "Watch database load and queue depth before users feel it.", "descAr": "راقب حمل قاعدة البيانات وعمق الطابور قبل أن يشعر المستخدمون." },
+      { "title": "E-commerce", "titleAr": "التجارة الإلكترونية", "desc": "Catch checkout and payment failures the moment they spike.", "descAr": "اكتشف أعطال الدفع والشراء لحظة ارتفاعها." },
+      { "title": "Internal Applications", "titleAr": "التطبيقات الداخلية", "desc": "Give every internal service production-grade visibility.", "descAr": "امنح كل خدمة داخلية رؤية بمستوى الإنتاج." }
+    ],
+    "highlights": [
+      { "icon": "▤", "title": "Single Pane of Glass", "titleAr": "لوحة واحدة موحّدة", "desc": "Metrics, logs, and trends in one Grafana view.", "descAr": "مقاييس وسجلات واتجاهات في عرض Grafana واحد." },
+      { "icon": "◬", "title": "Escalating Alerts", "titleAr": "تنبيهات متصاعدة", "desc": "The right person is paged at the right time, every time.", "descAr": "يصل التنبيه إلى الشخص المناسب في الوقت المناسب دائمًا." },
+      { "icon": "▦", "title": "Log Correlation", "titleAr": "ربط السجلات", "desc": "Loki ties logs to the exact moment a metric moved.", "descAr": "يربط Loki السجلات باللحظة الدقيقة التي تحرّك فيها المقياس." },
+      { "icon": "⤢", "title": "Capacity Planning", "titleAr": "تخطيط السعة", "desc": "Trend data turns scaling into a decision, not a guess.", "descAr": "بيانات الاتجاه تجعل التوسع قرارًا لا تخمينًا." },
+      { "icon": "✓", "title": "SLA Reporting", "titleAr": "تقارير مستوى الخدمة", "desc": "Prove uptime with real numbers, not estimates.", "descAr": "أثبِت زمن التشغيل بأرقام حقيقية لا تقديرات." },
+      { "icon": "⛁", "title": "Self-Hosted & Private", "titleAr": "ذاتية الاستضافة وخاصة", "desc": "Telemetry stays inside your perimeter, no per-host billing.", "descAr": "تبقى البيانات داخل محيطك، دون فوترة لكل مضيف." }
+    ],
+    "cta": {
+      "heading": "Need this solution?",
+      "headingAr": "تحتاج هذا الحل؟",
+      "body": "Let's design observability that scales with your infrastructure — and proves your uptime.",
+      "bodyAr": "لنصمم رصدًا ينمو مع بنيتك التحتية — ويثبت زمن تشغيلك.",
+      "primaryLabel": "Book a Meeting",
+      "primaryLabelAr": "احجز اجتماعًا",
+      "primaryUrl": "index.html#book"
+    }
+  }
+}

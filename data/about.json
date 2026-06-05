@@ -1,0 +1,112 @@
+{
+  "hero": {
+    "eyebrow": "About Ahmed Hamdy",
+    "eyebrowAr": "عن أحمد حمدي",
+    "title": "The architect behind the HamdyTech ecosystem",
+    "titleAr": "المهندس وراء منظومة HamdyTech",
+    "tagline": "Linux system administrator and DevOps engineer. I build, deploy, and operate self-hosted platforms — and I run every one of them on infrastructure I designed.",
+    "taglineAr": "مدير أنظمة Linux ومهندس DevOps. أبني وأنشر وأشغّل منصات ذاتية الاستضافة — وأدير كل واحدة منها على بنية تحتية صممتها بنفسي."
+  },
+  "intro": {
+    "body": "I'm Ahmed Hamdy — an infrastructure engineer who turned a personal obsession with uptime into an ecosystem of products and platforms. HamdyTech isn't an agency or a reseller; it's a working portfolio of systems I architected, deployed, and keep running in production. From a monitoring platform and a VPS host to an AI agent and an HR system, everything you see here runs on clusters I built, behind a network edge I configured, monitored by dashboards I wired myself.",
+    "bodyAr": "أنا أحمد حمدي — مهندس بنية تحتية حوّل هوسًا شخصيًا بزمن التشغيل إلى منظومة من المنتجات والمنصات. HamdyTech ليست وكالة ولا موزّعًا؛ إنها معرض عملي لأنظمة صممتها ونشرتها وأبقيها تعمل في الإنتاج. من منصة مراقبة ومضيف خوادم افتراضية إلى وكيل ذكاء اصطناعي ونظام موارد بشرية، كل ما تراه هنا يعمل على عناقيد بنيتها، خلف حافة شبكة أعددتها، تراقبها لوحات ربطتها بنفسي."
+  },
+  "expertise": [
+    {
+      "icon": "⌘",
+      "title": "Linux System Administration",
+      "titleAr": "إدارة أنظمة Linux",
+      "desc": "Years of hardening, tuning, and operating Linux servers — from kernel parameters and systemd units to networking, storage, and security at scale.",
+      "descAr": "سنوات من تحصين وضبط وتشغيل خوادم Linux — من معاملات النواة ووحدات systemd إلى الشبكات والتخزين والأمان على نطاق واسع."
+    },
+    {
+      "icon": "↻",
+      "title": "DevOps & Automation",
+      "titleAr": "DevOps والأتمتة",
+      "desc": "CI/CD pipelines, infrastructure as code, and one-click deployments. If a task happens twice, I automate it the third time never happens by hand.",
+      "descAr": "خطوط CI/CD، والبنية التحتية ككود، والنشر بنقرة واحدة. إن تكررت مهمة مرتين، أتمتتها فلا تحدث الثالثة يدويًا أبدًا."
+    },
+    {
+      "icon": "▦",
+      "title": "Proxmox & Virtualization",
+      "titleAr": "Proxmox والمحاكاة الافتراضية",
+      "desc": "Designing high-availability Proxmox clusters with Ceph storage and live migration — private clouds that survive node failure without dropping a workload.",
+      "descAr": "تصميم عناقيد Proxmox عالية التوافر بتخزين Ceph والترحيل الحي — سحب خاصة تصمد أمام فشل العقد دون إسقاط أي حمل."
+    },
+    {
+      "icon": "▤",
+      "title": "Docker & Containers",
+      "titleAr": "Docker والحاويات",
+      "desc": "Containerized application platforms with health checks, rolling updates, and instant rollback — reproducible from build to production.",
+      "descAr": "منصات تطبيقات محتواة بفحوص صحة وتحديثات متدرجة وتراجع فوري — قابلة لإعادة الإنتاج من البناء إلى الإنتاج."
+    },
+    {
+      "icon": "■",
+      "title": "ERPNext Deployments",
+      "titleAr": "نشر ERPNext",
+      "desc": "Production-grade ERPNext: tuned MariaDB, Redis queues, off-site backups, and monitoring — business systems that run without surprises.",
+      "descAr": "ERPNext بمستوى إنتاجي: MariaDB مضبوط، وطوابير Redis، ونسخ احتياطية خارج الموقع، ومراقبة — أنظمة أعمال تعمل دون مفاجآت."
+    },
+    {
+      "icon": "◎",
+      "title": "Monitoring & Observability",
+      "titleAr": "المراقبة والقابلية للرصد",
+      "desc": "Prometheus, Grafana, Loki, and Alertmanager wired into one pane of glass — so problems surface before users ever notice them.",
+      "descAr": "Prometheus وGrafana وLoki وAlertmanager مدمجة في لوحة واحدة — فتظهر المشكلات قبل أن يلاحظها المستخدمون."
+    }
+  ],
+  "philosophy": {
+    "body": "I believe infrastructure should be owned, observable, and built to survive failure. Owned, because self-hosting on open-source tools means no vendor lock-in, no per-seat tax, and complete control over your data. Observable, because you can't operate what you can't see — every system I run is monitored from day one. And built to survive failure, because production isn't a demo: redundancy, backups, and automated recovery aren't features I add later, they're how I start. Open source is the foundation of all of it — I'd rather understand and own my stack than rent a black box.",
+    "bodyAr": "أؤمن أن البنية التحتية يجب أن تُملك، وأن تكون قابلة للرصد، ومبنية لتصمد أمام الفشل. تُملك، لأن الاستضافة الذاتية على أدوات مفتوحة المصدر تعني لا قيود مورّد ولا ضريبة لكل مستخدم وتحكمًا كاملًا في بياناتك. قابلة للرصد، لأنك لا تستطيع تشغيل ما لا تراه — كل نظام أشغّله مُراقَب منذ اليوم الأول. ومبنية لتصمد أمام الفشل، لأن الإنتاج ليس عرضًا تجريبيًا: الزيادة والنسخ الاحتياطية والتعافي التلقائي ليست ميزات أضيفها لاحقًا، بل كيف أبدأ. المصدر المفتوح أساس كل ذلك — أفضّل أن أفهم وأملك حزمتي على أن أستأجر صندوقًا أسود."
+  },
+  "journey": [
+    {
+      "period": "Foundations",
+      "title": "Linux & Systems",
+      "titleAr": "Linux والأنظمة",
+      "desc": "Started deep in Linux administration — servers, networking, and the command line as a daily habit.",
+      "descAr": "بدأت عميقًا في إدارة Linux — الخوادم والشبكات وسطر الأوامر كعادة يومية."
+    },
+    {
+      "period": "Scale-up",
+      "title": "DevOps & Automation",
+      "titleAr": "DevOps والأتمتة",
+      "desc": "Moved from managing servers to automating them — pipelines, containers, and infrastructure as code.",
+      "descAr": "انتقلت من إدارة الخوادم إلى أتمتتها — خطوط الأنابيب والحاويات والبنية التحتية ككود."
+    },
+    {
+      "period": "Platforms",
+      "title": "Building Products",
+      "titleAr": "بناء المنتجات",
+      "desc": "Turned infrastructure expertise into shipping platforms — monitoring, hosting, automation, and more.",
+      "descAr": "حوّلت خبرة البنية التحتية إلى منصات تُطلق — مراقبة واستضافة وأتمتة وغيرها."
+    },
+    {
+      "period": "Today",
+      "title": "The HamdyTech Ecosystem",
+      "titleAr": "منظومة HamdyTech",
+      "desc": "Operating a growing ecosystem of products, solutions, and consulting — all on infrastructure I own.",
+      "descAr": "أشغّل منظومة متنامية من المنتجات والحلول والاستشارات — كلها على بنية تحتية أملكها."
+    }
+  ],
+  "stack": [
+    { "name": "Linux", "role": "Operating systems", "roleAr": "أنظمة التشغيل" },
+    { "name": "Proxmox VE", "role": "Virtualization", "roleAr": "المحاكاة الافتراضية" },
+    { "name": "Docker", "role": "Containers", "roleAr": "الحاويات" },
+    { "name": "Nginx", "role": "Reverse proxy & edge", "roleAr": "وكيل عكسي وحافة" },
+    { "name": "Prometheus & Grafana", "role": "Observability", "roleAr": "القابلية للرصد" },
+    { "name": "ERPNext", "role": "Business systems", "roleAr": "أنظمة الأعمال" },
+    { "name": "GitLab CI/CD", "role": "Delivery pipelines", "roleAr": "خطوط التسليم" },
+    { "name": "Ceph", "role": "Distributed storage", "roleAr": "تخزين موزع" },
+    { "name": "Bash & Python", "role": "Automation", "roleAr": "الأتمتة" }
+  ],
+  "cta": {
+    "heading": "Let's build something that stays up",
+    "headingAr": "لنبنِ شيئًا يبقى عاملًا",
+    "body": "Whether you need infrastructure designed, a platform deployed, or a system rescued — book a meeting and let's talk.",
+    "bodyAr": "سواء احتجت تصميم بنية تحتية أو نشر منصة أو إنقاذ نظام — احجز اجتماعًا ولنتحدث.",
+    "primaryLabel": "Book a Meeting →",
+    "primaryLabelAr": "احجز اجتماعًا →",
+    "primaryUrl": "index.html#book"
+  }
+}

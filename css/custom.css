@@ -24,6 +24,8 @@
   --text-3:      #606060;
   --red:         #ff4d4d;
   --amber:       #f59e0b;
+  --nav-bg:      rgba(14,14,14,0.85);
+  --shimmer-2:   #19e6ae;
   --font-head:   'Space Grotesk', sans-serif;
   --font-mono:   'JetBrains Mono', monospace;
 }
@@ -341,7 +343,7 @@ img { max-width: 100%; display: block; }
 .nav-blur {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  background: rgba(14,14,14,0.85);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -359,9 +361,9 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(
     90deg,
     var(--neon) 0%,
-    #7affdb 25%,
+    var(--shimmer-2) 25%,
     var(--neon) 50%,
-    #7affdb 75%,
+    var(--shimmer-2) 75%,
     var(--neon) 100%
   );
   background-size: 200% auto;
@@ -415,6 +417,287 @@ body::after {
 .tag.blue  { border-color: rgba(59,130,246,0.3); color: var(--blue); background: var(--blue-dim); }
 .tag.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: rgba(245,158,11,0.08); }
 
+/* ── Solutions: premium technology pills ─────────────────── */
+.tech-tag {
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tech-tag:hover { transform: translateY(-2px); }
+.tech-tag.neon:hover { box-shadow: 0 6px 20px -8px var(--neon-glow); }
+.tech-tag.blue:hover { box-shadow: 0 6px 20px -8px rgba(59,130,246,0.45); }
+
+/* ── Solutions: "What I Deliver" checklist badge ─────────── */
+.deliver-check {
+  flex: 0 0 auto;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  color: var(--neon);
+  background: var(--neon-dim);
+  border: 1px solid rgba(60,255,192,0.35);
+}
+
+/* ── Solutions: Architecture Overview visual ─────────────── */
+.arch-overview {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(60,255,192,0.06), 0 24px 60px -40px var(--neon-glow);
+}
+.arch-overview::before {
+  content: "";
+  position: absolute;
+  inset: -40% 30% auto -10%;
+  height: 220px;
+  background: radial-gradient(closest-side, var(--neon-dim), transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.arch-flow {
+  position: relative;
+  padding: 8px 2px;
+}
+.arch-flow .arch-node { font-size: 12px; padding: 9px 16px; }
+
+/* ============================================================
+   SOLUTIONS — premium consulting enhancements
+   ============================================================ */
+
+/* ── Hero: two-column copy + live architecture viz ───────── */
+.sol-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .sol-hero-grid { grid-template-columns: 1.05fr 0.95fr; }
+}
+.sol-hero-copy .hero-sub { max-width: 36rem; }
+
+/* "Powered by <technology>" badge */
+.powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid var(--neon-glow);
+  border-radius: 999px;
+  background: var(--neon-dim);
+  margin-top: 4px;
+}
+.powered-by-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.powered-by-tech {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--neon);
+  line-height: 1.2;
+}
+
+/* Hero architecture viz panel (glass) */
+.sol-hero-viz {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
+  padding: 22px 22px 26px;
+  box-shadow: inset 0 0 0 1px rgba(60,255,192,0.05), 0 30px 70px -50px var(--neon-glow);
+  overflow: hidden;
+}
+.sol-hero-viz::before {
+  content: "";
+  position: absolute;
+  inset: -30% 20% auto -10%;
+  height: 200px;
+  background: radial-gradient(closest-side, var(--neon-dim), transparent 70%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.sol-hero-viz-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px; position: relative;
+}
+
+/* ── Architecture stage (glowing animated node flow) ─────── */
+.arch-stage { display: flex; position: relative; }
+.arch-stage--v { flex-direction: column; align-items: stretch; gap: 0; }
+.arch-stage--h {
+  flex-direction: row; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0; padding: 10px 0;
+}
+.arch-stage-node {
+  position: relative;
+  display: flex; align-items: center; gap: 11px;
+  padding: 13px 18px;
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.arch-stage--h .arch-stage-node { flex: 0 0 auto; }
+.arch-stage-node .arch-stage-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--text-3); flex: 0 0 auto;
+  box-shadow: 0 0 0 0 transparent;
+}
+.arch-stage-node.active {
+  border-color: var(--neon);
+  color: var(--neon);
+  box-shadow: 0 0 0 1px var(--neon-glow), 0 8px 30px -12px var(--neon-glow);
+}
+.arch-stage-node.active .arch-stage-dot {
+  background: var(--neon);
+  box-shadow: 0 0 12px var(--neon);
+  animation: arch-dot-pulse 2.4s ease-in-out infinite;
+}
+.arch-stage-node.blue { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 0 1px var(--blue-dim), 0 8px 30px -12px var(--blue-dim); }
+.arch-stage-node.blue .arch-stage-dot { background: var(--blue); box-shadow: 0 0 12px var(--blue); }
+.arch-stage-node:hover { transform: translateY(-2px); }
+.arch-stage-label { line-height: 1.2; }
+
+/* Connectors with a flowing pulse */
+.arch-stage-link { position: relative; overflow: hidden; }
+.arch-stage--v .arch-stage-link {
+  width: 2px; height: 30px; margin: 6px 0 6px 22px;
+  background: linear-gradient(180deg, var(--neon-glow), transparent);
+}
+.arch-stage--h .arch-stage-link {
+  height: 2px; min-width: 40px; flex: 1 1 40px; max-width: 90px; margin: 0 6px;
+  background: linear-gradient(90deg, var(--neon-glow), var(--border-2), var(--neon-glow));
+}
+.arch-stage-pulse {
+  position: absolute;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 10px 2px var(--neon-glow);
+}
+.arch-stage--v .arch-stage-pulse {
+  left: 50%; transform: translateX(-50%);
+  animation: arch-pulse-v 2.6s linear infinite;
+  animation-delay: calc(var(--ai) * 0.4s);
+}
+.arch-stage--h .arch-stage-pulse {
+  top: 50%; transform: translateY(-50%);
+  animation: arch-pulse-h 2.6s linear infinite;
+  animation-delay: calc(var(--ai) * 0.4s);
+}
+@keyframes arch-pulse-h { 0% { left: -7px; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@keyframes arch-pulse-v { 0% { top: -7px; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@keyframes arch-dot-pulse { 0%, 100% { box-shadow: 0 0 8px var(--neon); } 50% { box-shadow: 0 0 16px var(--neon), 0 0 28px var(--neon-glow); } }
+
+/* Architecture centerpiece spacing */
+.arch-stage-wrap { display: flex; justify-content: center; }
+.arch-overview .arch-desc { font-size: 15px; }
+
+/* Horizontal stage stacks vertically on narrow screens */
+@media (max-width: 640px) {
+  .arch-stage--h { flex-direction: column; align-items: stretch; }
+  .arch-stage--h .arch-stage-node { justify-content: flex-start; }
+  .arch-stage--h .arch-stage-link {
+    width: 2px; height: 26px; min-width: 0; max-width: none; flex: 0 0 auto;
+    margin: 6px 0 6px 22px;
+    background: linear-gradient(180deg, var(--neon-glow), transparent);
+  }
+  .arch-stage--h .arch-stage-pulse {
+    left: 50%; top: auto; transform: translateX(-50%);
+    animation: arch-pulse-v 2.6s linear infinite;
+  }
+  [dir="rtl"] .arch-stage--h .arch-stage-link { margin-left: 0; margin-right: 22px; }
+}
+
+/* ── Business Value: outcome cards with icon medallion ───── */
+.bv-card { text-align: left; }
+.bv-icon {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  font-size: 24px;
+  color: var(--neon);
+  background: var(--neon-dim);
+  border: 1px solid var(--neon-glow);
+}
+
+/* ── Deliverables: titled cards ──────────────────────────── */
+.deliver-card { border-top: 2px solid transparent; }
+.deliver-card:hover { border-top-color: var(--neon); }
+.deliver-top { display: flex; align-items: center; gap: 12px; }
+.deliver-top h3 { font-size: 15px; }
+
+/* ── Technical Highlights: icon tile + body ──────────────── */
+.hl-card { display: flex; align-items: flex-start; gap: 16px; }
+.hl-icon {
+  flex: 0 0 auto;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  font-size: 20px;
+  color: var(--neon);
+  background: var(--neon-dim);
+  border: 1px solid var(--neon-glow);
+}
+.hl-body { min-width: 0; }
+
+/* ── CTA: glow centerpiece ───────────────────────────────── */
+.sol-cta-glow {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 620px; height: 320px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, var(--neon-dim), transparent 70%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Accessible focus for the primary booking button */
+.btn-cv:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+
+/* RTL: flip the vertical connector inset */
+[dir="rtl"] .arch-stage--v .arch-stage-link { margin-left: 0; margin-right: 22px; }
+
+/* Respect reduced-motion: freeze the flow pulses */
+@media (prefers-reduced-motion: reduce) {
+  .arch-stage-pulse { animation: none; opacity: 0; }
+  .arch-stage-node.active .arch-stage-dot { animation: none; }
+}
+
+/* ── Light theme: keep it premium, not washed out ────────── */
+[data-theme="light"] .arch-stage-node {
+  background: #ffffff;
+  border-color: var(--border-2);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(16,21,27,0.04);
+}
+[data-theme="light"] .arch-stage-node.active {
+  border-color: var(--neon);
+  box-shadow: 0 0 0 1px rgba(12,156,118,0.25), 0 10px 26px -16px rgba(12,156,118,0.5);
+}
+[data-theme="light"] .arch-stage-node.blue { border-color: var(--blue); }
+[data-theme="light"] .powered-by { background: rgba(12,156,118,0.10); border-color: rgba(12,156,118,0.35); }
+[data-theme="light"] .powered-by-tech { color: #0a8062; }
+[data-theme="light"] .tech-tag.neon { border-color: rgba(12,156,118,0.4); background: rgba(12,156,118,0.10); color: #0a7d60; font-weight: 600; }
+[data-theme="light"] .tech-tag.blue { border-color: rgba(37,99,235,0.4); background: rgba(37,99,235,0.10); color: #1d4ed8; font-weight: 600; }
+[data-theme="light"] .bv-icon,
+[data-theme="light"] .hl-icon { background: rgba(12,156,118,0.10); border-color: rgba(12,156,118,0.3); color: #0a8062; }
+[data-theme="light"] .deliver-check { background: rgba(12,156,118,0.12); border-color: rgba(12,156,118,0.35); color: #0a8062; }
+[data-theme="light"] .sol-hero-viz { background: linear-gradient(160deg, #ffffff 0%, #f4f7fb 100%); box-shadow: 0 24px 60px -45px rgba(12,156,118,0.4), 0 1px 2px rgba(16,21,27,0.05); }
+[data-theme="light"] .arch-overview { box-shadow: inset 0 0 0 1px rgba(12,156,118,0.08), 0 24px 60px -45px rgba(12,156,118,0.35); }
+[data-theme="light"] .sol-cta-glow { opacity: 0.5; }
+
 /* ── Responsive helpers ───────────────────────────────────── */
 @media (max-width: 768px) {
   .terminal-body { font-size: 11px; }
@@ -426,7 +709,7 @@ body::after {
 
 /* ── Top announcement banner ──────────────────────────────── */
 .top-banner {
-  background: linear-gradient(90deg, var(--neon) 0%, #7affdb 40%, var(--neon) 100%);
+  background: linear-gradient(90deg, var(--neon) 0%, var(--shimmer-2) 40%, var(--neon) 100%);
   background-size: 200% auto;
   animation: shimmer 5s linear infinite;
   position: fixed;
@@ -529,7 +812,7 @@ body::after {
 
 /* ── Automation Hub CTA button ────────────────────────────── */
 .btn-hub {
-  background: linear-gradient(135deg, var(--neon) 0%, #7affdb 100%);
+  background: linear-gradient(135deg, var(--neon) 0%, var(--shimmer-2) 100%);
   color: var(--obsidian);
   border: none;
   cursor: pointer;
@@ -600,7 +883,7 @@ body::after {
 
 /* ── Download CV button ───────────────────────────────────── */
 .btn-cv {
-  background: linear-gradient(135deg, var(--neon) 0%, #7affdb 100%);
+  background: linear-gradient(135deg, var(--neon) 0%, var(--shimmer-2) 100%);
   color: var(--obsidian);
   border: none;
   cursor: pointer;
@@ -629,9 +912,44 @@ body::after {
 .btn-cv:hover::before { opacity: 1; }
 .btn-cv:active { transform: translateY(0) scale(1); }
 
+/* ── Solid CTA button (Solution pages) — solid brand-green,
+      high contrast, no gradient/overlay dependency ────────── */
+.btn-cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--neon);
+  color: var(--obsidian);
+  border: 1px solid var(--neon);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 26px var(--neon-glow);
+  transition: box-shadow 0.25s, transform 0.18s, filter 0.2s;
+}
+.btn-cta:hover {
+  box-shadow: 0 8px 36px var(--neon-glow), 0 0 60px rgba(60,255,192,0.18);
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+.btn-cta:active { transform: translateY(0); }
+.btn-cta:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+[data-theme="light"] .btn-cta {
+  background: var(--neon);   /* #0c9c76 teal */
+  color: #ffffff;
+  border-color: var(--neon);
+  box-shadow: 0 6px 22px rgba(12,156,118,0.28);
+}
+[data-theme="light"] .btn-cta:hover {
+  box-shadow: 0 10px 30px rgba(12,156,118,0.4);
+}
+
 /* ── Improved Automation Hub CTA (higher contrast) ──────── */
 .btn-hub {
-  background: linear-gradient(135deg, var(--neon) 0%, #7affdb 100%);
+  background: linear-gradient(135deg, var(--neon) 0%, var(--shimmer-2) 100%);
   color: #050505;
   border: 2px solid rgba(60,255,192,0.4);
   cursor: pointer;
@@ -1226,4 +1544,211 @@ body { padding-top: var(--banner-h); }
     transparent 100%) !important;
   background-size: 200% 100% !important;
   animation: shimmer 2.5s linear infinite !important;
+}
+
+/* ============================================================
+   LIGHT THEME  —  [data-theme="light"] on <html>
+   Dark is the :root default; this block overrides the token
+   subset needed for a readable, premium light experience.
+   ============================================================ */
+[data-theme="light"] {
+  --obsidian:   #f6f8fb;   /* page background */
+  --surface:    #ffffff;
+  --surface-2:  #f1f4f8;
+  --surface-3:  #e7ebf1;
+  --border:     #e0e5ec;
+  --border-2:   #ccd3dd;
+  --neon:       #0c9c76;   /* deep teal-green: readable on white */
+  --neon-dim:   rgba(12,156,118,0.12);
+  --neon-glow:  rgba(12,156,118,0.22);
+  --blue:       #2563eb;
+  --blue-dim:   rgba(37,99,235,0.12);
+  --indigo:     #4f46e5;
+  --text:       #11151b;
+  --text-2:     #495162;
+  --text-3:     #828b9b;
+  --red:        #dc2626;
+  --amber:      #b45309;
+  --nav-bg:     rgba(255,255,255,0.82);
+  --shimmer-2:  #5fd8b4;   /* paler teal so shimmer stays visible on white */
+}
+
+/* Soften atmospherics that are tuned for a dark canvas */
+[data-theme="light"] body::after { opacity: 0.10; }
+[data-theme="light"] .aurora-blob { opacity: 0.22; }
+[data-theme="light"] #hero-particles { opacity: 0.45; }
+
+/* Remap the hardcoded Tailwind text utilities used across the markup
+   so copy stays legible on light surfaces (dark uses them as-is). */
+[data-theme="light"] .text-white { color: var(--text) !important; }
+[data-theme="light"] .text-gray-200,
+[data-theme="light"] .text-gray-300 { color: var(--text-2) !important; }
+[data-theme="light"] .text-gray-400 { color: var(--text-2) !important; }
+[data-theme="light"] .text-gray-500,
+[data-theme="light"] .text-gray-600 { color: var(--text-3) !important; }
+
+/* Tailwind surface utilities used in section backgrounds */
+[data-theme="light"] .bg-obsidian { background-color: var(--obsidian) !important; }
+[data-theme="light"] .bg-surface { background-color: var(--surface) !important; }
+[data-theme="light"] .border-border-dim { border-color: var(--border) !important; }
+
+/* Accent-filled surfaces: keep them bright/saturated in light mode so the
+   text stays readable (the inverted dark-teal tokens would tank contrast). */
+[data-theme="light"] .top-banner {
+  background: linear-gradient(90deg, #15d6a3 0%, #7af0d0 40%, #15d6a3 100%);
+  background-size: 200% auto;
+}
+[data-theme="light"] .btn-cv,
+[data-theme="light"] .btn-hub {
+  background: linear-gradient(135deg, #0c9c76 0%, #0a8062 100%);
+  color: #ffffff;
+}
+[data-theme="light"] .t-avatar { background: #0c9c76; color: #ffffff; }
+
+/* ============================================================
+   NAVBAR — dropdowns, theme toggle, mobile accordion
+   (rendered by js/nav.js, reuses tokens so it auto-themes)
+   ============================================================ */
+.nav-dd { position: relative; }
+.nav-dd-trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: 0; cursor: pointer; padding: 0;
+  color: var(--text-2); transition: color .2s ease;
+}
+.nav-dd-trigger:hover,
+.nav-dd.open .nav-dd-trigger,
+.nav-dd-trigger.active { color: var(--neon); }
+.nav-dd-chev { transition: transform .25s ease; opacity: .7; }
+.nav-dd.open .nav-dd-chev { transform: rotate(180deg); }
+
+.nav-dd-panel {
+  position: absolute; top: calc(100% + 14px);
+  inset-inline-start: 50%; transform: translateX(-50%) translateY(8px);
+  width: 300px; padding: 8px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 0 1px var(--neon-dim);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .22s ease, transform .22s cubic-bezier(.22,1,.36,1), visibility .22s;
+  z-index: 60;
+}
+[dir="rtl"] .nav-dd-panel { transform: translateX(50%) translateY(8px); }
+.nav-dd-panel--wide { width: 340px; }
+.nav-dd.open .nav-dd-panel {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+[dir="rtl"] .nav-dd.open .nav-dd-panel { transform: translateX(50%) translateY(0); }
+/* hover bridge so the gap doesn't close the menu */
+.nav-dd-panel::before { content:''; position:absolute; top:-14px; left:0; right:0; height:14px; }
+
+.nav-dd-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 10px;
+  border: 1px solid transparent;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.nav-dd-item:hover {
+  background: var(--neon-dim);
+  border-color: var(--neon-glow);
+  transform: translateX(2px);
+}
+[dir="rtl"] .nav-dd-item:hover { transform: translateX(-2px); }
+.nav-dd-ico {
+  flex: 0 0 auto; width: 34px; height: 34px;
+  display: grid; place-items: center;
+  font-size: 16px; color: var(--neon);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 9px;
+}
+.nav-dd-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.nav-dd-ext { flex: 0 0 auto; margin-left: auto; color: var(--text-3); opacity: .55; transition: opacity .18s ease, color .18s ease; }
+.nav-dd-item:hover .nav-dd-ext { opacity: 1; color: var(--neon); }
+[dir="rtl"] .nav-dd-ext { margin-left: 0; margin-right: auto; }
+.nav-m-sub-item .nav-dd-ext { margin-left: auto; }
+[dir="rtl"] .nav-m-sub-item .nav-dd-ext { margin-left: 0; margin-right: auto; }
+.nav-dd-title { font-family: var(--font-head); font-size: 13.5px; font-weight: 600; color: var(--text); }
+.nav-dd-desc  { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); line-height: 1.35; }
+
+/* ── Theme toggle ────────────────────────────────────────── */
+.theme-toggle {
+  display: grid; place-items: center;
+  width: 34px; height: 34px; padding: 0;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 9px; color: var(--text-2); cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.theme-toggle:hover { color: var(--neon); border-color: var(--neon-glow); }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* ── Mobile accordion ────────────────────────────────────── */
+.nav-m-link { padding: 9px 2px; display: flex; align-items: center; min-height: 40px; transition: color .2s ease; }
+.nav-m-link:hover { color: var(--neon); }
+.nav-m-acc {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 9px 2px; min-height: 40px;
+  background: none; border: 0; cursor: pointer; color: var(--text-2);
+  font-family: var(--font-mono);
+}
+.nav-m-acc .nav-dd-chev { transition: transform .25s ease; }
+.nav-m-acc.open { color: var(--neon); }
+.nav-m-acc.open .nav-dd-chev { transform: rotate(180deg); }
+.nav-m-sub {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease;
+  display: flex; flex-direction: column;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--border);
+  margin-inline-start: 6px;
+}
+.nav-m-sub.open { max-height: 420px; }
+.nav-m-sub-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 4px; font-family: var(--font-mono);
+  font-size: 13px; color: var(--text-2); transition: color .2s ease;
+}
+.nav-m-sub-item:hover { color: var(--neon); }
+.nav-m-sub-item .nav-dd-ico { width: 26px; height: 26px; font-size: 13px; }
+
+/* ── Live platform CTA / external links / status strip ───── */
+.btn-live {
+  position: relative;
+  box-shadow: 0 0 0 1px var(--neon-glow), 0 6px 26px var(--neon-glow);
+  animation: live-glow 2.8s ease-in-out infinite;
+}
+@keyframes live-glow {
+  0%, 100% { box-shadow: 0 0 0 1px var(--neon-glow), 0 6px 22px var(--neon-glow); }
+  50%      { box-shadow: 0 0 0 1px var(--neon-glow), 0 10px 42px var(--neon-glow); }
+}
+.ext-ico {
+  margin-inline-start: 7px;
+  opacity: .85;
+  vertical-align: -2px;
+  transition: transform .2s ease, opacity .2s ease;
+}
+a:hover > .ext-ico,
+a:hover .ext-ico { transform: translate(2px, -2px); opacity: 1; }
+[dir="rtl"] a:hover > .ext-ico,
+[dir="rtl"] a:hover .ext-ico { transform: translate(-2px, -2px); }
+
+.live-strip {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 10px 14px; border-radius: 10px;
+  background: var(--neon-dim); border: 1px solid var(--neon-glow);
+  width: fit-content; max-width: 100%;
+}
+.live-strip-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--border-2); flex: 0 0 auto; }
+
+/* ── Testimonial avatar ──────────────────────────────────── */
+.t-avatar {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  font-family: var(--font-head); font-weight: 700; font-size: 15px;
+  color: var(--obsidian);
+  background: linear-gradient(135deg, var(--neon) 0%, var(--shimmer-2) 100%);
+  border-radius: 50%;
 }

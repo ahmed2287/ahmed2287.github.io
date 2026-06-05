@@ -310,22 +310,22 @@ body {
 
 .topo-edge {
   fill: none;
-  stroke: rgba(120, 130, 140, 0.28);
-  stroke-width: 1.5;
+  stroke: rgba(120, 130, 140, 0.22);
+  stroke-width: 1.25;
 }
-/* Flowing data — animated dash. Calm, continuous. */
+/* Flowing data — animated dash. Calm, sparse, continuous. */
 .topo-flow {
   fill: none;
   stroke: var(--neon);
-  stroke-width: 1.5;
-  stroke-dasharray: 5 12;
+  stroke-width: 1.25;
+  stroke-dasharray: 3 17;
   stroke-linecap: round;
-  opacity: 0.7;
-  animation: topo-stream 2.6s linear infinite;
+  opacity: 0.55;
+  animation: topo-stream 3.8s linear infinite;
 }
-.topo-flow.blue { stroke: #60a5fa; animation-duration: 3.1s; }
-.topo-flow.indigo { stroke: #818cf8; animation-duration: 3.6s; }
-@keyframes topo-stream { to { stroke-dashoffset: -34; } }
+.topo-flow.blue { stroke: #60a5fa; opacity: 0.5; animation-duration: 4.6s; }
+.topo-flow.indigo { stroke: #818cf8; opacity: 0.42; animation-duration: 5.4s; }
+@keyframes topo-stream { to { stroke-dashoffset: -40; } }
 
 .topo-node rect {
   fill: rgba(20, 20, 20, 0.9);
@@ -425,8 +425,32 @@ body {
    9 · REDUCED MOTION
 ══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .topo-flow { animation: none; opacity: 0.45; }
+  .topo-flow { animation: none; opacity: 0.4; }
   .topo-dot.pulse { animation: none; }
   .pipeline::after { animation: none; display: none; }
   .shimmer-text { animation: none; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   10 · FINAL POLISH — touch targets, mobile rhythm, focus a11y
+══════════════════════════════════════════════════════════ */
+/* Consistent keyboard focus ring across interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgba(60, 255, 192, 0.7);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 1023px) {
+  /* Comfortable tap targets in the mobile menu */
+  #mobile-menu a { min-height: 40px; display: flex; align-items: center; }
+}
+@media (max-width: 768px) {
+  .topo { padding: 1.1rem; }
+  .signature-inner, .hero-shell { gap: 2.25rem; }
+  .outcome { padding: 1.4rem 0; }
+  .hero-sub, .hero-philosophy { max-width: 100%; }
 }

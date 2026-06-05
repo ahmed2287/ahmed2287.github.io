@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solutions — HamdyTech</title>
+  <meta name="description" content="Infrastructure solutions by Ahmed Hamdy — virtualization & private cloud, ERP, file & collaboration, internal communication, DevOps, and observability.">
+  <meta name="theme-color" content="#0e0e0e">
+  <!-- Theme bootstrap (runs before paint to prevent FOUC) -->
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')||'dark';document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#f6f8fb':'#0e0e0e');}catch(e){}})();</script>
+  <meta property="og:title" content="Solutions — HamdyTech">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HamdyTech">
+  <meta property="og:image" content="https://hamdyzone.icu/My-Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian:    '#0e0e0e',
+            surface:     '#141414',
+            'surface-2': '#1c1c1c',
+            'surface-3': '#222222',
+            'neon':      '#3cffc0',
+            'border-dim':'#2a2a2a',
+          },
+          fontFamily: {
+            grotesk: ['Space Grotesk', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/experience.css">
+  <link rel="stylesheet" href="css/brand.css">
+</head>
+
+<body class="bg-obsidian text-gray-200" data-page="solution">
+
+<!-- AURORA ATMOSPHERE -->
+<div class="aurora-bg" aria-hidden="true">
+  <div class="aurora-blob aurora-1"></div>
+  <div class="aurora-blob aurora-2"></div>
+  <div class="aurora-blob aurora-3"></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<!-- NAVIGATION (rendered by js/nav.js — shared across all pages) -->
+<div id="site-nav"></div>
+
+<!-- PAGE CONTENT (rendered by js/pages.js from ?id=SLUG) -->
+<main id="page-root"></main>
+
+<!-- FOOTER -->
+<footer class="border-t border-border-dim bg-surface/30 py-10">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <a href="index.html#hero" class="flex items-center gap-3">
+        <img src="/My-Logo.png" alt="HamdyTech" class="h-8 w-auto object-contain logo-img opacity-80 hover:opacity-100 transition-opacity">
+        <span>
+          <span class="block font-grotesk font-bold text-sm text-white">Ahmed Hamdy</span>
+          <span class="block font-mono text-xs text-gray-600" data-i18n="footer.tagline">DevOps &amp; Cloud Automation</span>
+        </span>
+      </a>
+      <div class="flex flex-wrap gap-6">
+        <a href="index.html#hero" class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="nav.home">Home</a>
+        <a href="index.html#services" class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_services">Services</a>
+        <a href="solution.html?id=virtualization" class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="footer.nav_solutions">Solutions</a>
+        <a href="about.html" class="font-mono text-xs text-gray-500 hover:text-neon transition-colors" data-i18n="nav.about">About</a>
+        <a href="index.html#book" class="font-mono text-xs text-neon hover:opacity-70 transition-opacity" data-i18n="footer.nav_book">Book</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="status-dot online"></span>
+        <span class="font-mono text-xs text-gray-500">
+          <span data-i18n="footer.status">All systems operational</span> &middot; <span class="text-neon">2026</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Motion stack -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/experience.js"></script>
+<script src="js/nav.js"></script>
+<!-- pages.js renders #page-root from data; main.js (last) drives i18n + langchange -->
+<script src="js/pages.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

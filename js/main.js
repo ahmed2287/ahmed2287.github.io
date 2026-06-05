@@ -503,7 +503,6 @@
 
     startLogStream('log-stream');
     startUptimeTicker();
-    initLiveMonMetrics();
     /* Reveal + counters are owned by animations.js (GSAP/ScrollTrigger)
        when present. These run only as a fallback if that stack failed
        to load (window.HTAnim is then undefined). */
@@ -516,7 +515,6 @@
     initCopyButtons();
     initScrollSpy();
     initLangSwitcher();
-    initContribGrid();
 
     setTimeout(animateMetricBars, 800);
 
