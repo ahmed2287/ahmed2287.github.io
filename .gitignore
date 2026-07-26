@@ -2,3 +2,8 @@
 backup/
 *.tmp
 .codex
+
+# local env (added by setup)
+.env
+.env.*
+!.env.example
