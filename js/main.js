@@ -147,7 +147,7 @@
     { level: 'info', msg: 'backup: snapshot pve-storage-01 \u2192 completed 4.1GB' },
     { level: 'ok',   msg: 'gitlab-ci: pipeline #3847 passed in 01m 22s' },
     { level: 'info', msg: 'netdata: avg response time 142ms (p99: 381ms)' },
-    { level: 'ok',   msg: 'dns: zone hamdyzone.icu propagated (TTL 300)' },
+    { level: 'ok',   msg: 'dns: zone propagated to all resolvers (TTL 300)' },
     { level: 'warn', msg: 'disk: /dev/sda3 at 78% \u2014 monitor recommended' },
     { level: 'ok',   msg: 'firewall: ufw rules synced (42 active rules)' },
     { level: 'info', msg: 'ansible: playbook site.yml finished 14/14 hosts' },
