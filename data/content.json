@@ -3,60 +3,18 @@
   "title": "DevOps Engineer",
   "description": "DevOps automation, cloud infrastructure, and smart deployment solutions to help you scale faster.",
   "cv": "/data/cv.pdf",
-
   "contact": {
     "email": "ahmedhamdy807@outlook.com",
     "phone": "01119433658",
     "whatsapp": "201119433658"
   },
-
   "social": {
     "github": "https://github.com/ahmed2287",
     "linkedin": "https://www.linkedin.com/in/ahmed-hamdy-ab58a3109/"
   },
-
   "stats": {
     "systemsDeployed": 47,
     "uptimeSLA": "99.9%",
     "deployTime": "200"
-  },
-
-  "projects": [
-    {
-      "id": "monitoring-platform",
-      "title": "Monitoring Platform",
-      "titleAr": "منصة المراقبة",
-      "url": "https://monitoring.hamdyzone.icu/",
-      "description": "Self-hosted infrastructure monitoring platform with agent-based data collection. Features API key generation for multi-tenant access, real-time metrics dashboards, alerting rules, and full observability across distributed systems.",
-      "descriptionAr": "منصة مراقبة بنية تحتية ذاتية الاستضافة تعتمد على وكلاء لجمع البيانات. تتضمن توليد مفاتيح API للوصول متعدد المستأجرين، ولوحات معلومات المقاييس في الوقت الفعلي، وقواعد التنبيه، والمراقبة الشاملة عبر الأنظمة الموزعة.",
-      "tech": ["Prometheus", "Grafana", "Docker", "API Keys", "Agents", "Loki"],
-      "tagColor": "neon",
-      "icon": "◎",
-      "status": "live"
-    },
-    {
-      "id": "hamdyhost",
-      "title": "HamdyHost",
-      "titleAr": "حمدي هوست",
-      "url": "https://hosting.hamdyzone.icu/",
-      "description": "Self-hosted KVM virtual servers with NVMe storage, full root access, and instant provisioning. Built for engineers who need bare-metal performance without the bare-metal hassle. DDoS protection, snapshots, and 24/7 support included.",
-      "descriptionAr": "خوادم افتراضية KVM ذاتية الاستضافة مع تخزين NVMe، ووصول root كامل، وتوفير فوري. مصممة للمهندسين الذين يحتاجون أداء المعدن المجرد بدون عناء المعدن المجرد. تشمل حماية DDoS، ولقطات، ودعماً على مدار الساعة.",
-      "tech": ["KVM", "NVMe SSD", "Root Access", "1Gbps", "DDoS Protection", "Snapshots"],
-      "tagColor": "neon",
-      "icon": "▣",
-      "status": "live"
-    },
-    {
-      "id": "automation-hub",
-      "title": "Automation Hub",
-      "titleAr": "مركز الأتمتة",
-      "url": "https://automation-hub.hamdyzone.icu",
-      "description": "One-click application deployment platform. Deploy Magento, WordPress, Node.js, and more in seconds with zero manual setup. Auto-scaling, SSL provisioning, and live monitoring included.",
-      "descriptionAr": "منصة نشر التطبيقات بنقرة واحدة. انشر Magento وWordPress وNode.js والمزيد في ثوانٍ بدون إعداد يدوي. يشمل التوسع التلقائي وتوفير SSL والمراقبة المباشرة.",
-      "tech": ["Docker", "Nginx", "SSL", "Auto-Scaling", "CI/CD"],
-      "tagColor": "blue",
-      "icon": "⚡",
-      "status": "live"
-    }
-  ]
+  }
 }

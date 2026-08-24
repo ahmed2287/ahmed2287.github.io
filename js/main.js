@@ -82,7 +82,6 @@
         this.data = await res.json();
         this._renderContact();
         this._renderSocial();
-        this._renderProjects();
         this._wireCV();
       } catch (e) {
         console.warn('[content] Could not load content.json:', e);
@@ -136,64 +135,8 @@
         el.href = cv;
         el.setAttribute('download', 'Ahmed Hamdy.pdf');
       });
-    },
-
-    _renderProjects() {
-      const grid = document.getElementById('projects-grid');
-      if (!grid || !this.data.projects) return;
-      const lang = i18n.lang;
-      grid.innerHTML = this.data.projects.map((p, idx) => {
-        const title    = (lang === 'ar' && p.titleAr) ? p.titleAr : p.title;
-        const desc     = (lang === 'ar' && p.descriptionAr) ? p.descriptionAr : p.description;
-        const tagClass = p.tagColor === 'blue' ? 'blue' : 'neon';
-        const delay    = idx * 120;
-        const liveLabel = i18n.t('projects.status_live') !== 'projects.status_live'
-          ? i18n.t('projects.status_live') : 'LIVE';
-        const viewLabel = i18n.t('projects.view_btn') !== 'projects.view_btn'
-          ? i18n.t('projects.view_btn') : 'View Live \u2192';
-        return `
-          <div class="project-card p-6 reveal" style="transition-delay:${delay}ms">
-            <div class="flex items-start justify-between mb-5">
-              <div class="w-10 h-10 bg-neon/10 border border-neon/30 flex items-center justify-center text-neon text-xl">
-                ${p.icon}
-              </div>
-              <div class="flex items-center gap-2 flex-wrap justify-end">
-                <span class="tag ${tagClass}">${p.id.toUpperCase()}</span>
-                <span class="tag neon" style="font-size:9px">
-                  <span class="status-dot online" style="width:5px;height:5px;display:inline-block;vertical-align:middle;margin-right:4px"></span>${liveLabel}
-                </span>
-              </div>
-            </div>
-            <h3 class="font-grotesk font-semibold text-lg text-white mb-2">${title}</h3>
-            <p class="text-gray-500 text-sm leading-relaxed mb-5">${desc}</p>
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              ${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}
-            </div>
-            <div class="pt-4 border-t border-border-dim">
-              <a href="${p.url}" target="_blank" rel="noopener"
-                 class="btn-ghost font-mono text-xs px-4 py-2 inline-flex items-center gap-2">
-                ${viewLabel}
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-              </a>
-            </div>
-          </div>`;
-      }).join('');
-
-      /* Re-observe newly inserted cards */
-      if (window._revealObserver) {
-        grid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
-      }
     }
   };
-
-  /* Re-render projects on language change */
-  document.addEventListener('langchange', () => {
-    if (content.data.projects) content._renderProjects();
-  });
 
   /* ── Fake log entries ──────────────────────────────────── */
   const LOG_ENTRIES = [

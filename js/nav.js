@@ -24,15 +24,11 @@
   function homeLink(hash) { return homeBase + hash; }
 
   /* ── Menu data ───────────────────────────────────────────── */
-  /* Projects are EXTERNAL live products — each item links straight to its
-     real domain (new tab). No internal project.html landing pages. */
+  /* One featured project, presented in full on the home page. The entry
+     scrolls to #projects rather than jumping straight to GitHub — the
+     section itself carries the source link. */
   var PROJECTS = [
-    { url: 'https://monitoring.hamdyzone.icu',       icon: '◎', k: 'nav.proj_monitoring', t: 'Monitoring Platform',        d: 'nav.proj_monitoring_d', dt: 'Agent-based observability' },
-    { url: 'https://hosting.hamdyzone.icu',          icon: '▣', k: 'nav.proj_hamdyhost',  t: 'HamdyHost',                  d: 'nav.proj_hamdyhost_d',  dt: 'KVM VPS hosting' },
-    { url: 'https://automation-hub.hamdyzone.icu',   icon: '⚡', k: 'nav.proj_automation', t: 'Automation Hub',             d: 'nav.proj_automation_d', dt: 'One-click deployments' },
-    { url: 'https://attendance.hamdyzone.icu',       icon: '⊞', k: 'nav.proj_hr',         t: 'HR Platform',                d: 'nav.proj_hr_d',         dt: 'Attendance & workforce' },
-    { url: 'https://agent.hamdyzone.icu',            icon: '✦', k: 'nav.proj_ai',         t: 'AI Agent',                   d: 'nav.proj_ai_d',         dt: 'Streaming AI assistant' },
-    { url: 'https://content-generator.hamdyzone.icu', icon: '✎', k: 'nav.proj_content',   t: 'Content Creation Platform',  d: 'nav.proj_content_d',    dt: 'AI content studio' }
+    { hash: '#projects', icon: '\u2261', k: 'nav.proj_logflow', t: 'LogFlow', d: 'nav.proj_logflow_d', dt: 'Self-hosted log management' }
   ];
   var INFRA = [
     { id: 'virtualization',          icon: '▦', k: 'nav.sol_virtualization', t: 'Virtualization & Private Cloud', d: 'nav.sol_virtualization_d', dt: 'Proxmox VE clusters' },
@@ -46,9 +42,9 @@
   /* External (real product domain) → new tab w/ opener protection;
      internal (solution) → solution.html?id=SLUG. */
   function ddAttrs(it, base) {
-    return it.url
-      ? 'href="' + it.url + '" target="_blank" rel="noopener noreferrer"'
-      : 'href="' + base + '?id=' + it.id + '"';
+    if (it.url)  return 'href="' + it.url + '" target="_blank" rel="noopener noreferrer"';
+    if (it.hash) return 'href="' + homeLink(it.hash) + '"';
+    return 'href="' + base + '?id=' + it.id + '"';
   }
 
   var extDdIco = '<svg class="nav-dd-ext" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';

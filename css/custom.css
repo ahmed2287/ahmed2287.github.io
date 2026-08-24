@@ -1729,3 +1729,170 @@ a:hover .ext-ico { transform: translate(2px, -2px); opacity: 1; }
   background: linear-gradient(135deg, var(--neon) 0%, var(--shimmer-2) 100%);
   border-radius: 50%;
 }
+
+/* ══════════════════════════════════════════════════════════
+   FEATURED PROJECT — LogFlow (#projects)
+   Two-column feature block: narrative on the left, a product
+   preview terminal on the right. Collapses to one column
+   below xl, where the terminal follows the copy.
+══════════════════════════════════════════════════════════ */
+.project-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (min-width: 1280px) {
+  .project-feature { grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; }
+}
+
+/* ── Main column ──────────────────────────────────────────── */
+.pf-main {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.pf-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.5;
+}
+.pf-main:hover {
+  border-color: rgba(60, 255, 192, 0.35);
+  box-shadow: 0 0 40px rgba(60, 255, 192, 0.06);
+}
+@media (min-width: 768px) { .pf-main { padding: 2.5rem; } }
+
+.pf-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.pf-icon {
+  width: 2.75rem; height: 2.75rem;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+  color: var(--neon);
+  background: rgba(60, 255, 192, 0.08);
+  border: 1px solid rgba(60, 255, 192, 0.3);
+}
+.pf-tagline { letter-spacing: 0.01em; }
+
+/* ── Feature list ─────────────────────────────────────────── */
+.pf-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem 2rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.75rem;
+}
+@media (min-width: 768px) { .pf-features { grid-template-columns: 1fr 1fr; } }
+
+.pf-feat { display: flex; gap: 0.85rem; align-items: flex-start; }
+.pf-feat-mark {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5rem;
+  color: var(--neon);
+  opacity: 0.55;
+  letter-spacing: 0.08em;
+}
+.pf-feat-t {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.pf-feat-d {
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.pf-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.75rem; min-width: 0; }
+
+.pf-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.pf-repo { word-break: break-all; }
+
+/* ── Aside: product preview ───────────────────────────────── */
+.pf-aside { position: relative; min-width: 0; }
+@media (min-width: 1280px) {
+  .pf-aside { position: sticky; top: 6.5rem; }
+}
+.pf-term { overflow: hidden; }
+[data-theme="light"] .pf-term .terminal-header { background: #141414; border-bottom-color: #262626; }
+.pf-term-body {
+  padding: 1rem 1.1rem 1.25rem;
+  font-size: 11.5px;
+  line-height: 1.9;
+  overflow-x: auto;
+}
+/* The terminal keeps its dark canvas in both themes, so everything inside
+   it is pinned to fixed values — theme tokens would flip to dark ink on a
+   black background in light mode. */
+.pf-line { display: flex; gap: 0.6rem; align-items: baseline; white-space: nowrap; }
+.pf-ts   { color: #5a5a5a; flex: none; }
+.pf-lvl  { flex: none; font-weight: 700; letter-spacing: 0.03em; }
+.pf-lvl.err  { color: #ff6b6b; }
+.pf-lvl.warn { color: #ffb454; }
+.pf-lvl.info { color: #6bb6ff; }
+.pf-msg  { color: #9a9a9a; overflow: hidden; text-overflow: ellipsis; }
+.pf-sep  { height: 1px; background: #262626; margin: 0.75rem 0; }
+.pf-prompt { color: #3cffc0; flex: none; }
+.pf-cmd  { color: #e8e8e8; }
+.pf-out  { color: #9a9a9a; }
+.pf-out.ok { color: #3cffc0; }
+
+.pf-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid #262626;
+}
+.pf-stat { padding: 0.9rem 0.75rem; text-align: center; }
+.pf-stat + .pf-stat { border-left: 1px solid #262626; }
+.pf-stat-v {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3cffc0;
+  margin-bottom: 0.2rem;
+}
+.pf-stat-l { font-family: var(--font-mono); font-size: 10px; color: #7a7a7a; }
+.pf-note { line-height: 1.7; }
+
+/* Terminal content stays LTR even in the Arabic layout */
+[dir="rtl"] .pf-term,
+[dir="rtl"] .pf-term-body,
+[dir="rtl"] .pf-line { direction: ltr; text-align: left; }
+[dir="rtl"] .pf-stat + .pf-stat { border-left: 0; border-right: 1px solid #262626; }
+[dir="rtl"] .pf-repo { direction: ltr; }
+
+@media (max-width: 640px) {
+  .pf-main { padding: 1.5rem; }
+  .pf-term-body { font-size: 10.5px; }
+  .pf-stats { grid-template-columns: 1fr; }
+  .pf-stat + .pf-stat { border-left: 0; border-top: 1px solid #262626; }
+  [dir="rtl"] .pf-stat + .pf-stat { border-right: 0; border-top: 1px solid #262626; }
+}

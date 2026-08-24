@@ -68,7 +68,7 @@
     });
   }
 
-  /* Shim consumed by main.js → content._renderProjects() */
+  /* Shim for any code that reveals dynamically inserted nodes */
   window._revealObserver = { observe: revealElement };
 
   function setupReveals() {
