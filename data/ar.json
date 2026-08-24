@@ -1,9 +1,6 @@
 {
   "lang": "ar",
 
-  "banner.text": "جرّب <strong>مركز الأتمتة</strong> — انشر التطبيقات في ثوانٍ. بدون إعداد يدوي.",
-  "banner.cta": "استكشف الآن →",
-
   "nav.automation_hub": "مركز الأتمتة",
   "nav.monitoring": "مركز المراقبة",
   "nav.services": "الخدمات",

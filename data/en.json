@@ -1,9 +1,6 @@
 {
   "lang": "en",
 
-  "banner.text": "Try <strong>Automation Hub</strong> — Deploy apps in seconds. Zero manual setup.",
-  "banner.cta": "Explore Now →",
-
   "nav.automation_hub": "Automation Hub",
   "nav.monitoring": "Monitoring",
   "nav.services": "Services",

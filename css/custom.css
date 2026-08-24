@@ -707,19 +707,6 @@ body::after {
   section.py-32 { padding-top: 4rem;   padding-bottom: 4rem; }
 }
 
-/* ── Top announcement banner ──────────────────────────────── */
-.top-banner {
-  background: linear-gradient(90deg, var(--neon) 0%, var(--shimmer-2) 40%, var(--neon) 100%);
-  background-size: 200% auto;
-  animation: shimmer 5s linear infinite;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 61;
-  text-align: center;
-}
-
 /* ── Logo image ───────────────────────────────────────────── */
 .logo-img {
   filter: brightness(1.05);
@@ -1242,14 +1229,8 @@ body::after {
   #contact h2.text-4xl             { font-size: 1.875rem; }
 }
 
-/* ── Banner height compensation ───────────────────────────── */
+/* Legacy offset token — banner removed; kept at 0 for layout math */
 :root { --banner-h: 0px; }
-
-/* Nav follows banner */
-.nav-blur { top: var(--banner-h) !important; }
-
-/* Push page content below the fixed banner */
-body { padding-top: var(--banner-h); }
 
 /* ── Modern language toggle pill ─────────────────────────── */
 .lang-switch {
@@ -1594,10 +1575,6 @@ body { padding-top: var(--banner-h); }
 
 /* Accent-filled surfaces: keep them bright/saturated in light mode so the
    text stays readable (the inverted dark-teal tokens would tank contrast). */
-[data-theme="light"] .top-banner {
-  background: linear-gradient(90deg, #15d6a3 0%, #7af0d0 40%, #15d6a3 100%);
-  background-size: 200% auto;
-}
 [data-theme="light"] .btn-cv,
 [data-theme="light"] .btn-hub {
   background: linear-gradient(135deg, #0c9c76 0%, #0a8062 100%);

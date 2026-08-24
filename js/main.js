@@ -371,40 +371,6 @@
     if (mobileBtn) mobileBtn.addEventListener('click', () => i18n.toggle());
   }
 
-  /* ── Top banner with localStorage persistence ─────────────── */
-  function initBanner() {
-    const banner = document.getElementById('top-banner');
-    if (!banner) return;
-
-    /* Hide immediately if previously dismissed */
-    if (localStorage.getItem('ht-banner-closed') === '1') {
-      banner.style.display = 'none';
-      return;
-    }
-
-    /* Set CSS variable to banner height so nav and body offset correctly */
-    function applyBannerHeight() {
-      const h = banner.offsetHeight;
-      document.documentElement.style.setProperty('--banner-h', h + 'px');
-    }
-    applyBannerHeight();
-
-    /* Re-calculate on resize (e.g. text wrap changes) */
-    const onResize = () => applyBannerHeight();
-    window.addEventListener('resize', onResize);
-
-    /* Wire close button */
-    const closeBtn = document.getElementById('banner-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        banner.style.display = 'none';
-        document.documentElement.style.setProperty('--banner-h', '0px');
-        localStorage.setItem('ht-banner-closed', '1');
-        window.removeEventListener('resize', onResize);
-      });
-    }
-  }
-
   function initContribGrid() {
     const grid = document.getElementById('contrib-grid');
     if (!grid || grid.children.length) return;
@@ -495,9 +461,6 @@
      BOOT
   ══════════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', async () => {
-    /* Banner must run first so --banner-h is set before layout */
-    initBanner();
-
     await content.load();
     await i18n.load(i18n.lang);
 
