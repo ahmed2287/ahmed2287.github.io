@@ -120,7 +120,7 @@
           '<span class="lang-switch-option" data-lang="ar">AR</span>' +
           '<span class="lang-switch-thumb"></span>' +
         '</div>' +
-        '<a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link" class="btn-cv text-sm px-5 py-2 tracking-wide">' +
+        '<a href="/data/cv.pdf" download="Ahmed Hamdy CV.pdf" data-content="cv-link" class="btn-cv text-sm px-5 py-2 tracking-wide">' +
           '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CV' +
         '</a>' +
       '</div>' +
@@ -154,7 +154,7 @@
 
         '<div class="flex items-center gap-3 pt-3 mt-2 border-t border-border-dim">' +
           '<button id="lang-switcher-mobile" class="btn-lang" aria-label="Switch language">AR</button>' +
-          '<a href="/data/cv.pdf" download="Ahmed Hamdy.pdf" data-content="cv-link" class="btn-cv font-mono text-xs px-5 py-2.5 tracking-wide">' +
+          '<a href="/data/cv.pdf" download="Ahmed Hamdy CV.pdf" data-content="cv-link" class="btn-cv font-mono text-xs px-5 py-2.5 tracking-wide">' +
             '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
             '<span data-i18n="hero.cta_cv"></span>' +
           '</a>' +

@@ -303,15 +303,23 @@
   /* ── about page (single object, not slug-keyed) ──────────── */
   function aboutHero(a) {
     var h = a.hero || {};
+    var photo = h.photo ?
+      '<figure class="about-portrait reveal">' +
+        '<div class="about-portrait-glow" aria-hidden="true"></div>' +
+        '<img src="' + esc(h.photo) + '" alt="' + esc(pick(h, 'photoAlt') || 'Ahmed Hamdy') + '" width="800" height="1000" decoding="async">' +
+      '</figure>' : '';
     return '<section class="relative pt-32 md:pt-40 pb-16 overflow-hidden">' +
       '<div class="hero-grid-bg absolute inset-0" aria-hidden="true"></div>' +
-      '<div class="max-w-7xl mx-auto px-6 relative">' +
-        '<div class="flex items-center gap-3 mb-5 flex-wrap">' +
-          '<span class="hero-eyebrow font-mono text-xs tracking-widest text-gray-400">' + esc(pick(h, 'eyebrow')) + '</span>' +
-          '<span class="tag neon">Founder &amp; Architect</span>' +
+      '<div class="max-w-7xl mx-auto px-6 relative' + (photo ? ' about-hero-grid' : '') + '">' +
+        '<div>' +
+          '<div class="flex items-center gap-3 mb-5 flex-wrap">' +
+            '<span class="hero-eyebrow font-mono text-xs tracking-widest text-gray-400">' + esc(pick(h, 'eyebrow')) + '</span>' +
+            '<span class="tag neon">Founder &amp; Architect</span>' +
+          '</div>' +
+          '<h1 class="font-grotesk text-4xl md:text-6xl font-bold text-white leading-tight max-w-4xl">' + esc(pick(h, 'title')) + '</h1>' +
+          '<p class="hero-sub text-gray-400 mt-6 max-w-2xl leading-relaxed">' + esc(pick(h, 'tagline')) + '</p>' +
         '</div>' +
-        '<h1 class="font-grotesk text-4xl md:text-6xl font-bold text-white leading-tight max-w-4xl">' + esc(pick(h, 'title')) + '</h1>' +
-        '<p class="hero-sub text-gray-400 mt-6 max-w-2xl leading-relaxed">' + esc(pick(h, 'tagline')) + '</p>' +
+        photo +
       '</div></section>';
   }
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 &mdash; Page not found · Ahmed Hamdy</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0e0e">
+<!-- absolute paths: GitHub Pages serves this file for any missing path, at any depth -->
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0e0e0e; --surface: #141414; --border: #2a2a2a; --neon: #3cffc0; --text: #e5e7eb; --dim: #9ca3af; --faint: #6b7280; --err: #f87171; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg); color: var(--text); font-family: "Space Grotesk", system-ui, sans-serif;
+    min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 96px 20px 48px;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 50% 35%, rgba(60, 255, 192, .07), transparent 70%),
+      linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+    background-size: auto, 48px 48px, 48px 48px;
+  }
+  a { color: inherit; text-decoration: none; }
+  .brand { position: fixed; top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .brand img { height: 30px; width: auto; }
+  .box { width: 100%; max-width: 620px; text-align: center; }
+  .label { font: 500 12px "JetBrains Mono", monospace; letter-spacing: .2em; color: var(--neon); text-transform: uppercase; }
+  .code { margin-top: 14px; font: 700 clamp(96px, 22vw, 168px)/.9 "JetBrains Mono", monospace; letter-spacing: -.06em; color: #fff; }
+  .code span { color: var(--neon); text-shadow: 0 0 40px rgba(60, 255, 192, .45); }
+  h1 { margin-top: 20px; font-size: clamp(26px, 4.4vw, 38px); line-height: 1.15; font-weight: 700; letter-spacing: -.02em; color: #fff; }
+  p.lead { margin: 14px auto 0; max-width: 44ch; color: var(--dim); font-size: 17px; line-height: 1.6; }
+  .term { margin: 30px auto 0; text-align: left; background: var(--surface); border: 1px solid var(--border); font: 400 14px/1.85 "JetBrains Mono", monospace; color: var(--dim); }
+  .term-head { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .term-head i { width: 10px; height: 10px; border-radius: 50%; background: rgba(239, 68, 68, .7); }
+  .term-head i:nth-child(2) { background: rgba(245, 158, 11, .7); }
+  .term-head i:nth-child(3) { background: rgba(60, 255, 192, .7); }
+  .term-body { padding: 14px 18px; overflow-wrap: anywhere; }
+  .term b { color: var(--neon); font-weight: 500; }
+  .term .err { color: var(--err); }
+  .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; font: 500 14px "JetBrains Mono", monospace; letter-spacing: .03em; border: 1px solid var(--border); transition: border-color .2s, background .2s, color .2s; }
+  .btn-neon { background: var(--neon); color: #04120d; border-color: var(--neon); font-weight: 600; }
+  .btn-neon:hover { background: #6fffd2; }
+  .btn-ghost:hover { border-color: var(--neon); color: var(--neon); }
+  .btn:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+  .cursor { display: inline-block; width: 8px; height: 15px; background: var(--neon); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+</style>
+</head>
+<body>
+<a class="brand" href="/" aria-label="Ahmed Hamdy, home"><img src="/My-Logo.png" alt=""><span>Ahmed Hamdy</span></a>
+
+<main class="box">
+  <div class="label">// route not found</div>
+  <div class="code">4<span>0</span>4</div>
+  <h1>This route doesn&rsquo;t go anywhere.</h1>
+  <p class="lead">The page you asked for isn&rsquo;t on this server. Everything I have is one hop away.</p>
+  <div class="term" aria-label="Request log">
+    <div class="term-head" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="term-body">
+      <div><b>$</b> curl -sI <span id="nfPath">/this-page</span></div>
+      <div class="err">HTTP/2 404 Not Found</div>
+      <div><b>$</b> cd ~ <span class="cursor" aria-hidden="true"></span></div>
+    </div>
+  </div>
+  <div class="cta">
+    <a class="btn btn-neon" href="/">Back to home</a>
+    <a class="btn btn-ghost" href="/#contact">Contact me</a>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var el = document.getElementById('nfPath');
+    var p = location.pathname + location.search;
+    if (el && p) el.textContent = p.length > 60 ? p.slice(0, 57) + '...' : p;
+  })();
+</script>
+</body>
+</html>

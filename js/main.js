@@ -133,33 +133,29 @@
       const cv = this.data.cv || '/assets/cv.pdf';
       document.querySelectorAll('[data-content="cv-link"]').forEach(el => {
         el.href = cv;
-        el.setAttribute('download', 'Ahmed Hamdy.pdf');
+        el.setAttribute('download', 'Ahmed Hamdy CV.pdf');
       });
     }
   };
 
   /* ── Fake log entries ──────────────────────────────────── */
   const LOG_ENTRIES = [
-    { level: 'ok',   msg: 'nginx: upstream 10.0.0.1:8080 health check PASS' },
-    { level: 'ok',   msg: 'docker: service api_gateway scaled to 3 replicas' },
-    { level: 'info', msg: 'proxmox: VM-104 (web-prod) CPU 11% MEM 2.1GB' },
+    { level: 'ok',   msg: 'pvecm: quorum OK — 6/6 nodes online' },
+    { level: 'info', msg: 'vzdump: vm/214 → pbs completed (incremental)' },
+    { level: 'ok',   msg: 'qm migrate: vm/131 → pve-04 over vlan' },
+    { level: 'ok',   msg: 'pct: ct/118 started on pve-02' },
     { level: 'ok',   msg: 'certbot: certificate renewed — 89 days remaining' },
-    { level: 'info', msg: 'backup: snapshot pve-storage-01 \u2192 completed 4.1GB' },
-    { level: 'ok',   msg: 'gitlab-ci: pipeline #3847 passed in 01m 22s' },
-    { level: 'info', msg: 'netdata: avg response time 142ms (p99: 381ms)' },
-    { level: 'ok',   msg: 'dns: zone propagated to all resolvers (TTL 300)' },
-    { level: 'warn', msg: 'disk: /dev/sda3 at 78% \u2014 monitor recommended' },
-    { level: 'ok',   msg: 'firewall: ufw rules synced (42 active rules)' },
-    { level: 'info', msg: 'ansible: playbook site.yml finished 14/14 hosts' },
-    { level: 'ok',   msg: 'redis: replication lag 0ms \u2014 in sync' },
-    { level: 'info', msg: 'cron: daily-report generated \u2192 /var/reports/' },
-    { level: 'ok',   msg: 'traefik: TLS handshake 0.8ms (ECDHE-RSA-AES256)' },
-    { level: 'ok',   msg: 'monitoring: all 9 services reporting HEALTHY' },
-    { level: 'info', msg: 'k8s: pod rollout finished \u2014 0 restarts in 24h' },
-    { level: 'ok',   msg: 'postgres: vacuum analyze completed \u2014 0 dead tuples' },
-    { level: 'info', msg: 'cadvisor: container memory budget 68% utilized' },
-    { level: 'warn', msg: 'swap: 12% usage \u2014 consider adding RAM' },
-    { level: 'ok',   msg: 'haproxy: sticky sessions active \u2014 session store OK' },
+    { level: 'info', msg: 'pbs: garbage collection finished on datastore' },
+    { level: 'ok',   msg: 'gitlab-ci: pipeline passed — deploy to staging' },
+    { level: 'ok',   msg: 'nginx: config test successful, reloaded' },
+    { level: 'info', msg: 'postfix: queue empty — 0 deferred' },
+    { level: 'ok',   msg: 'bind9: zone reloaded, serial bumped' },
+    { level: 'ok',   msg: 'cloudflare: dns record updated, proxied' },
+    { level: 'warn', msg: 'pve-05: /var/lib/vz at 78% — watch it' },
+    { level: 'info', msg: 'k8s: rollout finished — 0 restarts' },
+    { level: 'ok',   msg: 'grafana: all dashboards reporting' },
+    { level: 'info', msg: 'iptables: MASQUERADE on vmbr99 active' },
+    { level: 'ok',   msg: 'vault: secrets engine unsealed' },
   ];
 
   const LEVEL_CLASS  = { ok: 'text-neon', info: 'text-blue-400', warn: 'text-amber-400', err: 'text-red-400' };

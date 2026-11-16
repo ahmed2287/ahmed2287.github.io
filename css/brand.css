@@ -340,6 +340,8 @@ body {
   letter-spacing: 0.02em;
 }
 .topo-node .topo-sub { fill: var(--text-3); font-size: 9px; }
+.topo-node .topo-guest { fill: #60a5fa; stroke: none; opacity: .6; }
+.topo-bus { fill: var(--text-3); font-family: var(--font-mono); font-size: 9px; letter-spacing: .04em; }
 .topo-dot { fill: var(--neon); }
 .topo-dot.pulse { animation: topo-pulse 2.4s ease-in-out infinite; }
 .topo-dot.amber { fill: var(--amber); }
@@ -454,3 +456,23 @@ input:focus-visible,
   .outcome { padding: 1.4rem 0; }
   .hero-sub, .hero-philosophy { max-width: 100%; }
 }
+
+/* LogFlow: private for now, so a lock note instead of a source link */
+.pf-private { color: var(--text-3); border: 1px dashed rgba(255, 255, 255, .14); padding: .55rem .9rem; }
+
+/* About: portrait beside the intro */
+.about-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: clamp(2rem, 5vw, 4rem); align-items: end; }
+.about-portrait { position: relative; margin: 0; aspect-ratio: 4 / 5; max-width: 360px; width: 100%; justify-self: end; }
+.about-portrait-glow {
+  position: absolute; inset: 14% 4% 0; border-radius: 999px 999px 0 0;
+  background: radial-gradient(70% 55% at 50% 30%, rgba(60, 255, 192, .22), rgba(60, 255, 192, .05) 60%, transparent), #101312;
+  border: 1px solid rgba(60, 255, 192, .25); border-bottom: 0;
+  box-shadow: 0 0 70px -18px rgba(60, 255, 192, .45);
+}
+.about-portrait img { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.about-portrait::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(transparent, var(--obsidian, #0e0e0e)); pointer-events: none; }
+@media (max-width: 860px) {
+  .about-hero-grid { grid-template-columns: 1fr; }
+  .about-portrait { justify-self: center; max-width: 300px; }
+}
+[data-theme="light"] .about-portrait-glow { background: radial-gradient(70% 55% at 50% 30%, rgba(16, 185, 129, .18), transparent 70%), #eef3f1; border-color: rgba(16, 185, 129, .3); }

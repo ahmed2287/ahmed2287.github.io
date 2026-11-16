@@ -5,7 +5,10 @@
     "title": "The architect behind the HamdyTech ecosystem",
     "titleAr": "المهندس وراء منظومة HamdyTech",
     "tagline": "Linux system administrator and DevOps engineer. I build, deploy, and operate self-hosted platforms — and I run every one of them on infrastructure I designed.",
-    "taglineAr": "مدير أنظمة Linux ومهندس DevOps. أبني وأنشر وأشغّل منصات ذاتية الاستضافة — وأدير كل واحدة منها على بنية تحتية صممتها بنفسي."
+    "taglineAr": "مدير أنظمة Linux ومهندس DevOps. أبني وأنشر وأشغّل منصات ذاتية الاستضافة — وأدير كل واحدة منها على بنية تحتية صممتها بنفسي.",
+    "photo": "/assets/ahmed.webp",
+    "photoAlt": "Ahmed Hamdy",
+    "photoAltAr": "أحمد حمدي"
   },
   "intro": {
     "body": "I'm Ahmed Hamdy — an infrastructure engineer who turned a personal obsession with uptime into an ecosystem of products and platforms. HamdyTech isn't an agency or a reseller; it's a working portfolio of systems I architected, deployed, and keep running in production. From a monitoring platform and a VPS host to an AI agent and an HR system, everything you see here runs on clusters I built, behind a network edge I configured, monitored by dashboards I wired myself.",
@@ -90,15 +93,51 @@
     }
   ],
   "stack": [
-    { "name": "Linux", "role": "Operating systems", "roleAr": "أنظمة التشغيل" },
-    { "name": "Proxmox VE", "role": "Virtualization", "roleAr": "المحاكاة الافتراضية" },
-    { "name": "Docker", "role": "Containers", "roleAr": "الحاويات" },
-    { "name": "Nginx", "role": "Reverse proxy & edge", "roleAr": "وكيل عكسي وحافة" },
-    { "name": "Prometheus & Grafana", "role": "Observability", "roleAr": "القابلية للرصد" },
-    { "name": "ERPNext", "role": "Business systems", "roleAr": "أنظمة الأعمال" },
-    { "name": "GitLab CI/CD", "role": "Delivery pipelines", "roleAr": "خطوط التسليم" },
-    { "name": "Ceph", "role": "Distributed storage", "roleAr": "تخزين موزع" },
-    { "name": "Bash & Python", "role": "Automation", "roleAr": "الأتمتة" }
+    {
+      "name": "Linux",
+      "role": "Operating systems",
+      "roleAr": "أنظمة التشغيل"
+    },
+    {
+      "name": "Proxmox VE",
+      "role": "Virtualization",
+      "roleAr": "المحاكاة الافتراضية"
+    },
+    {
+      "name": "Docker",
+      "role": "Containers",
+      "roleAr": "الحاويات"
+    },
+    {
+      "name": "Nginx",
+      "role": "Reverse proxy & edge",
+      "roleAr": "وكيل عكسي وحافة"
+    },
+    {
+      "name": "Prometheus & Grafana",
+      "role": "Observability",
+      "roleAr": "القابلية للرصد"
+    },
+    {
+      "name": "ERPNext",
+      "role": "Business systems",
+      "roleAr": "أنظمة الأعمال"
+    },
+    {
+      "name": "GitLab CI/CD",
+      "role": "Delivery pipelines",
+      "roleAr": "خطوط التسليم"
+    },
+    {
+      "name": "Ceph",
+      "role": "Distributed storage",
+      "roleAr": "تخزين موزع"
+    },
+    {
+      "name": "Bash & Python",
+      "role": "Automation",
+      "roleAr": "الأتمتة"
+    }
   ],
   "cta": {
     "heading": "Let's build something that stays up",
