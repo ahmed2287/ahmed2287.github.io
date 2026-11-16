@@ -476,3 +476,18 @@ input:focus-visible,
   .about-portrait { justify-self: center; max-width: 300px; }
 }
 [data-theme="light"] .about-portrait-glow { background: radial-gradient(70% 55% at 50% 30%, rgba(16, 185, 129, .18), transparent 70%), #eef3f1; border-color: rgba(16, 185, 129, .3); }
+
+/* Intro: the person behind the site, right under the hero */
+.intro { padding: clamp(4rem, 9vw, 7rem) 0; position: relative; }
+.intro-grid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+.intro-portrait { justify-self: start; max-width: 340px; }
+.intro .accent { color: var(--neon); }
+.intro-body { margin-top: 1.25rem; max-width: 60ch; color: var(--text-2, #9ca3af); font-size: 1.125rem; line-height: 1.75; }
+.intro-cta { margin-top: 2rem; }
+.intro-link { color: var(--text-3); transition: color .2s; }
+.intro-link:hover { color: var(--neon); }
+[dir="rtl"] .intro-arrow { transform: scaleX(-1); }
+@media (max-width: 860px) {
+  .intro-grid { grid-template-columns: 1fr; }
+  .intro-portrait { justify-self: center; max-width: 280px; }
+}
